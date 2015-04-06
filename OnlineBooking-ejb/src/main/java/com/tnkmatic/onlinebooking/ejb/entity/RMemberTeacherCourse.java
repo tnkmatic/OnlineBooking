@@ -7,6 +7,7 @@
 package com.tnkmatic.onlinebooking.ejb.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -14,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,13 +25,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Eiichi
  */
 @Entity
-@Table(name = "r_member_teacher_course", catalog = "onlinebooking", schema = "")
+@Table(name = "r_member_teacher_course")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RMemberTeacherCourse.findAll", query = "SELECT r FROM RMemberTeacherCourse r"),
     @NamedQuery(name = "RMemberTeacherCourse.findByMemberId", query = "SELECT r FROM RMemberTeacherCourse r WHERE r.rMemberTeacherCoursePK.memberId = :memberId"),
     @NamedQuery(name = "RMemberTeacherCourse.findByCourseId", query = "SELECT r FROM RMemberTeacherCourse r WHERE r.rMemberTeacherCoursePK.courseId = :courseId"),
-    @NamedQuery(name = "RMemberTeacherCourse.findBySalaryPerHour", query = "SELECT r FROM RMemberTeacherCourse r WHERE r.salaryPerHour = :salaryPerHour")})
+    @NamedQuery(name = "RMemberTeacherCourse.findBySalaryPerHour", query = "SELECT r FROM RMemberTeacherCourse r WHERE r.salaryPerHour = :salaryPerHour"),
+    @NamedQuery(name = "RMemberTeacherCourse.findByInsDate", query = "SELECT r FROM RMemberTeacherCourse r WHERE r.insDate = :insDate"),
+    @NamedQuery(name = "RMemberTeacherCourse.findByUpdDate", query = "SELECT r FROM RMemberTeacherCourse r WHERE r.updDate = :updDate")})
 public class RMemberTeacherCourse implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -37,6 +42,16 @@ public class RMemberTeacherCourse implements Serializable {
     @NotNull
     @Column(name = "SALARY_PER_HOUR")
     private int salaryPerHour;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "INS_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date insDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "UPD_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date updDate;
 
     public RMemberTeacherCourse() {
     }
@@ -45,9 +60,11 @@ public class RMemberTeacherCourse implements Serializable {
         this.rMemberTeacherCoursePK = rMemberTeacherCoursePK;
     }
 
-    public RMemberTeacherCourse(RMemberTeacherCoursePK rMemberTeacherCoursePK, int salaryPerHour) {
+    public RMemberTeacherCourse(RMemberTeacherCoursePK rMemberTeacherCoursePK, int salaryPerHour, Date insDate, Date updDate) {
         this.rMemberTeacherCoursePK = rMemberTeacherCoursePK;
         this.salaryPerHour = salaryPerHour;
+        this.insDate = insDate;
+        this.updDate = updDate;
     }
 
     public RMemberTeacherCourse(int memberId, short courseId) {
@@ -68,6 +85,22 @@ public class RMemberTeacherCourse implements Serializable {
 
     public void setSalaryPerHour(int salaryPerHour) {
         this.salaryPerHour = salaryPerHour;
+    }
+
+    public Date getInsDate() {
+        return insDate;
+    }
+
+    public void setInsDate(Date insDate) {
+        this.insDate = insDate;
+    }
+
+    public Date getUpdDate() {
+        return updDate;
+    }
+
+    public void setUpdDate(Date updDate) {
+        this.updDate = updDate;
     }
 
     @Override

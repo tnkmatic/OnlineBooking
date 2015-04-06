@@ -6,7 +6,7 @@
 
 package com.tnkmatic.onlinebooking.ejb.service;
 
-import com.tnkmatic.onlinebooking.ejb.resource.request.member.MemberRegister;
+import com.tnkmatic.onlinebooking.ejb.resource.request.member.MemberRegisterRequest;
 import java.lang.reflect.InvocationTargetException;
 import javax.ejb.Local;
 
@@ -16,5 +16,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface MemberServiceLocal {
-    public void memberRegist(MemberRegister memberRegister) throws IllegalAccessException, InvocationTargetException;
+    public void memberRegist(MemberRegisterRequest memberRegister) throws IllegalAccessException, InvocationTargetException;
 }

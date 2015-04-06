@@ -7,6 +7,7 @@
 package com.tnkmatic.onlinebooking.ejb.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,11 +25,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Eiichi
  */
 @Entity
-@Table(name = "member_student", catalog = "onlinebooking", schema = "")
+@Table(name = "member_student")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MemberStudent.findAll", query = "SELECT m FROM MemberStudent m"),
-    @NamedQuery(name = "MemberStudent.findByMemberId", query = "SELECT m FROM MemberStudent m WHERE m.memberId = :memberId")})
+    @NamedQuery(name = "MemberStudent.findByMemberId", query = "SELECT m FROM MemberStudent m WHERE m.memberId = :memberId"),
+    @NamedQuery(name = "MemberStudent.findByInsDate", query = "SELECT m FROM MemberStudent m WHERE m.insDate = :insDate"),
+    @NamedQuery(name = "MemberStudent.findByUpdDate", query = "SELECT m FROM MemberStudent m WHERE m.updDate = :updDate")})
 public class MemberStudent implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,6 +39,16 @@ public class MemberStudent implements Serializable {
     @NotNull
     @Column(name = "MEMBER_ID")
     private Integer memberId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "INS_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date insDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "UPD_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date updDate;
 
     public MemberStudent() {
     }
@@ -42,12 +57,34 @@ public class MemberStudent implements Serializable {
         this.memberId = memberId;
     }
 
+    public MemberStudent(Integer memberId, Date insDate, Date updDate) {
+        this.memberId = memberId;
+        this.insDate = insDate;
+        this.updDate = updDate;
+    }
+
     public Integer getMemberId() {
         return memberId;
     }
 
     public void setMemberId(Integer memberId) {
         this.memberId = memberId;
+    }
+
+    public Date getInsDate() {
+        return insDate;
+    }
+
+    public void setInsDate(Date insDate) {
+        this.insDate = insDate;
+    }
+
+    public Date getUpdDate() {
+        return updDate;
+    }
+
+    public void setUpdDate(Date updDate) {
+        this.updDate = updDate;
     }
 
     @Override

@@ -6,20 +6,20 @@
 
 package com.tnkmatic.onlinebooking.ejb.resource.request;
 
-import com.tnkmatic.onlinebooking.ejb.resource.request.member.MemberRegister;
+import com.tnkmatic.onlinebooking.ejb.resource.request.member.MemberRegisterRequest;
 
 /**
  *
  * @author Eiichi
  */
 public class MemberRequest {
-    private MemberRegister memberRegister;
+    private MemberRegisterRequest memberRegister;
 
-    public MemberRegister getMemberRegister() {
+    public MemberRegisterRequest getMemberRegister() {
         return memberRegister;
     }
 
-    public void setMemberRegister(MemberRegister memberRegister) {
+    public void setMemberRegister(MemberRegisterRequest memberRegister) {
         this.memberRegister = memberRegister;
     }
 }

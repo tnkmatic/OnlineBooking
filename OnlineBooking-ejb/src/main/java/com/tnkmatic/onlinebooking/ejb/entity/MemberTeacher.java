@@ -26,14 +26,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Eiichi
  */
 @Entity
-@Table(name = "member_teacher", catalog = "onlinebooking", schema = "")
+@Table(name = "member_teacher")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MemberTeacher.findAll", query = "SELECT m FROM MemberTeacher m"),
     @NamedQuery(name = "MemberTeacher.findByMemberId", query = "SELECT m FROM MemberTeacher m WHERE m.memberId = :memberId"),
     @NamedQuery(name = "MemberTeacher.findByEmployKbn", query = "SELECT m FROM MemberTeacher m WHERE m.employKbn = :employKbn"),
     @NamedQuery(name = "MemberTeacher.findByEmployYmdFrom", query = "SELECT m FROM MemberTeacher m WHERE m.employYmdFrom = :employYmdFrom"),
-    @NamedQuery(name = "MemberTeacher.findByEmployYmdTo", query = "SELECT m FROM MemberTeacher m WHERE m.employYmdTo = :employYmdTo")})
+    @NamedQuery(name = "MemberTeacher.findByEmployYmdTo", query = "SELECT m FROM MemberTeacher m WHERE m.employYmdTo = :employYmdTo"),
+    @NamedQuery(name = "MemberTeacher.findByInsDate", query = "SELECT m FROM MemberTeacher m WHERE m.insDate = :insDate"),
+    @NamedQuery(name = "MemberTeacher.findByUpdDate", query = "SELECT m FROM MemberTeacher m WHERE m.updDate = :updDate")})
 public class MemberTeacher implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +58,16 @@ public class MemberTeacher implements Serializable {
     @Column(name = "EMPLOY_YMD_TO")
     @Temporal(TemporalType.DATE)
     private Date employYmdTo;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "INS_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date insDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "UPD_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date updDate;
 
     public MemberTeacher() {
     }
@@ -64,11 +76,13 @@ public class MemberTeacher implements Serializable {
         this.memberId = memberId;
     }
 
-    public MemberTeacher(Integer memberId, String employKbn, Date employYmdFrom, Date employYmdTo) {
+    public MemberTeacher(Integer memberId, String employKbn, Date employYmdFrom, Date employYmdTo, Date insDate, Date updDate) {
         this.memberId = memberId;
         this.employKbn = employKbn;
         this.employYmdFrom = employYmdFrom;
         this.employYmdTo = employYmdTo;
+        this.insDate = insDate;
+        this.updDate = updDate;
     }
 
     public Integer getMemberId() {
@@ -101,6 +115,22 @@ public class MemberTeacher implements Serializable {
 
     public void setEmployYmdTo(Date employYmdTo) {
         this.employYmdTo = employYmdTo;
+    }
+
+    public Date getInsDate() {
+        return insDate;
+    }
+
+    public void setInsDate(Date insDate) {
+        this.insDate = insDate;
+    }
+
+    public Date getUpdDate() {
+        return updDate;
+    }
+
+    public void setUpdDate(Date updDate) {
+        this.updDate = updDate;
     }
 
     @Override

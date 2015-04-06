@@ -28,28 +28,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Eiichi
  */
 @Entity
-@Table(name = "member", catalog = "onlinebooking", schema = "")
+@Table(name = "member")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Member1.findAll", query = "SELECT m FROM Member1 m"),
-    @NamedQuery(name = "Member1.findByMemberId", query = "SELECT m FROM Member1 m WHERE m.memberId = :memberId"),
-    @NamedQuery(name = "Member1.findByLoginId", query = "SELECT m FROM Member1 m WHERE m.loginId = :loginId"),
-    @NamedQuery(name = "Member1.findByLoginPassword", query = "SELECT m FROM Member1 m WHERE m.loginPassword = :loginPassword"),
-    @NamedQuery(name = "Member1.findByLastName", query = "SELECT m FROM Member1 m WHERE m.lastName = :lastName"),
-    @NamedQuery(name = "Member1.findByFirstName", query = "SELECT m FROM Member1 m WHERE m.firstName = :firstName"),
-    @NamedQuery(name = "Member1.findByLastNameKana", query = "SELECT m FROM Member1 m WHERE m.lastNameKana = :lastNameKana"),
-    @NamedQuery(name = "Member1.findByFirstNameKana", query = "SELECT m FROM Member1 m WHERE m.firstNameKana = :firstNameKana"),
-    @NamedQuery(name = "Member1.findByGender", query = "SELECT m FROM Member1 m WHERE m.gender = :gender"),
-    @NamedQuery(name = "Member1.findByBirthday", query = "SELECT m FROM Member1 m WHERE m.birthday = :birthday"),
-    @NamedQuery(name = "Member1.findBySkypeId", query = "SELECT m FROM Member1 m WHERE m.skypeId = :skypeId"),
-    @NamedQuery(name = "Member1.findByContactWayKbn", query = "SELECT m FROM Member1 m WHERE m.contactWayKbn = :contactWayKbn"),
-    @NamedQuery(name = "Member1.findByTel", query = "SELECT m FROM Member1 m WHERE m.tel = :tel"),
-    @NamedQuery(name = "Member1.findByEmail", query = "SELECT m FROM Member1 m WHERE m.email = :email"),
-    @NamedQuery(name = "Member1.findByPostalCd", query = "SELECT m FROM Member1 m WHERE m.postalCd = :postalCd"),
-    @NamedQuery(name = "Member1.findByPrefName", query = "SELECT m FROM Member1 m WHERE m.prefName = :prefName"),
-    @NamedQuery(name = "Member1.findByCityName", query = "SELECT m FROM Member1 m WHERE m.cityName = :cityName"),
-    @NamedQuery(name = "Member1.findByAddressDetailName", query = "SELECT m FROM Member1 m WHERE m.addressDetailName = :addressDetailName"),
-    @NamedQuery(name = "Member1.findByBuildingName", query = "SELECT m FROM Member1 m WHERE m.buildingName = :buildingName")})
+    @NamedQuery(name = "BookingMember.findAll", query = "SELECT b FROM BookingMember b"),
+    @NamedQuery(name = "BookingMember.findByMemberId", query = "SELECT b FROM BookingMember b WHERE b.memberId = :memberId"),
+    @NamedQuery(name = "BookingMember.findByLoginId", query = "SELECT b FROM BookingMember b WHERE b.loginId = :loginId"),
+    @NamedQuery(name = "BookingMember.findByLoginPassword", query = "SELECT b FROM BookingMember b WHERE b.loginPassword = :loginPassword"),
+    @NamedQuery(name = "BookingMember.findByLastName", query = "SELECT b FROM BookingMember b WHERE b.lastName = :lastName"),
+    @NamedQuery(name = "BookingMember.findByFirstName", query = "SELECT b FROM BookingMember b WHERE b.firstName = :firstName"),
+    @NamedQuery(name = "BookingMember.findByLastNameKana", query = "SELECT b FROM BookingMember b WHERE b.lastNameKana = :lastNameKana"),
+    @NamedQuery(name = "BookingMember.findByFirstNameKana", query = "SELECT b FROM BookingMember b WHERE b.firstNameKana = :firstNameKana"),
+    @NamedQuery(name = "BookingMember.findByGender", query = "SELECT b FROM BookingMember b WHERE b.gender = :gender"),
+    @NamedQuery(name = "BookingMember.findByBirthday", query = "SELECT b FROM BookingMember b WHERE b.birthday = :birthday"),
+    @NamedQuery(name = "BookingMember.findBySkypeId", query = "SELECT b FROM BookingMember b WHERE b.skypeId = :skypeId"),
+    @NamedQuery(name = "BookingMember.findByContactWayKbn", query = "SELECT b FROM BookingMember b WHERE b.contactWayKbn = :contactWayKbn"),
+    @NamedQuery(name = "BookingMember.findByTel", query = "SELECT b FROM BookingMember b WHERE b.tel = :tel"),
+    @NamedQuery(name = "BookingMember.findByEmail", query = "SELECT b FROM BookingMember b WHERE b.email = :email"),
+    @NamedQuery(name = "BookingMember.findByPostalCd", query = "SELECT b FROM BookingMember b WHERE b.postalCd = :postalCd"),
+    @NamedQuery(name = "BookingMember.findByPrefName", query = "SELECT b FROM BookingMember b WHERE b.prefName = :prefName"),
+    @NamedQuery(name = "BookingMember.findByCityName", query = "SELECT b FROM BookingMember b WHERE b.cityName = :cityName"),
+    @NamedQuery(name = "BookingMember.findByAddressDetailName", query = "SELECT b FROM BookingMember b WHERE b.addressDetailName = :addressDetailName"),
+    @NamedQuery(name = "BookingMember.findByBuildingName", query = "SELECT b FROM BookingMember b WHERE b.buildingName = :buildingName"),
+    @NamedQuery(name = "BookingMember.findByInsDate", query = "SELECT b FROM BookingMember b WHERE b.insDate = :insDate"),
+    @NamedQuery(name = "BookingMember.findByUpdDate", query = "SELECT b FROM BookingMember b WHERE b.updDate = :updDate")})
 public class BookingMember implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -135,6 +137,16 @@ public class BookingMember implements Serializable {
     @Size(max = 100)
     @Column(name = "BUILDING_NAME")
     private String buildingName;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "INS_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date insDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "UPD_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date updDate;
 
     public BookingMember() {
     }
@@ -143,7 +155,7 @@ public class BookingMember implements Serializable {
         this.memberId = memberId;
     }
 
-    public BookingMember(Integer memberId, String loginId, String loginPassword, String lastName, String firstName, String lastNameKana, String firstNameKana, Date birthday, String skypeId, String contactWayKbn, String postalCd, String prefName, String cityName, String addressDetailName) {
+    public BookingMember(Integer memberId, String loginId, String loginPassword, String lastName, String firstName, String lastNameKana, String firstNameKana, Date birthday, String skypeId, String contactWayKbn, String postalCd, String prefName, String cityName, String addressDetailName, Date insDate, Date updDate) {
         this.memberId = memberId;
         this.loginId = loginId;
         this.loginPassword = loginPassword;
@@ -158,6 +170,8 @@ public class BookingMember implements Serializable {
         this.prefName = prefName;
         this.cityName = cityName;
         this.addressDetailName = addressDetailName;
+        this.insDate = insDate;
+        this.updDate = updDate;
     }
 
     public Integer getMemberId() {
@@ -304,6 +318,22 @@ public class BookingMember implements Serializable {
         this.buildingName = buildingName;
     }
 
+    public Date getInsDate() {
+        return insDate;
+    }
+
+    public void setInsDate(Date insDate) {
+        this.insDate = insDate;
+    }
+
+    public Date getUpdDate() {
+        return updDate;
+    }
+
+    public void setUpdDate(Date updDate) {
+        this.updDate = updDate;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -326,7 +356,7 @@ public class BookingMember implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tnkmatic.onlinebooking.ejb.entity.Member1[ memberId=" + memberId + " ]";
+        return "com.tnkmatic.onlinebooking.ejb.entity.BookingMember[ memberId=" + memberId + " ]";
     }
     
 }

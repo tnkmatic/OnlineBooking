@@ -5,24 +5,26 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
+-- Schema onlinebooking
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `onlinebooking` ;
+
+-- -----------------------------------------------------
+-- Schema onlinebooking
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `onlinebooking` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+SHOW WARNINGS;
+-- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `mydb` ;
 
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 SHOW WARNINGS;
--- -----------------------------------------------------
--- Schema onlinebooking
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema onlinebooking
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `onlinebooking` DEFAULT CHARACTER SET utf8 ;
-SHOW WARNINGS;
-USE `mydb` ;
+USE `onlinebooking` ;
 
 -- -----------------------------------------------------
 -- Table `MEMBER`
@@ -38,17 +40,19 @@ CREATE TABLE IF NOT EXISTS `MEMBER` (
   `FIRST_NAME` VARCHAR(20) NOT NULL COMMENT '氏名（名）',
   `LAST_NAME_KANA` VARCHAR(40) NOT NULL COMMENT '氏名カナ（姓）',
   `FIRST_NAME_KANA` VARCHAR(40) NOT NULL COMMENT '氏名カナ（名）',
-  `GENDER` CHAR(1) NULL COMMENT '性別（将来用）',
+  `GENDER` VARCHAR(1) NULL COMMENT '性別（将来用）',
   `BIRTHDAY` DATE NOT NULL COMMENT '誕生日',
   `SKYPE_ID` VARCHAR(64) NOT NULL COMMENT 'スカイプID',
-  `CONTACT_WAY_KBN` CHAR(1) NOT NULL COMMENT '連絡方法区分',
+  `CONTACT_WAY_KBN` VARCHAR(1) NOT NULL COMMENT '連絡方法区分',
   `TEL` VARCHAR(13) NULL COMMENT '電話番号',
   `EMAIL` VARCHAR(256) NULL COMMENT 'メールアドレス',
   `POSTAL_CD` VARCHAR(7) NOT NULL COMMENT '郵便番号',
   `PREF_NAME` VARCHAR(4) NOT NULL COMMENT '都道府県名',
-  `CITY_NAME` VARCHAR(20) NOT NULL,
+  `CITY_NAME` VARCHAR(20) NOT NULL COMMENT '市区町村名',
   `ADDRESS_DETAIL_NAME` VARCHAR(100) NOT NULL COMMENT '住所詳細名',
   `BUILDING_NAME` VARCHAR(100) NULL COMMENT '建物名',
+  `INS_DATE` DATE NOT NULL COMMENT 'レコード作成日時',
+  `UPD_DATE` DATE NOT NULL COMMENT 'レコード更新日時',
   PRIMARY KEY (`MEMBER_ID`))
 ENGINE = InnoDB
 COMMENT = 'メンバー';
@@ -63,6 +67,8 @@ DROP TABLE IF EXISTS `MEMBER_STUDENT` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `MEMBER_STUDENT` (
   `MEMBER_ID` INT NOT NULL COMMENT 'メンバーID',
+  `INS_DATE` DATE NOT NULL COMMENT 'レコード作成日時',
+  `UPD_DATE` DATE NOT NULL COMMENT 'レコード更新日時',
   PRIMARY KEY (`MEMBER_ID`))
 ENGINE = InnoDB
 COMMENT = '生徒';
@@ -76,7 +82,7 @@ DROP TABLE IF EXISTS `MST_EMPLOY` ;
 
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `MST_EMPLOY` (
-  `EMPLOY_KBN` CHAR(1) NOT NULL COMMENT '雇用形態区分',
+  `EMPLOY_KBN` VARCHAR(1) NOT NULL COMMENT '雇用形態区分',
   `EMPLOY_NAME` VARCHAR(20) NULL COMMENT '雇用形態名',
   PRIMARY KEY (`EMPLOY_KBN`))
 ENGINE = InnoDB
@@ -92,9 +98,11 @@ DROP TABLE IF EXISTS `MEMBER_TEACHER` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `MEMBER_TEACHER` (
   `MEMBER_ID` INT NOT NULL COMMENT 'メンバーID',
-  `EMPLOY_KBN` CHAR(1) NOT NULL COMMENT '雇用形態区分',
+  `EMPLOY_KBN` VARCHAR(1) NOT NULL COMMENT '雇用形態区分',
   `EMPLOY_YMD_FROM` DATE NOT NULL COMMENT '雇用期間FROM',
   `EMPLOY_YMD_TO` DATE NOT NULL COMMENT '雇用期間TO',
+  `INS_DATE` DATE NOT NULL COMMENT 'レコード作成日時',
+  `UPD_DATE` DATE NOT NULL COMMENT 'レコード更新日時',
   PRIMARY KEY (`MEMBER_ID`))
 ENGINE = InnoDB
 COMMENT = '講師';
@@ -126,7 +134,9 @@ CREATE TABLE IF NOT EXISTS `R_MEMBER_STUDENT_COURSE` (
   `MEMBER_ID` INT NOT NULL COMMENT 'メンバーID',
   `COURSE_ID` SMALLINT NOT NULL COMMENT 'コースID',
   `PRICE_PER_HOUR` INT NOT NULL COMMENT '単価（時間単位）',
-  PRIMARY KEY (`MEMBER_ID`, `COURSE_ID`, `PRICE_PER_HOUR`))
+  `INS_DATE` DATE NOT NULL COMMENT 'レコード作成日時',
+  `UPD_DATE` DATE NOT NULL COMMENT 'レコード更新日時',
+  PRIMARY KEY (`MEMBER_ID`, `COURSE_ID`))
 ENGINE = InnoDB
 COMMENT = '生徒コース関連';
 
@@ -142,6 +152,8 @@ CREATE TABLE IF NOT EXISTS `R_MEMBER_TEACHER_COURSE` (
   `MEMBER_ID` INT NOT NULL COMMENT 'メンバーID',
   `COURSE_ID` SMALLINT NOT NULL COMMENT 'コースID',
   `SALARY_PER_HOUR` INT NOT NULL COMMENT '報酬（時間単位）',
+  `INS_DATE` DATE NOT NULL COMMENT 'レコード作成日時',
+  `UPD_DATE` DATE NOT NULL COMMENT 'レコード更新日時',
   PRIMARY KEY (`MEMBER_ID`, `COURSE_ID`))
 ENGINE = InnoDB
 COMMENT = '講師スケジュール関連';
@@ -157,9 +169,11 @@ SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `MEMBER_TEACHER_SCHEDULE` (
   `MEMBER_ID` INT NOT NULL COMMENT 'メンバーID',
   `SCHEDULE_SEQ` INT NOT NULL COMMENT 'スケジュール連番',
-  `DAY_OF_WEEK_KBN` CHAR(1) NOT NULL COMMENT '曜日区分',
+  `DAY_OF_WEEK_KBN` VARCHAR(1) NOT NULL COMMENT '曜日区分',
   `LESSON_TIME_FROM` CHAR(4) NOT NULL COMMENT '授業可能時刻FROM',
   `LESSON_TIME_TO` CHAR(4) NOT NULL COMMENT '授業可能時刻TO',
+  `INS_DATE` DATE NOT NULL,
+  `UPD_DATE` DATE NOT NULL,
   PRIMARY KEY (`SCHEDULE_SEQ`))
 ENGINE = InnoDB
 COMMENT = '講師スケジュール';
@@ -208,12 +222,12 @@ CREATE TABLE IF NOT EXISTS `TRN_RESERVE` (
   `STUDENT_MEMBER_ID` INT NULL COMMENT 'メンバーID（生徒）',
   `RESERVE_DATE` DATE NULL COMMENT '予約日時',
   `INS_DATE` DATE NOT NULL COMMENT 'レコード作成日時',
+  `UPD_DATE` DATE NOT NULL COMMENT 'レコード更新日時',
   PRIMARY KEY (`RESERVE_ID`, `TEACHER_MEMBER_ID`, `COURSE_ID`))
 ENGINE = InnoDB
 COMMENT = '予約トラン';
 
 SHOW WARNINGS;
-USE `onlinebooking` ;
 
 -- -----------------------------------------------------
 -- Table `MEMBER_GROUP`
@@ -222,28 +236,43 @@ DROP TABLE IF EXISTS `MEMBER_GROUP` ;
 
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `MEMBER_GROUP` (
-  `MEMBER_KBN` CHAR(1) NOT NULL COMMENT '会員グループID',
-  `MEMBER_KBN_NAME` VARCHAR(20) NOT NULL COMMENT '会員グループ名',
-  PRIMARY KEY (`MEMBER_KBN`))
+  `MEMBER_GROUP_KBN` VARCHAR(1) NOT NULL COMMENT 'メンバーグループ区分',
+  `MEMBER_GROUP_NAME` VARCHAR(20) NOT NULL COMMENT 'メンバーグループ名',
+  PRIMARY KEY (`MEMBER_GROUP_KBN`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COMMENT = 'メンバーグループマスタ';
+COMMENT = 'メンバーグループ';
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `R_MEMBER_GROUP`
+-- Table `R_MEMBER_MEMBER_GROUP`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `R_MEMBER_GROUP` ;
+DROP TABLE IF EXISTS `R_MEMBER_MEMBER_GROUP` ;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `R_MEMBER_GROUP` (
-  `MEMBER_MEMBER_ID` INT NOT NULL,
-  `MEMBER_KBN` CHAR(1) NOT NULL,
-  PRIMARY KEY (`MEMBER_MEMBER_ID`, `MEMBER_KBN`))
+CREATE TABLE IF NOT EXISTS `R_MEMBER_MEMBER_GROUP` (
+  `MEMBER_ID` INT NOT NULL COMMENT 'メンバーID',
+  `MEMBER_GROUP_KBN` VARCHAR(1) NOT NULL COMMENT 'メンバーグループ区分',
+  `INS_DATE` DATE NOT NULL COMMENT 'レコード作成日時',
+  `UPD_DATE` DATE NOT NULL COMMENT 'レコード更新日時',
+  PRIMARY KEY (`MEMBER_ID`, `MEMBER_GROUP_KBN`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
 COMMENT = 'メンバーグループ関連';
+
+SHOW WARNINGS;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `MEMBER_ID_SEQ`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `MEMBER_ID_SEQ` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `MEMBER_ID_SEQ` (
+  `MEMBER_ID_LAST` INT NOT NULL COMMENT '最新メンバーID',
+  PRIMARY KEY (`MEMBER_ID_LAST`))
+ENGINE = InnoDB
+COMMENT = 'メンバーIDシーケンス';
 
 SHOW WARNINGS;
 

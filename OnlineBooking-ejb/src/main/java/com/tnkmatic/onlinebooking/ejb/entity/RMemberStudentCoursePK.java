@@ -26,18 +26,13 @@ public class RMemberStudentCoursePK implements Serializable {
     @NotNull
     @Column(name = "COURSE_ID")
     private short courseId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "PRICE_PER_HOUR")
-    private int pricePerHour;
 
     public RMemberStudentCoursePK() {
     }
 
-    public RMemberStudentCoursePK(int memberId, short courseId, int pricePerHour) {
+    public RMemberStudentCoursePK(int memberId, short courseId) {
         this.memberId = memberId;
         this.courseId = courseId;
-        this.pricePerHour = pricePerHour;
     }
 
     public int getMemberId() {
@@ -56,20 +51,11 @@ public class RMemberStudentCoursePK implements Serializable {
         this.courseId = courseId;
     }
 
-    public int getPricePerHour() {
-        return pricePerHour;
-    }
-
-    public void setPricePerHour(int pricePerHour) {
-        this.pricePerHour = pricePerHour;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) memberId;
         hash += (int) courseId;
-        hash += (int) pricePerHour;
         return hash;
     }
 
@@ -86,15 +72,12 @@ public class RMemberStudentCoursePK implements Serializable {
         if (this.courseId != other.courseId) {
             return false;
         }
-        if (this.pricePerHour != other.pricePerHour) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "com.tnkmatic.onlinebooking.ejb.entity.RMemberStudentCoursePK[ memberId=" + memberId + ", courseId=" + courseId + ", pricePerHour=" + pricePerHour + " ]";
+        return "com.tnkmatic.onlinebooking.ejb.entity.RMemberStudentCoursePK[ memberId=" + memberId + ", courseId=" + courseId + " ]";
     }
     
 }

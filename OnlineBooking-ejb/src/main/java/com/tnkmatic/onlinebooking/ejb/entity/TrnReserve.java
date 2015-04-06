@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Eiichi
  */
 @Entity
-@Table(name = "trn_reserve", catalog = "onlinebooking", schema = "")
+@Table(name = "trn_reserve")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TrnReserve.findAll", query = "SELECT t FROM TrnReserve t"),
@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TrnReserve.findByCourseId", query = "SELECT t FROM TrnReserve t WHERE t.trnReservePK.courseId = :courseId"),
     @NamedQuery(name = "TrnReserve.findByStudentMemberId", query = "SELECT t FROM TrnReserve t WHERE t.studentMemberId = :studentMemberId"),
     @NamedQuery(name = "TrnReserve.findByReserveDate", query = "SELECT t FROM TrnReserve t WHERE t.reserveDate = :reserveDate"),
-    @NamedQuery(name = "TrnReserve.findByInsDate", query = "SELECT t FROM TrnReserve t WHERE t.insDate = :insDate")})
+    @NamedQuery(name = "TrnReserve.findByInsDate", query = "SELECT t FROM TrnReserve t WHERE t.insDate = :insDate"),
+    @NamedQuery(name = "TrnReserve.findByUpdDate", query = "SELECT t FROM TrnReserve t WHERE t.updDate = :updDate")})
 public class TrnReserve implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -49,6 +50,11 @@ public class TrnReserve implements Serializable {
     @Column(name = "INS_DATE")
     @Temporal(TemporalType.DATE)
     private Date insDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "UPD_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date updDate;
 
     public TrnReserve() {
     }
@@ -57,9 +63,10 @@ public class TrnReserve implements Serializable {
         this.trnReservePK = trnReservePK;
     }
 
-    public TrnReserve(TrnReservePK trnReservePK, Date insDate) {
+    public TrnReserve(TrnReservePK trnReservePK, Date insDate, Date updDate) {
         this.trnReservePK = trnReservePK;
         this.insDate = insDate;
+        this.updDate = updDate;
     }
 
     public TrnReserve(int reserveId, int teacherMemberId, int courseId) {
@@ -96,6 +103,14 @@ public class TrnReserve implements Serializable {
 
     public void setInsDate(Date insDate) {
         this.insDate = insDate;
+    }
+
+    public Date getUpdDate() {
+        return updDate;
+    }
+
+    public void setUpdDate(Date updDate) {
+        this.updDate = updDate;
     }
 
     @Override

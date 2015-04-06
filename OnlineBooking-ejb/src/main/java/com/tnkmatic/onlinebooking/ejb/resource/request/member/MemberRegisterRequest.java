@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author Eiichi
  */
-public class MemberRegister implements Serializable {
+public class MemberRegisterRequest implements Serializable {
     private String loginId;
     private String loginPassword;
     private String lastName;
@@ -31,7 +31,9 @@ public class MemberRegister implements Serializable {
     private String cityName;
     private String addressDetailName;
     private String buildingName;
-    private String memberKbn;    
+    private String memberGroupKbn;
+    private MemberTeacherRequest memberTeacherRequest;
+    private MemberStudentRequest memberStudentRequest;
 
     public String getLoginId() {
         return loginId;
@@ -169,12 +171,27 @@ public class MemberRegister implements Serializable {
         this.buildingName = buildingName;
     }
     
-    public String getMemberKbn() {
-        return memberKbn;
+    public String getMemberGroupKbn() {
+        return memberGroupKbn;
     }
 
-    public void setMemberKbn(String memberKbn) {
-        this.memberKbn = memberKbn;
+    public void setMemberGroupKbn(String memberGroupKbn) {
+        this.memberGroupKbn = memberGroupKbn;
     }
-    
+
+    public MemberTeacherRequest getMemberTeacherRequest() {
+        return memberTeacherRequest;
+    }
+
+    public void setMemberTeacherRequest(MemberTeacherRequest memberTeacherRequest) {
+        this.memberTeacherRequest = memberTeacherRequest;
+    }
+
+    public MemberStudentRequest getMemberStudentRequest() {
+        return memberStudentRequest;
+    }
+
+    public void setMemberStudentRequest(MemberStudentRequest memberStudentRequest) {
+        this.memberStudentRequest = memberStudentRequest;
+    }
 }

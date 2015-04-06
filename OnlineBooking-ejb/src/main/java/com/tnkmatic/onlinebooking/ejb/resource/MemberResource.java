@@ -8,7 +8,9 @@ package com.tnkmatic.onlinebooking.ejb.resource;
 
 import com.tnkmatic.onlinebooking.ejb.common.ConstantValue;
 import com.tnkmatic.onlinebooking.ejb.resource.request.MemberRequest;
+import com.tnkmatic.onlinebooking.ejb.service.MemberServiceLocal;
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -28,6 +30,8 @@ import javax.ws.rs.core.UriInfo;
 public class MemberResource {
     @Context
     UriInfo uriInfo;
+    
+    @EJB private MemberServiceLocal memberService;
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON + ";" + ConstantValue.ENCODING)
