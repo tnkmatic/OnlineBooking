@@ -44,17 +44,14 @@ public class MemberTeacher implements Serializable {
     @Column(name = "MEMBER_ID")
     private Integer memberId;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 1)
     @Column(name = "EMPLOY_KBN")
     private String employKbn;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "EMPLOY_YMD_FROM")
     @Temporal(TemporalType.DATE)
     private Date employYmdFrom;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "EMPLOY_YMD_TO")
     @Temporal(TemporalType.DATE)
     private Date employYmdTo;

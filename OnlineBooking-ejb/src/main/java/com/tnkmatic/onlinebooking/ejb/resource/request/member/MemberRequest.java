@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.tnkmatic.onlinebooking.ejb.resource.request;
+package com.tnkmatic.onlinebooking.ejb.resource.request.member;
 
-import com.tnkmatic.onlinebooking.ejb.resource.request.member.MemberRegisterRequest;
+import com.tnkmatic.onlinebooking.ejb.resource.request.member.register.MemberRegisterRequest;
 
 /**
  *

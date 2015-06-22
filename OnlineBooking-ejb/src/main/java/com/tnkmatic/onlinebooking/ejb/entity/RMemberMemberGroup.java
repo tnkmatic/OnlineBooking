@@ -50,6 +50,11 @@ public class RMemberMemberGroup implements Serializable {
 
     public RMemberMemberGroup() {
     }
+    
+    public RMemberMemberGroup(Date processDate) {
+        this.setInsDate(processDate);
+        this.setUpdDate(processDate);
+    }
 
     public RMemberMemberGroup(RMemberMemberGroupPK rMemberMemberGroupPK) {
         this.rMemberMemberGroupPK = rMemberMemberGroupPK;

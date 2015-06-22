@@ -28,6 +28,8 @@ public interface BookingMemberFacadeLocal {
     List<BookingMember> findAll();
 
     List<BookingMember> findRange(int[] range);
+    
+    void flush();
 
     int count();
     

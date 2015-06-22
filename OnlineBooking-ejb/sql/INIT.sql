@@ -1,16 +1,17 @@
+USE onlinebooking;
 -- メンバーグループへの初期登録
 INSERT INTO MEMBER_GROUP VALUES (
-    '0001', 
+    '1', 
     'administrators'
 );
 
 INSERT INTO MEMBER_GROUP VALUES (
-    '0002', 
+    '2', 
     'students'
 );
 
 INSERT INTO MEMBER_GROUP VALUES (
-    '0003', 
+    '3', 
     'teachers'
 );
 

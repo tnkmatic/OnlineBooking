@@ -150,6 +150,11 @@ public class BookingMember implements Serializable {
 
     public BookingMember() {
     }
+    
+    public BookingMember(Date processDate) {
+        this.setInsDate(processDate);
+        this.setUpdDate(processDate);
+    }
 
     public BookingMember(Integer memberId) {
         this.memberId = memberId;

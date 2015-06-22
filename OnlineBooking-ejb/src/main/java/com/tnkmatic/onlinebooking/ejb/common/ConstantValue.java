@@ -18,4 +18,7 @@ public class ConstantValue {
     public static final String MEMBER_GROUP_KBN_STUDENT = "2"; //生徒
     public static final String MEMBER_GROUP_KBN_ADMIN = "9"; //管理者
     
+    //HTTPレスポンス系
+    public static final String RESPONSE_CHARSET_UTF8 = "charset=UTF-8";
+    
 }

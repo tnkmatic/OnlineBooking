@@ -17,20 +17,21 @@ import com.tnkmatic.onlinebooking.ejb.entity.BookingMember;
 import com.tnkmatic.onlinebooking.ejb.entity.MemberStudent;
 import com.tnkmatic.onlinebooking.ejb.entity.MemberTeacher;
 import com.tnkmatic.onlinebooking.ejb.entity.RMemberMemberGroup;
+import com.tnkmatic.onlinebooking.ejb.entity.RMemberMemberGroupPK;
 import com.tnkmatic.onlinebooking.ejb.entity.RMemberStudentCourse;
 import com.tnkmatic.onlinebooking.ejb.entity.RMemberStudentCoursePK;
-import com.tnkmatic.onlinebooking.ejb.entity.RMemberTeacherCourse;
-import com.tnkmatic.onlinebooking.ejb.entity.RMemberTeacherCoursePK;
-import com.tnkmatic.onlinebooking.ejb.entity.TrnReserve_;
-import com.tnkmatic.onlinebooking.ejb.resource.request.member.MemberRegisterRequest;
-import com.tnkmatic.onlinebooking.ejb.resource.request.member.MemberStudentCourseRequest;
-import com.tnkmatic.onlinebooking.ejb.resource.request.member.MemberTeacherCourseRequest;
+import com.tnkmatic.onlinebooking.ejb.resource.request.member.register.MemberRegisterRequest;
+import com.tnkmatic.onlinebooking.ejb.resource.request.member.register.MemberStudentCourseRequest;
 import com.tnkmatic.onlinebooking.ejb.service.MemberServiceLocal;
-import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
+import java.util.Iterator;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -44,95 +45,97 @@ public class MemberService implements MemberServiceLocal {
     @EJB private RMemberMemberGroupFacadeLocal rMemberMemberGroupDao;
     @EJB private MemberTeacherFacadeLocal memberTeacherDao;
     @EJB private MemberStudentFacadeLocal memberStudenDao;
-    @EJB private RMemberTeacherCourseFacadeLocal rMemberTeacherCourseDao;
-    @EJB private RMemberStudentCourseFacadeLocal rMemberStudentCourseDao;
+    
+    // TODO リファクタリング(多態性)
     
     @Override
-    public void memberRegist(final MemberRegisterRequest memberRegister)
-            throws IllegalAccessException, InvocationTargetException {
-        // パスワードをハッシュ化(SHA-256)
+    public BookingMember memberRegist(MemberRegisterRequest memberRegister) throws Exception {
+        Integer memberId = null;
+        BookingMember bookingMember = null;
         
-        
-        // メンバーエンティティクラスの生成
-        final BookingMember bookingMember = new BookingMember();
-        BeanUtils.copyProperties(bookingMember, memberRegister);
+        try {
+            // 処理基準日
+            Date processDate = new Date();
 
-        // メンバーグループ関連クラスの生成
-        final RMemberMemberGroup rMemberMemberGroup = new RMemberMemberGroup();
-        BeanUtils.copyProperties(rMemberMemberGroup, memberRegister);
-        
-        // メンバー・メンバーグループ関連の永続化
-        bookingMemberDao.create(bookingMember);
-        rMemberMemberGroupDao.create(rMemberMemberGroup);
-        
-        // 生成されたメンバーIDを取得
-        final Integer memberId = bookingMember.getMemberId();
+            // メンバーエンティティの生成
+            bookingMember = new BookingMember(processDate);
+            BeanUtils.copyProperties(bookingMember, memberRegister);
+            // ハッシュ化(SHA-256)をパスワード設定
+            bookingMember.setLoginPassword(
+                    DigestUtils.sha256Hex(memberRegister.getLoginPassword()));
+            
+            // メンバーの永続化
+            bookingMemberDao.create(bookingMember);
+            // 強制的にFlushすることでメンバーIDを採番
+            bookingMemberDao.flush();
+            // 生成されたメンバーIDを取得
+            memberId = bookingMember.getMemberId();
+            
+            // TODO ロガーによる出力に変更
+            System.out.println("memberId = " + memberId);
 
-        if (!StringUtils.isEmpty(memberRegister.getMemberGroupKbn())) {
-            if (ConstantValue.MEMBER_GROUP_KBN_TEACHER.equals(
-                    memberRegister.getMemberGroupKbn())) {
-                // 講師エンティティクラスの生成
-                final MemberTeacher memberTeacher = new MemberTeacher();
-                BeanUtils.copyProperties(
-                        memberTeacher, memberRegister.getMemberTeacherRequest());
-                memberTeacher.setMemberId(memberId);
-                // 講師エンティティの永続化
-                memberTeacherDao.create(memberTeacher);
-                
-                // 講師コースエンティティクラスの生成
-                for (final MemberTeacherCourseRequest memberTeacherCourseRequest
-                        : memberRegister.getMemberTeacherRequest().getMemberTeacherCourseRequestList()) {
-                    final RMemberTeacherCourse rMemberTeacherCourse =
-                            new RMemberTeacherCourse();
-                    BeanUtils.copyProperties(
-                        rMemberTeacherCourse, memberTeacherCourseRequest);
-                    final RMemberTeacherCoursePK pk = new RMemberTeacherCoursePK();
-                    pk.setMemberId(memberId);
-                    pk.setCourseId(memberTeacherCourseRequest.getCourseId());
-                    rMemberTeacherCourse.setRMemberTeacherCoursePK(pk);
-                    // 永続化
-                    rMemberTeacherCourseDao.create(rMemberTeacherCourse);
+            // メンバーグループ関連PKエンティティの生成
+            final RMemberMemberGroupPK rMemberMemberGroupPk = new RMemberMemberGroupPK();
+            rMemberMemberGroupPk.setMemberId(memberId);
+            BeanUtils.copyProperties(rMemberMemberGroupPk, memberRegister);
+            // メンバーグループ関連エンティティの生成
+            final RMemberMemberGroup rMemberMemberGroup = new RMemberMemberGroup(processDate);
+            BeanUtils.copyProperties(rMemberMemberGroup, memberRegister);
+            rMemberMemberGroup.setRMemberMemberGroupPK(rMemberMemberGroupPk);
+
+            // メンバーグループ関連の永続化
+            rMemberMemberGroupDao.create(rMemberMemberGroup);
+            
+            if (!StringUtils.isEmpty(memberRegister.getMemberGroupKbn())) {
+                if (ConstantValue.MEMBER_GROUP_KBN_TEACHER.equals(
+                        memberRegister.getMemberGroupKbn())) {
+                    // 講師エンティティの永続化
+                    memberTeacherDao.create(
+                            createMemberTeacher(memberId, processDate));
+                } else if (ConstantValue.MEMBER_GROUP_KBN_STUDENT.equals(
+                        memberRegister.getMemberGroupKbn())) {
+                    // 生徒エンティティの永続化
+                    memberStudenDao.create(
+                            createMemberStudent(memberId, processDate));
+                } else {
+                    //
                 }
-            } else if (ConstantValue.MEMBER_GROUP_KBN_STUDENT.equals(
-                    memberRegister.getMemberGroupKbn())) {
-                // 生徒エンティティクラスの生成
-                final MemberStudent memberStudent = new MemberStudent();
-                BeanUtils.copyProperties(
-                        memberStudent, memberRegister.getMemberStudentRequest());
-                memberStudent.setMemberId(memberId);
-                // 生徒エンティティの永続化
-                memberStudenDao.create(memberStudent);
-                
-                // 生徒コースエンティティクラスの生成
-                for (final MemberStudentCourseRequest memberStudentCourseRequest
-                        : memberRegister.getMemberStudentRequest().getMemberStudentCourseRequestList()) {
-                    final RMemberStudentCourse rMemberStudentCourse =
-                            new RMemberStudentCourse();
-                    BeanUtils.copyProperties(
-                            rMemberStudentCourse, memberStudentCourseRequest);
-                    final RMemberStudentCoursePK pk = new RMemberStudentCoursePK();
-                    pk.setMemberId(memberId);
-                    pk.setCourseId(memberStudentCourseRequest);
+            }
+        } catch (Exception e) {
+            if (e.getCause().getCause() instanceof javax.validation.ConstraintViolationException) {
+                ConstraintViolationException cve = (ConstraintViolationException) e.getCause().getCause();
+                System.out.println("size:" + cve.getConstraintViolations().size());
+                for (Iterator<ConstraintViolation<?>> it 
+                        = cve.getConstraintViolations().iterator(); it.hasNext();) {
+                    ConstraintViolation cv = it.next();
+                    System.out.println("class:" + cv.getRootBeanClass().getSimpleName());
+                    System.out.println("field:" + cv.getPropertyPath().toString());
+                    System.out.println("type:" + cv.getConstraintDescriptor().getAnnotation().annotationType());
+                    System.out.println("message:" + cv.getMessage());
                 }
-
-                INS_DATE, UPD_DATEのコメント
-                シーケンスが取得できるか（メンバーID）
-                
-            } else {
-                //
             }
         }
-                
-                
- 
         
-        
-        // Entityオブジェクトにコピー
-        
-        
-        
-        
-        
-        
+        return bookingMember;
+    }
+    
+    private MemberTeacher createMemberTeacher(
+            final Integer memberId, final Date processDate) throws Exception {
+        // 講師エンティティクラスの生成
+        final MemberTeacher memberTeacher = new MemberTeacher();
+        memberTeacher.setMemberId(memberId);
+        memberTeacher.setInsDate(processDate);
+        memberTeacher.setUpdDate(processDate);
+        return memberTeacher;
+   }
+    
+    private MemberStudent createMemberStudent(
+            final Integer memberId, final Date processDate) throws Exception {
+        // 生徒エンティティクラスの生成
+        final MemberStudent memberStudent = new MemberStudent();
+        memberStudent.setMemberId(memberId);
+        memberStudent.setInsDate(processDate);
+        memberStudent.setUpdDate(processDate);
+        return memberStudent;
     }
 }

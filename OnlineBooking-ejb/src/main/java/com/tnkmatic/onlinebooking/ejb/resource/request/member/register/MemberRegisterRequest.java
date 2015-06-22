@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.tnkmatic.onlinebooking.ejb.resource.request.member;
+package com.tnkmatic.onlinebooking.ejb.resource.request.member.register;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,10 +12,12 @@ import java.util.Date;
 /**
  *
  * @author Eiichi
+ * 会員登録リクエスト用オブジェクト
  */
 public class MemberRegisterRequest implements Serializable {
     private String loginId;
     private String loginPassword;
+    private String loginPasswordc;
     private String lastName;
     private String firstName;
     private String lastNameKana;
@@ -32,8 +34,6 @@ public class MemberRegisterRequest implements Serializable {
     private String addressDetailName;
     private String buildingName;
     private String memberGroupKbn;
-    private MemberTeacherRequest memberTeacherRequest;
-    private MemberStudentRequest memberStudentRequest;
 
     public String getLoginId() {
         return loginId;
@@ -51,6 +51,14 @@ public class MemberRegisterRequest implements Serializable {
         this.loginPassword = loginPassword;
     }
 
+    public String getLoginPasswordc() {
+        return loginPasswordc;
+    }
+
+    public void setLoginPasswordc(String loginPasswordc) {
+        this.loginPasswordc = loginPasswordc;
+    }
+    
     public String getLastName() {
         return lastName;
     }
@@ -179,19 +187,4 @@ public class MemberRegisterRequest implements Serializable {
         this.memberGroupKbn = memberGroupKbn;
     }
 
-    public MemberTeacherRequest getMemberTeacherRequest() {
-        return memberTeacherRequest;
-    }
-
-    public void setMemberTeacherRequest(MemberTeacherRequest memberTeacherRequest) {
-        this.memberTeacherRequest = memberTeacherRequest;
-    }
-
-    public MemberStudentRequest getMemberStudentRequest() {
-        return memberStudentRequest;
-    }
-
-    public void setMemberStudentRequest(MemberStudentRequest memberStudentRequest) {
-        this.memberStudentRequest = memberStudentRequest;
-    }
 }
