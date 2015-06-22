@@ -52,7 +52,7 @@ h1 a {text-decoration:none;} 			/*リンクの下線を無くす*/
 ul#menu {
 	height:42px; background-color:#eeeeee; font-weight:bold;
 }
-li#menu01,li#menu02,li#menu03,li#menu04,li#menu05 {
+li#menuHome,li#menuMemberEntry,li#menu03,li#menu04,li#menu05 {
 	float:left;			/*リスト項目を横に並べる*/
 	display:inline;			/*リスト項目をインライン表示にする*/
 	list-style-type:none;		/*リストマーカー無しにする*/
@@ -64,7 +64,7 @@ li#menuHome {
 	width:164px; height:42px;	/*背景画像に合わせたサイズ指定*/
 	background-image:url("images/bg_menu01.jpg");	/*背景画像*/
 }
-li#menuStudentEntry {
+li#menuMemberEntry {
 	width:156px; height:42px;	/*背景画像に合わせたサイズ指定*/
 	background-image:url("images/bg_menu02.jpg");	/*背景画像*/
 }
@@ -191,3 +191,32 @@ address {
 	font-size:small;			 /*フォントサイズを小さくする*/
 	padding:5px 0px 5px 0px;		 /*要素内容の位置調整*/
 }
+
+/*============================================
+タブ
+============================================*/
+.tab {
+    overflow: hidden;
+}
+
+.tab li {
+    background:#ccc; 
+    padding:5px 25px; 
+    float:left; 
+    margin-right:1px;
+    cursor: pointer;
+}
+
+.tab li.tabSelect {
+    background: #eee;
+}
+
+.tabContent li {
+    background: #eee;
+    padding: 20px;
+}
+
+.tabHide {
+    display: none;
+}
+

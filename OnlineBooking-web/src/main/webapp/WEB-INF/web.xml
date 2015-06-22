@@ -67,7 +67,7 @@
     </login-config>
 
     <!-- Webリソースに対する認可  -->
-    <security-constraint>
+<!--    <security-constraint>
         <web-resource-collection>
             <web-resource-name>onlinebooking</web-resource-name>
             <url-pattern>/jsp/mng/*</url-pattern>
@@ -78,7 +78,7 @@
             <role-name>studentsRole</role-name>
             <role-name>teachersRole</role-name>
         </auth-constraint>
-    </security-constraint>
+    </security-constraint>-->
     
     <!-- 利用可能なロール名を定義 -->
     <security-role>
