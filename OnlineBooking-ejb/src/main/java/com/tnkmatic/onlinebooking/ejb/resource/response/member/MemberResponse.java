@@ -6,6 +6,7 @@
 package com.tnkmatic.onlinebooking.ejb.resource.response.member;
 
 import com.tnkmatic.onlinebooking.ejb.entity.BookingMember;
+import java.util.List;
 
 /**
  *
@@ -13,6 +14,7 @@ import com.tnkmatic.onlinebooking.ejb.entity.BookingMember;
  */
 public class MemberResponse {
     private BookingMember member;
+    private List<BookingMember> members;
 
     public BookingMember getMember() {
         return member;
@@ -21,4 +23,13 @@ public class MemberResponse {
     public void setMember(BookingMember member) {
         this.member = member;
     }
+    
+    public List<BookingMember> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<BookingMember> members) {
+        this.members = members;
+    }
+
 }

@@ -14,8 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -147,6 +149,14 @@ public class BookingMember implements Serializable {
     @Column(name = "UPD_DATE")
     @Temporal(TemporalType.DATE)
     private Date updDate;
+    
+    //追加プロパティ
+    @OneToOne
+    @JoinColumn(name = "CONTACT_WAY_KBN", nullable = false, insertable = false, updatable = false)
+    private MstContactWay mstContactWay;
+    @OneToOne
+    @JoinColumn(name = "GENDER", nullable = false, insertable = false, updatable = false)
+    private MstGender mstGender;
 
     public BookingMember() {
     }
@@ -337,6 +347,22 @@ public class BookingMember implements Serializable {
 
     public void setUpdDate(Date updDate) {
         this.updDate = updDate;
+    }
+    
+    public MstContactWay getMstContactWay() {
+        return mstContactWay;
+    }
+
+    public void setMstContactWay(MstContactWay mstContactWay) {
+        this.mstContactWay = mstContactWay;
+    }
+
+    public MstGender getMstGender() {
+        return mstGender;
+    }
+
+    public void setMstGender(MstGender mstGender) {
+        this.mstGender = mstGender;
     }
 
     @Override

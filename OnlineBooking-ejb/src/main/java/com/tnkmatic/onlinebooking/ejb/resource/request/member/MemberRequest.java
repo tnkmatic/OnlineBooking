@@ -6,6 +6,7 @@
 
 package com.tnkmatic.onlinebooking.ejb.resource.request.member;
 
+import com.tnkmatic.onlinebooking.ejb.resource.request.member.reference.MemberReferenceCondition;
 import com.tnkmatic.onlinebooking.ejb.resource.request.member.register.MemberRegisterRequest;
 
 /**
@@ -22,4 +23,5 @@ public class MemberRequest {
     public void setMemberRegister(MemberRegisterRequest memberRegister) {
         this.memberRegister = memberRegister;
     }
+    
 }

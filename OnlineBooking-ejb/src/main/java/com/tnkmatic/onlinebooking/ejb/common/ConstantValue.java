@@ -21,4 +21,7 @@ public class ConstantValue {
     //HTTPレスポンス系
     public static final String RESPONSE_CHARSET_UTF8 = "charset=UTF-8";
     
+    //検索パラメータ
+    public static final String MEMBER_CONDITION_LOGIN_ID = "loginId";
+    
 }

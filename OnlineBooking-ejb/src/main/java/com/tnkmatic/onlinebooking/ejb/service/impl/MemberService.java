@@ -11,20 +11,18 @@ import com.tnkmatic.onlinebooking.ejb.dao.BookingMemberFacadeLocal;
 import com.tnkmatic.onlinebooking.ejb.dao.MemberStudentFacadeLocal;
 import com.tnkmatic.onlinebooking.ejb.dao.MemberTeacherFacadeLocal;
 import com.tnkmatic.onlinebooking.ejb.dao.RMemberMemberGroupFacadeLocal;
-import com.tnkmatic.onlinebooking.ejb.dao.RMemberStudentCourseFacadeLocal;
-import com.tnkmatic.onlinebooking.ejb.dao.RMemberTeacherCourseFacadeLocal;
+import com.tnkmatic.onlinebooking.ejb.dao.custom.BookingMemberCustom;
 import com.tnkmatic.onlinebooking.ejb.entity.BookingMember;
 import com.tnkmatic.onlinebooking.ejb.entity.MemberStudent;
 import com.tnkmatic.onlinebooking.ejb.entity.MemberTeacher;
 import com.tnkmatic.onlinebooking.ejb.entity.RMemberMemberGroup;
 import com.tnkmatic.onlinebooking.ejb.entity.RMemberMemberGroupPK;
-import com.tnkmatic.onlinebooking.ejb.entity.RMemberStudentCourse;
-import com.tnkmatic.onlinebooking.ejb.entity.RMemberStudentCoursePK;
+import com.tnkmatic.onlinebooking.ejb.resource.request.member.reference.MemberReferenceCondition;
 import com.tnkmatic.onlinebooking.ejb.resource.request.member.register.MemberRegisterRequest;
-import com.tnkmatic.onlinebooking.ejb.resource.request.member.register.MemberStudentCourseRequest;
 import com.tnkmatic.onlinebooking.ejb.service.MemberServiceLocal;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -45,6 +43,7 @@ public class MemberService implements MemberServiceLocal {
     @EJB private RMemberMemberGroupFacadeLocal rMemberMemberGroupDao;
     @EJB private MemberTeacherFacadeLocal memberTeacherDao;
     @EJB private MemberStudentFacadeLocal memberStudenDao;
+    @EJB private BookingMemberCustom bookingMemberCustomDao;
     
     // TODO リファクタリング(多態性)
     
@@ -117,6 +116,11 @@ public class MemberService implements MemberServiceLocal {
         }
         
         return bookingMember;
+    }
+
+    @Override
+    public List<BookingMember> memberReference(MemberReferenceCondition memberCondition) throws Exception {
+        return bookingMemberCustomDao.findCondition(memberCondition);
     }
     
     private MemberTeacher createMemberTeacher(
