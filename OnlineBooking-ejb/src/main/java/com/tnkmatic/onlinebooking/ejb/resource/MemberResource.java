@@ -15,6 +15,8 @@ import com.tnkmatic.onlinebooking.ejb.service.MemberServiceLocal;
 import com.tnkmatic.onlinebooking.ejb.util.ResourceUtil;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -34,6 +36,9 @@ import javax.ws.rs.core.Response;
 @RequestScoped
 @Path("members")
 public class MemberResource extends BaseResource {
+    private static final Logger LOG = Logger.getLogger(MemberResource.class.getName());
+    
+    
     @EJB private MemberServiceLocal memberService;
     
     @POST
@@ -85,6 +90,7 @@ public class MemberResource extends BaseResource {
                     null,
                     null,
                     memberResponse);
+            LOG.log(Level.INFO, memberResponse.toString());
         } catch (Exception e) {
             throw new javax.ws.rs.InternalServerErrorException(
                     Response.status(Response.Status.INTERNAL_SERVER_ERROR).build(), e);
