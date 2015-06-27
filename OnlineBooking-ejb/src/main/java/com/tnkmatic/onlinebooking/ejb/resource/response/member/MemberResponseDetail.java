@@ -5,10 +5,21 @@
  */
 package com.tnkmatic.onlinebooking.ejb.resource.response.member;
 
+import com.tnkmatic.onlinebooking.ejb.entity.BookingMember;
+
 /**
  *
  * @author tnkmatic@outlook.jp
  */
-public class MemberResponseDetail {
+public class MemberResponseDetail extends BookingMember {
+    private Integer recid;
+
+    public Integer getRecid() {
+        return recid;
+    }
+
+    public void setRecid(Integer recid) {
+        this.recid = recid;
+    }
     
 }

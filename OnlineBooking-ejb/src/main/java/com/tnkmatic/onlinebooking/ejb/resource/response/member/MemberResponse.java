@@ -13,22 +13,22 @@ import java.util.List;
  * @author Eiichi
  */
 public class MemberResponse {
-    private BookingMember member;
-    private List<BookingMember> members;
+    private MemberResponseDetail member;
+    private List<MemberResponseDetail> members;
 
     public BookingMember getMember() {
         return member;
     }
 
-    public void setMember(BookingMember member) {
+    public void setMember(MemberResponseDetail member) {
         this.member = member;
     }
     
-    public List<BookingMember> getMembers() {
+    public List<MemberResponseDetail> getMembers() {
         return members;
     }
 
-    public void setMembers(List<BookingMember> members) {
+    public void setMembers(List<MemberResponseDetail> members) {
         this.members = members;
     }
 
