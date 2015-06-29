@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 
+var w2gridSeq = 0;
 var w2gridName = "memberGrid";
 var w2gridHeader = "登録メンバー一覧";
 var w2gridColumns = [
-    {field: 'loginId', caption: 'ログインID', size: '120px'},
-    {field: 'lastName', caption: '氏名（姓）', size: '120px'},
+    {field: 'loginId', caption: 'ログインID', size: '120px', sortable: true},
+    {field: 'lastName', caption: '氏名（姓）', size: '120px', searchable: true},
     {field: 'firstName', caption: '氏名（名）', size: '120px'},
     {field: 'lastNameKana', caption: '氏名カナ（姓）', size: '120px'},
     {field: 'firstNameKana', caption: '氏名カナ（名）', size: '120px'},
@@ -26,6 +27,22 @@ var w2gridColumns = [
     {field: 'memberGroupKbnName', caption: 'メンバーグループ', size: '120px'}
 ];
 
+var w2gridOnSelect = function(event) {
+    $('#memberDetailReference').attr('disabled', false);
+};
+var w2gridOnUnselect = function(event) {
+    $('#memberDetailReference').attr('disabled', true);
+}
+
+var w2gridObj = {
+    name: w2gridName + w2gridSeq,
+    header: w2gridHeader,
+    columns: w2gridColumns,
+    records: undefined,
+    onSelect: w2gridOnSelect,
+    onUnselect: w2gridOnUnselect
+};
+
 function memberReference() {
     var button = $(this);
     button.attr('disabled', true);
@@ -39,13 +56,11 @@ function memberReference() {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (data, dataType) {
-            alert(data.members.toString());
-            $('#memberGrid').w2grid({
-                name: w2gridName,
-                header: w2gridHeader,
-                columns: w2gridColumns,
-                records: data.members
-            });
+            // TODO nameプロパティの値重複でエラーがコンソールに表示されるのでインクリメントで動的変更(他にやり方がないか？)
+            w2gridSeq = w2gridSeq + 1;
+            w2gridObj.name = w2gridName + w2gridSeq;
+            w2gridObj.records = data.members;
+            $('#memberGrid').w2grid(w2gridObj);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             

@@ -24,7 +24,7 @@ body {
 	text-align:center;		/*IE6以下でセンタリングするための対策*/
 }
 div#pagebody {
-	width:796px; margin:0 auto;	/*内容全体をセンタリング*/
+	width:100%; margin:0 auto;	/*内容全体をセンタリング*/
 	text-align:left;	/*テキストの配置を左揃えにする*/
 	background-image:url("images/bg_pagebody.gif");	/*内容全体の背景*/
 	background-repeat:repeat-y;		/*背景画像を縦方向に繰り返す*/

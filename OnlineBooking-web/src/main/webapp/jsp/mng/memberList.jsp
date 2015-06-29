@@ -24,13 +24,8 @@
         <script type="text/javascript" src="http://w2ui.com/src/w2ui-1.4.min.js"></script>
         <script>
             $(function() {
-                $('#memberGrid')
-                    .w2grid({
-                        name: w2gridName,
-                        columns: w2gridColumns
-                    });
-                $('#memberReference')
-                    .on('click', memberReference);
+                $('#memberGrid').w2grid(w2gridObj);
+                $('#memberReference').on('click', memberReference);
             });
         </script>
         <title>オンライン授業予約</title>
@@ -76,13 +71,17 @@
                                            class=""
                                            value="tnkmatic"/><br/>
                                 <input id="memberReference" type="button" value="検索" />
+                                <input id="memberDetailReference" type="button" value="詳細" disabled="false" />
                             </div>
                         </div>
                         <!-- 検索結果(一覧)表示エリア　-->
-                        <div id="memberGrid" style="width: 100%; height: 250px;"></div>
+                        <div id="memberGrid" style="width: 100%; height: 500px;"></div>
                     </form>
                 </div>
             </div>
+        </div>
+        <div id="debug">
+            <ul id="debugarea"></ul>
         </div>
     </body>
 </html>
