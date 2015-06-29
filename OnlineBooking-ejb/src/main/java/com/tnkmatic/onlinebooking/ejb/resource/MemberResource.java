@@ -106,7 +106,7 @@ public class MemberResource extends BaseResource {
                     null,
                     null,
                     memberResponse);
-            LOG.log(Level.INFO, memberResponse.toString());
+            LOG.log(Level.INFO, response.toString());
         } catch (Exception e) {
             throw new javax.ws.rs.InternalServerErrorException(
                     Response.status(Response.Status.INTERNAL_SERVER_ERROR).build(), e);

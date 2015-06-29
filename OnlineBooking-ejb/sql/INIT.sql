@@ -15,11 +15,26 @@ INSERT INTO MEMBER_GROUP VALUES (
     'teachers'
 );
 
+-- 性別マスタへの初期登録
 INSERT INTO MST_GENDER VALUES ('1', '男性');
 INSERT INTO MST_GENDER VALUES ('2', '女性');
 
+-- 連絡方法区分マスタへの初期登録
 INSERT INTO MST_CONTACT_WAY VALUES ('1', '電話');
 INSERT INTO MST_CONTACT_WAY VALUES ('2', 'メール');
+
+-- 雇用形態マスタへの初期登録
+INSERT INTO MST_EMPLOY VALUES ('1', '正社員');
+INSERT INTO MST_EMPLOY VALUES ('2', '契約社員');
+INSERT INTO MST_EMPLOY VALUES ('3', '派遣社員');
+INSERT INTO MST_EMPLOY VALUES ('4', 'パート／アルバイト');
+
+-- コースマスタへの初期登録
+INSERT INTO MST_COURSE VALUES ('1', 'Javaオブジェクト指向編(初級コース)');
+INSERT INTO MST_COURSE VALUES ('2', '独習Javaサーバサイド編(中級コース)');
+INSERT INTO MST_COURSE VALUES ('3', 'JavaEE6(マスタコース)');
+INSERT INTO MST_COURSE VALUES ('4', 'JavaScript(初級コース)');
+
 
 -- メンバーテーブルへのテストユーザ登録
 INSERT INTO MEMBER VALUES (

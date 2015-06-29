@@ -5,7 +5,6 @@
  */
 package com.tnkmatic.onlinebooking.ejb.resource.response.member;
 
-import com.tnkmatic.onlinebooking.ejb.entity.BookingMember;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ public class MemberResponse {
     private MemberResponseDetail member;
     private List<MemberResponseDetail> members;
 
-    public BookingMember getMember() {
+    public MemberResponseDetail getMember() {
         return member;
     }
 
