@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-var w2gridSeq = 0;
 var w2gridName = "memberGrid";
 var w2gridHeader = "登録メンバー一覧";
 var w2gridColumns = [
@@ -27,6 +26,35 @@ var w2gridColumns = [
     {field: 'memberGroupKbnName', caption: 'メンバーグループ', size: '120px'}
 ];
 
+var config = {
+    layout: {
+        name: 'layout',
+        padding: 0,
+        panels: [
+            {type:'top',  content:'top',  size:700, resizable: false},
+            {type:'left', content:'left', size:200, resizable: true, minSize: 120},
+            {type:'main', content:'main', size:500, resizable: true}
+        ]
+    },
+    sidebar: {
+        name: 'slidebar',
+        nodes: [
+            {id: 'memberRegist', text: 'メンバ登録'},
+            {id: 'memberList', text: 'メンバ参照'}
+        ],
+        onClick: function() {
+
+        }
+    },
+    grid: {
+        name: w2gridName,
+        header: w2gridHeader,
+        columns: w2gridColumns,
+        onSelect: w2gridOnSelect,
+        onUnselect: w2gridOnUnselect
+    }  
+};
+
 var w2gridOnSelect = function(event) {
     $('#memberDetailReference').attr('disabled', false);
 };
@@ -35,7 +63,7 @@ var w2gridOnUnselect = function(event) {
 }
 
 var w2gridObj = {
-    name: w2gridName + w2gridSeq,
+    name: w2gridName,
     header: w2gridHeader,
     columns: w2gridColumns,
     records: undefined,
@@ -56,11 +84,9 @@ function memberReference() {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (data, dataType) {
-            // TODO nameプロパティの値重複でエラーがコンソールに表示されるのでインクリメントで動的変更(他にやり方がないか？)
-            w2gridSeq = w2gridSeq + 1;
-            w2gridObj.name = w2gridName + w2gridSeq;
-            w2gridObj.records = data.members;
-            $('#memberGrid').w2grid(w2gridObj);
+            var w2grid = w2ui[w2gridName];
+            w2grid.records = data.members;
+            w2grid.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             
