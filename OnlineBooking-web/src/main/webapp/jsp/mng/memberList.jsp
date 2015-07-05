@@ -21,10 +21,12 @@
         <title>オンライン授業予約</title>
     </head>
     <body>
-        <div id="main"></div>
+        <div id="main" style="width: 100%; height: 400px;"></div>
+        <button class="w2ui-btn" onclick="memberReference()">検索</button>
         <div id="debug">
             <ul id="debugarea"></ul>
         </div>
+        
         <script>
             $(function (){
                 init();
