@@ -59,9 +59,23 @@ var config = {
         name: 'layout',
         padding: 0,
         panels: [
+            { type: 'top', size: 50}, 
             { type: 'left', size: 200, resizable: true, minSize: 120 },
             { type: 'main', minSize: 550, overflow: 'hidden' }
         ]
+    },
+    toolbar: {
+        name: 'toolbar',
+        items: [
+            { id: 'btnSpacer', type: 'spacer' },
+            { id: 'btnReset', type: 'button', caption: 'クリア', img: 'icon-page' },
+            { id: 'btnSearch', type: 'button', caption: '検索', img: 'icon-page' }
+        ],
+        onClick: function (event) {
+            if (event.target === 'btnSearch') {
+                memberReference();
+            }
+        }
     },
     sidebar: {
         name: 'sidebar',
@@ -89,6 +103,7 @@ function init() {
     w2utils.locale('/src/locale/ja-jp.json');
     // initialization
     $('#main').w2layout(config.layout);
+    w2ui.layout.content('top', $().w2toolbar(config.toolbar));
     w2ui.layout.content('left', $().w2sidebar(config.sidebar));
     w2ui.layout.content('main', $().w2grid(config.grid));
     // in memory initialization

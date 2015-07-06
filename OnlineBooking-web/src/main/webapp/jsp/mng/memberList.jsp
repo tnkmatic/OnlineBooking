@@ -11,7 +11,7 @@
     <head id="pageHeader">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="http://w2ui.com/src/w2ui-1.4.2.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/OnlineBokking.css" />
+<!--        <link rel="stylesheet" type="text/css" href="../../css/OnlineBokking.css" />-->
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script type="text/javascript" src="http://w2ui.com/src/w2ui-1.4.2.min.js"></script>
@@ -22,7 +22,6 @@
     </head>
     <body>
         <div id="main" style="width: 100%; height: 400px;"></div>
-        <button class="w2ui-btn" onclick="memberReference()">検索</button>
         <div id="debug">
             <ul id="debugarea"></ul>
         </div>
@@ -33,6 +32,4 @@
             });
         </script>
     </body>
-    
-
 </html>
