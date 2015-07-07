@@ -21,7 +21,7 @@
         <title>オンライン授業予約</title>
     </head>
     <body>
-        <div id="main" style="width: 100%; height: 400px;"></div>
+        <div id="main" style="width: 100%; height: 960px;"></div>
         <div id="debug">
             <ul id="debugarea"></ul>
         </div>
