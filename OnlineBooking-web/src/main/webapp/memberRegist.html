@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- css -->
+        <link rel="stylesheet" href="css/common.css">
+        <!-- lib -->
+        <script type="text/javascript" src="js/lib/angular.min.js"></script>
+        <!-- Angular App -->
+        <script type="text/javascript" src="js/angular/app.js"></script>
+        <script type="text/javascript" src="js/angular/controllers/memberRegistController.js"></script>
+    </head>
+    <body ng-app="onlineBookingModule" ng-controller="memberRegistController">
+        <!-- サブミット時にHTML5のバリデーションチェック動作を回避するためnovalidate属性を付与 -->
+        <form ng-submit="submit()"  name="memberRegistForm" novalidate>
+            <!-- ログインID -->
+            <label>ログインＩＤ：</label>
+            <input type="text" name="loginId" ng-model="member.loginId"
+                   ng-required="true"
+                   ng-pattern="/^[a-zA-Z0-9]+$/"
+                   ng-minlength="4"
+                   ng-maxlength="8"
+                   class=""
+                   placeholder="(例) tnkmatic" 
+                   size="20" 
+                   value="tnkmatic">
+            <span ng-show="memberRegistForm.loginId.$error.required">必須入力です</span>
+            <span ng-show="memberRegistForm.loginId.$error.pattern">半角英数時のみ指定可能です</span>
+            <span ng-show="memberRegistForm.loginId.$error.minlength">4文字以上で指定してください</span>
+            <span ng-show="memberRegistForm.loginId.$error.maxlength">8文字以下で指定してください</span>
+            <br>
+            <!-- パスワード -->
+            <label>パスワード：</label>
+            <input type="password" name="memberPassword" ng-model="member.password"
+                   ng-required="true"
+                   ng-pattern="/^[a-zA-Z0-9]{4,8}$/">
+            <span ng-show="memberRegistForm.memberPassword.$error.required">必須入力です</span>
+            <span ng-show="memberRegistForm.memberPassword.$error.pattern">4～8文字で半角英数時のみ指定可能です</span>
+            <!-- 名前（姓） -->
+            <label>名前（姓）：</label>
+            <input type="text" name="lastName" ng-model="member.lastName"
+                   ng-required="true"
+                   placeholder="(例) 田中">
+            <span ng-show="memberRegistForm.lastName.$error.required">必須入力です</span>
+            <!-- 名前（名） -->
+            <label>名前（姓）：</label>
+            <input type="text" name="firstName" ng-model="member.firstName"
+                   ng-required="true"
+                   placeholder="(例) 栄一">
+            <span ng-show="memberRegistForm.firstName.$error.required">必須入力です</span>
+            <!-- 名前（姓カナ） -->
+            <label for="lastNameKana">名前カナ（姓）：</label>
+            <input type="text" name="lastNameKana" ng-model="member.lastNameKana"
+                   ng-required="true"
+                   placeholder="(例) タナカ">
+            <span ng-show="memberRegistForm.lastNameKana.$error.required">必須入力です</span>
+            
+ここから            
+            
+            
+            <!-- submit -->
+            <input type="submit" value="登録" ng-disabled="memberRegistForm.$invalid" />
+        </form>
+    </body>
+</html>
