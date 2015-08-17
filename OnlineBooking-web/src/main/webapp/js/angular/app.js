@@ -3,4 +3,4 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var OnlineBookingModule = angular.module('onlineBookingModule', []);
+var OnlineBookingModule = angular.module('onlineBookingModule', ['ngMessages']);

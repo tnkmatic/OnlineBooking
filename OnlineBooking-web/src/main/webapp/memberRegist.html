@@ -12,10 +12,14 @@ and open the template in the editor.
         <!-- css -->
         <link rel="stylesheet" href="css/common.css">
         <!-- lib -->
-        <script type="text/javascript" src="js/lib/angular.min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery-1.11.3.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-messages.js"></script>
+      
         <!-- Angular App -->
         <script type="text/javascript" src="js/angular/app.js"></script>
         <script type="text/javascript" src="js/angular/controllers/memberRegistController.js"></script>
+
     </head>
     <body ng-app="onlineBookingModule" ng-controller="memberRegistController">
         <!-- サブミット時にHTML5のバリデーションチェック動作を回避するためnovalidate属性を付与 -->
@@ -23,7 +27,7 @@ and open the template in the editor.
             <!-- ログインID -->
             <label>ログインＩＤ：</label>
             <input type="text" name="loginId" ng-model="member.loginId"
-                   ng-required="true"
+                   required
                    ng-pattern="/^[a-zA-Z0-9]+$/"
                    ng-minlength="4"
                    ng-maxlength="8"
@@ -31,38 +35,75 @@ and open the template in the editor.
                    placeholder="(例) tnkmatic" 
                    size="20" 
                    value="tnkmatic">
-            <span ng-show="memberRegistForm.loginId.$error.required">必須入力です</span>
+            <span ng-messages="memberRegistForm.loginId.$error" ng-messages-multiple>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+            
+<!--            <span ng-show="memberRegistForm.loginId.$error.required">必須入力です</span>
             <span ng-show="memberRegistForm.loginId.$error.pattern">半角英数時のみ指定可能です</span>
             <span ng-show="memberRegistForm.loginId.$error.minlength">4文字以上で指定してください</span>
             <span ng-show="memberRegistForm.loginId.$error.maxlength">8文字以下で指定してください</span>
+-->
             <br>
             <!-- パスワード -->
             <label>パスワード：</label>
             <input type="password" name="memberPassword" ng-model="member.password"
                    ng-required="true"
-                   ng-pattern="/^[a-zA-Z0-9]{4,8}$/">
+                   ng-pattern="/^[a-zA-Z0-9]{4,8}$/"
+                   size="20">
             <span ng-show="memberRegistForm.memberPassword.$error.required">必須入力です</span>
             <span ng-show="memberRegistForm.memberPassword.$error.pattern">4～8文字で半角英数時のみ指定可能です</span>
+            <br>
             <!-- 名前（姓） -->
             <label>名前（姓）：</label>
             <input type="text" name="lastName" ng-model="member.lastName"
                    ng-required="true"
-                   placeholder="(例) 田中">
+                   placeholder="(例) 田中"
+                   size="20">
             <span ng-show="memberRegistForm.lastName.$error.required">必須入力です</span>
+            <br>
             <!-- 名前（名） -->
             <label>名前（姓）：</label>
             <input type="text" name="firstName" ng-model="member.firstName"
                    ng-required="true"
-                   placeholder="(例) 栄一">
+                   placeholder="(例) 栄一"
+                   size="20">
             <span ng-show="memberRegistForm.firstName.$error.required">必須入力です</span>
+            <br>
             <!-- 名前（姓カナ） -->
-            <label for="lastNameKana">名前カナ（姓）：</label>
+            <label>名前カナ（姓）：</label>
             <input type="text" name="lastNameKana" ng-model="member.lastNameKana"
                    ng-required="true"
-                   placeholder="(例) タナカ">
+                   placeholder="(例) タナカ"
+                   size="20">
             <span ng-show="memberRegistForm.lastNameKana.$error.required">必須入力です</span>
-            
-ここから            
+            <br>
+            <!-- 名前（名カナ） -->
+            <label>名前カナ（名）：</label>
+            <input type="text" name="firstNameKana" ng-model="member.firstNameKana"
+                   ng-required="true"
+                   placeholder="(例) エイイチ"
+                   size="20">
+            <span ng-show="memberRegistForm.firstNameKana.$error.required">必須入力です</span>
+            <br>
+            <!-- パスワード -->
+            <label>パスワード：</label>
+            <input type="password" name="loginPassword" ng-model="member.loginPassword"
+                   ng-required="true"
+                   size="20">
+            <span ng-show="memberRegistForm.loginPassword.$error.required">必須入力です</span>
+            <br>
+            <!-- パスワード（確認用）-->
+            <label>パスワード（確認用）：</label>
+            <input type="password" name="loginPassword" ng-model="member.loginPasswordConfirm"
+                   ng-required="true"
+                   size="20">
+            <span ng-show="memberRegistForm.loginPasswordConfirm.$error.required">必須入力です</span>
+            <br>
+            <!-- 生年月日 -->
+<!--            <label>生年月日：</label>
+            <input type="dateTimeLocal" name="birthday" ng-model="member.loginPassword"
+                   ng-required="true">-->
             
             
             <!-- submit -->
