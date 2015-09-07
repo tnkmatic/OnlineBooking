@@ -3,4 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var OnlineBookingModule = angular.module('onlineBookingModule', ['ngMessages']);
+var app = angular.module(
+        'onlineBookingModule', ['ngMessages', 'ngResource']);
+
+//$resourceProvider設定
+app.config([
+    '$resourceProvider',
+    function($resourceProvider) {
+        //リソースキーを指定しなかった場合にURL末尾に/を付与するかどうか
+        $resourceProvider.defaults.stripTrailingSlashes = true;
+    }]);
