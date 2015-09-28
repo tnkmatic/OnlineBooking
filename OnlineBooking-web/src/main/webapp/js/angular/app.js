@@ -13,3 +13,8 @@ app.config([
         //リソースキーを指定しなかった場合にURL末尾に/を付与するかどうか
         $resourceProvider.defaults.stripTrailingSlashes = true;
     }]);
+
+/*
+ * アプリケーション共通変数定義
+ */
+var onlineBookingResourceDomain = 'http://localhost:8080/OnlineBooking-web/';
