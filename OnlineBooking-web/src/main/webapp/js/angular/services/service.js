@@ -7,8 +7,14 @@
 /*
  * factoryメソッドでは共有するオブジェクトや関数を返す関数を登録(memberService)
  */
-angular.module('onlineBookingModule').factory(
-        'memberService', ['$resource', '$scope', function($resource, $scope) {
-    //サービスの実装(DI経由で共有するオブジェクトの返却)
-    return new app.memberService($resource, $scope);
-}]);
+(function(module) {
+    
+    module.factory(
+            'memberService', ['$resource', '$rootScope', function($resource, $rootScope) {
+        //サービスの実装(DI経由で共有するオブジェクトの返却)
+        return new MemberService($resource, $rootScope);
+        }]
+    );
+    
+}(onlineBookingModule));
+

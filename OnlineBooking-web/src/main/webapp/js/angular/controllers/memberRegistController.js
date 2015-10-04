@@ -8,6 +8,9 @@ angular.module('onlineBookingModule').controller('memberRegistController',
     ['$scope', 'memberService', function($scope, memberService) {
         //メンバ追加用のモデル
         $scope.member = {};
+        
+        //リソースサービスの初期設定
+        memberService.resourceConfig($scope);
 
         //画面制御用
         $scope.contactWayKbnTelChecked = true;
