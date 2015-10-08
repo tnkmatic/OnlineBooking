@@ -31,25 +31,27 @@ prototype.resourceConfig = function($scope) {
             regist: {
                 method: 'POST',
                 params: {
-                    loginId: $scope.member.loginId,
-                    loginPassword: $scope.member.loginPassword,
-                    loginPasswordc: $scope.member.loginPasswordConfirm,
-                    lastName: $scope.member.lastName,
-                    firstName: $scope.member.firstName,
-                    lastNameKana: $scope.member.lastNameKana,
-                    firstNameKana: $scope.member.firstNameKana,
-                    gender: null,
-                    birthday: $scope.member.birthday, 
-                    skypeId: $scope.member.skypeId,
-                    contactWayKbn: $scope.member.contactWayKbn,
-                    tel: $scope.member.tel,
-                    email: $scope.member.email,
-                    postalCd: $scope.member.postalCd,
-                    prefName: $scope.member.cityName,
-                    cityName: $scope.member.cityName,
-                    addressDetailName: $scope.member.addressDetailName,
-                    buildingName: $scope.member.buildingName,
-                    memberGroupKbn: $scope.member.memberGroupKbn
+                    memberRegisterRequest: {
+                        loginId: $scope.member.loginId,
+                        loginPassword: $scope.member.loginPassword,
+                        loginPasswordc: $scope.member.loginPasswordConfirm,
+                        lastName: $scope.member.lastName,
+                        firstName: $scope.member.firstName,
+                        lastNameKana: $scope.member.lastNameKana,
+                        firstNameKana: $scope.member.firstNameKana,
+                        gender: null,
+                        birthday: $scope.member.birthday, 
+                        skypeId: $scope.member.skypeId,
+                        contactWayKbn: $scope.member.contactWayKbn,
+                        tel: $scope.member.tel,
+                        email: $scope.member.email,
+                        postalCd: $scope.member.postalCd,
+                        prefName: $scope.member.cityName,
+                        cityName: $scope.member.cityName,
+                        addressDetailName: $scope.member.addressDetailName,
+                        buildingName: $scope.member.buildingName,
+                        memberGroupKbn: $scope.member.memberGroupKbn
+                    } //memberRegisterRequest
                 }
             }
         }
