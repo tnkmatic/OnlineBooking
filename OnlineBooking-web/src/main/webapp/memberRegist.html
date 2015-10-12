@@ -19,9 +19,12 @@ and open the template in the editor.
 
         <!-- Angular App -->
         <script type="text/javascript" src="js/angular/app.js"></script>
-        <script type="text/javascript" src="js/angular/controllers/memberRegistController.js"></script>
         <script type="text/javascript" src="js/angular/services/service.js"></script>
         <script type="text/javascript" src="js/angular/services/memberService.js"></script>
+        <script type="text/javascript" src="js/angular/controllers/memberRegistController.js"></script>
+        
+        <!-- Utility -->
+        <script type="text/javascript" src="js/common/util/stringUtil.js"></script>
         
         <!-- 画面制御 -->
         <script type="text/javascript">
@@ -135,6 +138,15 @@ and open the template in the editor.
                 <span ng-messages-include="messages_template.html"></span>
             </span>
             <br>
+            <!-- 都道府県 -->
+            <label>都道府県：</label>
+            <input type="text" name="prefName" size="20" ng-model="member.prefName"
+                   ng-required="true" ng-maxlength=10>
+            <span ng-messages="memberRegistForm.prefName.$error" ng-messages-multiple>
+                <span ng-message="maxlength">10文字以内で入力してください。</span>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+            <br>
             <!-- 市区町村 -->
             <label>市区町村：</label>
             <input type="text" name="cityName" size="20" ng-model="member.cityName"
@@ -198,5 +210,9 @@ and open the template in the editor.
             <!-- submit -->
             <input type="submit" value="登録" ng-disabled="memberRegistForm.$invalid" >
         </form>
+        
+        <!-- debug -->
+        <div ng-model="debug.statusCode"></div>
+        <div ng-model="debug.data"></div>
     </body>
 </html>

@@ -9,8 +9,8 @@ angular.module('onlineBookingModule').controller('memberRegistController',
         //メンバ追加用のモデル
         $scope.member = {};
         
-        //リソースサービスの初期設定
-        memberService.resourceConfig($scope);
+        //デバッグ用のモデル
+        $scope.debug = {};
 
         //画面制御用
         $scope.contactWayKbnTelChecked = true;
@@ -21,10 +21,10 @@ angular.module('onlineBookingModule').controller('memberRegistController',
             return !($scope.member.contactWayKbn === compareValue);
         };
 
-        //submit
+        //メンバー登録(submit)
         $scope.submit = function() {
             //memberServiceを介してメンバー登録
-            memberService.memberRegist();
+            memberService.memberRegist($scope);
         };
     }]
 );
