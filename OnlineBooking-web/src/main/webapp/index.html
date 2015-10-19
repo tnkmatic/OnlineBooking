@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="onlineBookingModule">
     <head>
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- css -->
+        <link rel="stylesheet" href="css/common.css">
+        <!-- lib Angular -->
+        <script type="text/javascript" src="js/lib/jquery-1.11.3.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-messages.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
+        <!-- lib BootStrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        
+        <!-- Angular App -->
+        <script type="text/javascript" src="js/angular/route.js"></script>
+        <script type="text/javascript" src="js/angular/app.js"></script>
+        <script type="text/javascript" src="js/angular/services/service.js"></script>
+        <script type="text/javascript" src="js/angular/services/memberService.js"></script>
+        <script type="text/javascript" src="js/angular/controllers/memberRegistController.js"></script>
+        <!-- Utility -->
+        <script type="text/javascript" src="js/common/util/stringUtil.js"></script>
+        <!-- 画面制御 -->
+        <script type="text/javascript">
+
+        </script>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <ul>
+            <li><a href="#/member/regist">会員登録</a></li> <!-- 会員登録 -->
+        </ul>
+        <div class="main" ng-view></div>
     </body>
 </html>

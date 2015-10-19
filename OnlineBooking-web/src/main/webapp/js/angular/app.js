@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 var onlineBookingModule = angular.module(
-        'onlineBookingModule', ['ngMessages', 'ngResource']);
+        'onlineBookingModule', ['ngMessages', 'ngResource', 'onlineBookingRouteModule']);
 
-//$resourceProvider設定
-onlineBookingModule.config([
-    '$resourceProvider',
-    function($resourceProvider) {
-        //リソースキーを指定しなかった場合にURL末尾に/を付与するかどうか
-        $resourceProvider.defaults.stripTrailingSlashes = true;
-    }]);
+onlineBookingModule
+        //$resourceProvider設定
+        .config(['$resourceProvider',    
+            function($resourceProvider) {
+                //リソースキーを指定しなかった場合にURL末尾に/を付与するかどうか
+                //$resourceProvider.defaults.stripTrailingSlashes = true;
+            }]);
 
 /*
  * アプリケーション共通変数定義
