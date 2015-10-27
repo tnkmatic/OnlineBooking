@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html ng-app="onlineBookingModule">
+<html ng-app="onlineBookingModule" lang="ja">
     <head>
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- css -->
-        <link rel="stylesheet" href="css/common.css">
-        <!-- lib Angular -->
+        <meta name="viewport" content="width=device-width initial-scale=1">
+        
+        <!-- jQuery -->
         <script type="text/javascript" src="js/lib/jquery-1.11.3.min.js"></script>
+        <!-- lib Angular -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-messages.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.js"></script>
@@ -24,15 +25,43 @@
         <script type="text/javascript" src="js/angular/controllers/memberRegistController.js"></script>
         <!-- Utility -->
         <script type="text/javascript" src="js/common/util/stringUtil.js"></script>
+        <!-- css -->
+        <link rel="stylesheet" href="css/common.css">
         <!-- 画面制御 -->
         <script type="text/javascript">
 
         </script>
     </head>
     <body>
-        <ul>
-            <li><a href="#/member/regist">会員登録</a></li> <!-- 会員登録 -->
-        </ul>
+        <!-- ナビゲーションバー -->
+        <nav class="navbar navbar-inverse">
+            <div class="continer">
+                <!-- ヘッダ情報 -->
+                <div class="navbar-header">
+                    <a class="navbar-brand">オンライン予約システム</a>
+                </div>
+                <!-- ドロップダウンメニューの配置 -->
+                <ul class="nav navbar-nav navbar-left">
+                    <!-- メニューリストの配置 -->
+                    <li class="dropdown">
+                        <a href="#" class="drpdown-toggle" data-toggle="dropdown">
+                            会員<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- メニューの配置(会員) -->
+                            <li><a href="#/member/regist">会員登録</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">会員検索</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- ボタンの配置 -->
+                <button type="button" class="btn btn-default navbar-btn">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- コンテンツの挿入場所 -->
         <div class="main" ng-view></div>
     </body>
 </html>
