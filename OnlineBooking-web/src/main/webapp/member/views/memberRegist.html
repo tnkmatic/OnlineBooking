@@ -1,181 +1,196 @@
 <!-- サブミット時にHTML5のバリデーションチェック動作を回避するためnovalidate属性を付与 -->
 <form ng-submit="submit()"  name="memberRegistForm" novalidate >
-    <!-- ログインID -->
-    <label>ログインＩＤ：</label>
-    <input type="text" name="loginId" ng-model="member.loginId"
-           ng-required="true"
-           ng-pattern="/^[a-zA-Z0-9]{4,8}$/"
-           class=""
-           placeholder="(例) tnkmatic" 
-           size="20" 
-           value="tnkmatic">
-    <span ng-messages="memberRegistForm.loginId.$error" ng-messages-multiple>
-        <span ng-message="pattern">4文字以上、8文字以下の半角英数時のみ指定可能です。</span>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 名前（姓） -->
-    <label>名前（姓）：</label>
-    <input type="text" name="lastName" ng-model="member.lastName"
-           ng-required="true"
-           placeholder="(例) 田中"
-           size="20">
-    <span ng-messages="memberRegistForm.lastName.$error" ng-messages-multiple>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 名前（名） -->
-    <label>名前（姓）：</label>
-    <input type="text" name="firstName" ng-model="member.firstName"
-           ng-required="true"
-           placeholder="(例) 栄一"
-           size="20">
-    <span ng-messages="memberRegistForm.firstName.$error" ng-messages-multiple>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 名前（姓カナ） -->
-    <label>名前カナ（姓）：</label>
-    <input type="text" name="lastNameKana" ng-model="member.lastNameKana"
-           ng-required="true"
-           placeholder="(例) タナカ"
-           size="20">
-    <span ng-messages="memberRegistForm.lastNameKana.$error" ng-messages-multiple>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 名前（名カナ） -->
-    <label>名前カナ（名）：</label>
-    <input type="text" name="firstNameKana" ng-model="member.firstNameKana"
-           ng-required="true"
-           placeholder="(例) エイイチ"
-           size="20">
-    <span ng-messages="memberRegistForm.firstNameKana.$error" ng-messages-multiple>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 生年月日 -->
-    <label>生年月日：</label>
-    <input type="dateTimeLocal" name="birthday" ng-model="member.birthday"
-           ng-required="true">
-    <span ng-messages="memberRegistForm.birthday.$error" ng-messages-multiple>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- SkypeID -->
-    <label>SkypeID：</label>
-    <input type="text" name="skypeId" size="64" ng-model="member.skypeId"
-           ng-required="true"
-           placeholder="(例) tnkmatic">
-    <span ng-messages="memberRegistForm.skypeId.$error" ng-messages-multiple>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 連絡方法区分 -->
-    <label>連絡方法：</label>
-    <input type="radio" name="contactWayKbn" id="contactWayKbnTel" 
-           ng-model="member.contactWayKbn"
-           value="1">
-    <label for="contactWayKbnTel">電話番号</label>
-    <input type="text" name="tel" size="13" ng-model="member.tel"
-           ng-pattern="/0\d{1,4}-\d{1,4}-\d{4}/"
-           ng-disabled="contactWayKbnOn('1')">
-    <span ng-messages="memberRegistForm.tel.$error" ng-messages-multiple>
-        <span ng-message="pattern">ハイフン付きの番号を市外局番から入力してください。</span>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <input type="radio" name="contactWayKbn" id="contactWayKbnEmail" 
-           ng-model="member.contactWayKbn" value="2">
-    <label for="contactWayKbnEmail">メールアドレス</label>
-    <input type="email" name="email" size="40" ng-model="member.email"
-           ng-disabled="contactWayKbnOn('2')">
-    <span ng-messages="memberRegistForm.email.$error" ng-messages-multiple>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 郵便番号 -->
-    <label>郵便番号：</label>
-    <input type="text" name="postalCd" size="7" ng-model="member.postalCd"
-           ng-required="true" ng-pattern="/\d{7}/">
-    <span ng-messages="memberRegistForm.postalCd.$error" ng-messages-multiple>
-        <span ng-message="pattern">7桁の数字で入力してください。</span>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 都道府県 -->
-    <label>都道府県：</label>
-    <input type="text" name="prefName" size="20" ng-model="member.prefName"
-           ng-required="true" ng-maxlength=10>
-    <span ng-messages="memberRegistForm.prefName.$error" ng-messages-multiple>
-        <span ng-message="maxlength">10文字以内で入力してください。</span>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 市区町村 -->
-    <label>市区町村：</label>
-    <input type="text" name="cityName" size="20" ng-model="member.cityName"
-           ng-required="true" ng-maxlength=20>
-    <span ng-messages="memberRegistForm.cityName.$error" ng-messages-multiple>
-        <span ng-message="maxlength">20文字以内で入力してください。</span>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 丁目・番地・号 -->
-    <label>丁目・番地・号</label>
-    <input type="text" name="addressDetailName" ng-model="member.addressDetailName"
-           ng-required="true"
-           ng-maxlength="100">
-    <span ng-messages="memberRegistForm.addressDetailName.$error" ng-messages-multiple>
-        <span ng-message="maxlength">100文字以内で入力してください。</span>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- 建物名 -->
-    <label>建物名：</label>
-    <input type="text" name="buildingName" ng-model="member.buildingName"
-           ng-maxlength="100">
-    <span ng-messages="memberRegistForm.buildingName.$error" ng-messages-multiple>
-        <span ng-message="maxlength">100文字以内で入力してください。</span>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- メンバー区分 -->
-    <input type="radio" name="memberGroupKbn" id="memberGroupKbnTeacher" value="1" 
-           ng-model="member.memberGroupKbn"checked />
-        <label for="memberGroupKbnTeacher">講師</label>
-    <input type="radio" name="memberGroupKbn" id="memberGroupKbnStudent" value="2" 
-           ng-model="member.memberGroupKbn"/>
-        <label for="memberGroupKbnStudent">生徒</label>
-    <input type="radio" name="memberGroupKbn" id="memberGroupKbnAdmin" value="9" 
-           ng-model="member.memberGroupKbn"/>
-        <label for="memberGroupKbnAdmin">管理者</label>
-    <br>
-    <!-- パスワード -->
-    <label>パスワード：</label>
-    <input type="password" name="loginPassword" ng-model="member.loginPassword"
-           ng-required="true"
-           ng-pattern="/^[a-zA-Z0-9]{4,8}$/"
-           size="20">
-    <span ng-messages="memberRegistForm.loginPassword.$error" ng-messages-multiple>
-        <span ng-message="pattern">4文字以上、8文字以下の半角英数時のみ指定可能です。</span>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
-    <!-- パスワード（確認用）-->
-    <label>パスワード（確認用）：</label>
-    <input type="password" name="loginPasswordConfirm" ng-model="member.loginPasswordConfirm"
-           ng-required="true"
-           size="20">
-    <span ng-messages="memberRegistForm.loginPassword.$error" ng-messages-multiple>
-        <span ng-messages-include="messages_template.html"></span>
-    </span>
-    <br>
+    <div class="form-horizontal">
+        <!-- ログインID -->
+        <div class="form-group form-inline">
+            <label class="control-label col-ms-2">ログインID</label>
+            <input type="text" name="loginId" class="form-control col-ms-3" ng-model="member.loginId"
+                   ng-required="true"
+                   ng-pattern="/^[a-zA-Z0-9]{4,8}$/"
+                   placeholder="(例) tnkmatic" 
+                   value="tnkmatic">
+            <span class="help-block" ng-messages="memberRegistForm.loginId.$error" ng-messages-multiple>
+                <span ng-message="pattern">4文字以上、8文字以下の半角英数時のみ指定可能です。</span>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
+        <!-- 名前（姓）名前（名） -->
+        <div class="form-group form-inline">
+            <label>名前（姓）</label>
+            <input type="text" class="form-control" name="lastName" ng-model="member.lastName"
+                   ng-required="true"
+                   placeholder="(例) 田中"
+                   size="20">
+            <span class="help-block" ng-messages="memberRegistForm.lastName.$error" ng-messages-multiple>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+            <label>名前（姓）</label>
+            <input type="text" class="form-control" name="firstName" ng-model="member.firstName"
+                   ng-required="true"
+                   placeholder="(例) 栄一"
+                   size="20">
+            <span class="help-block" ng-messages="memberRegistForm.firstName.$error" ng-messages-multiple>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
+        <!-- 名前（姓カナ）名前（名カナ） -->
+        <div class="form-group form-inline">
+            <label>名前カナ（姓）</label>
+            <input type="text" class="form-control" name="lastNameKana" ng-model="member.lastNameKana"
+                   ng-required="true"
+                   placeholder="(例) タナカ"
+                   size="20">
+            <span class="help-block" ng-messages="memberRegistForm.lastNameKana.$error" ng-messages-multiple>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+            <label>名前カナ（名）</label>
+            <input type="text" class="form-control" name="firstNameKana" ng-model="member.firstNameKana"
+                   ng-required="true"
+                   placeholder="(例) エイイチ"
+                   size="20">
+            <span class="help-block" ng-messages="memberRegistForm.firstNameKana.$error" ng-messages-multiple>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
+        <!-- 生年月日 -->
+        <div class="form-group form-inline">
+            <label>生年月日</label>
+            <input type="dateTimeLocal" class="form-control" name="birthday" ng-model="member.birthday"
+                   ng-required="true">
+            <span class="help-block" ng-messages="memberRegistForm.birthday.$error" ng-messages-multiple>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
+        <!-- SkypeID -->
+        <div class="form-group form-inline">
+            <label>SkypeID</label>
+            <input type="text" class="form-control" name="skypeId" size="64" ng-model="member.skypeId"
+                   ng-required="true"
+                   placeholder="(例) tnkmatic">
+            <span class="help-block" ng-messages="memberRegistForm.skypeId.$error" ng-messages-multiple>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
+        <!-- 連絡方法区分 -->
+        <div class="form-group form-inline">
+            <label>連絡方法</label>
+            <div class="radio">
+                <label for="contactWayKbnTel">
+                    <input type="radio" name="contactWayKbn" id="contactWayKbnTel" 
+                       ng-model="member.contactWayKbn"
+                       value="1">電話番号
+                </label>
+            </div>
+            <input type="text" class="form-control" name="tel" size="13" ng-model="member.tel"
+                   ng-pattern="/0\d{1,4}-\d{1,4}-\d{4}/"
+                   ng-disabled="contactWayKbnOn('1')">
+            <span class="help-block" ng-messages="memberRegistForm.tel.$error" ng-messages-multiple>
+                <span ng-message="pattern">ハイフン付きの番号を市外局番から入力してください。</span>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+            <div class="radio">
+                <label for="contactWayKbnEmail">
+                    <input type="radio" name="contactWayKbn" id="contactWayKbnEmail" 
+                           ng-model="member.contactWayKbn" value="2">メールアドレス
+                </label>
+            </div>
+            <input type="email" class="form-control" name="email" size="40" ng-model="member.email"
+                   ng-disabled="contactWayKbnOn('2')">
+            <span class="help-block" ng-messages="memberRegistForm.email.$error" ng-messages-multiple>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
+        <!-- 郵便番号 -->
+        <div class="form-group form-inline">
+            <label>郵便番号</label>
+            <input type="text" class="form-control" name="postalCd" size="7" ng-model="member.postalCd"
+                   ng-required="true" ng-pattern="/\d{7}/">
+            <span class="help-block" ng-messages="memberRegistForm.postalCd.$error" ng-messages-multiple>
+                <span ng-message="pattern">7桁の数字で入力してください。</span>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
+        <!-- 都道府県 市区町村 -->
+        <div class="form-group form-inline">
+            <label>都道府県</label>
+            <input type="text" class="form-control" name="prefName" size="20" ng-model="member.prefName"
+                   ng-required="true" ng-maxlength=10>
+            <span class="help-block" ng-messages="memberRegistForm.prefName.$error" ng-messages-multiple>
+                <span ng-message="maxlength">10文字以内で入力してください。</span>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+            <label>市区町村</label>
+            <input type="text" class="form-control" name="cityName" size="20" ng-model="member.cityName"
+                   ng-required="true" ng-maxlength=20>
+            <span class="help-block" ng-messages="memberRegistForm.cityName.$error" ng-messages-multiple>
+                <span ng-message="maxlength">20文字以内で入力してください。</span>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
+        <!-- 丁目・番地・号 建物名 -->
+        <div class="form-group form-inline">
+            <label>丁目・番地・号</label>
+            <input type="text" class="form-control" name="addressDetailName" ng-model="member.addressDetailName"
+                   ng-required="true"
+                   ng-maxlength="100">
+            <span class="help-block" ng-messages="memberRegistForm.addressDetailName.$error" ng-messages-multiple>
+                <span ng-message="maxlength">100文字以内で入力してください。</span>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+            <label>建物名</label>
+            <input type="text" class="form-control" name="buildingName" ng-model="member.buildingName"
+                   ng-maxlength="100">
+            <span class="help-block" ng-messages="memberRegistForm.buildingName.$error" ng-messages-multiple>
+                <span ng-message="maxlength">100文字以内で入力してください。</span>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
+        <!-- メンバー区分 -->
+        <div class="form-group form-inline">
+            <label>メンバー区分</label>
+            <div class="radio">
+                <label for="memberGroupKbnTeacher">
+                    <input type="radio" name="memberGroupKbn" id="memberGroupKbnTeacher" value="1" 
+                           ng-model="member.memberGroupKbn"checked />講師
+                </label>
+                <label for="memberGroupKbnStudent">
+                    <input type="radio" name="memberGroupKbn" id="memberGroupKbnStudent" value="2" 
+                       ng-model="member.memberGroupKbn"/>生徒
+                </label>
+                <label for="memberGroupKbnAdmin">
+                    <input type="radio" name="memberGroupKbn" id="memberGroupKbnAdmin" value="9" 
+                           ng-model="member.memberGroupKbn"/>管理者
+                </label>
+            </div>
+        </div><br>
+        <!-- パスワード -->
+        <div class="form-group form-inline">
+            <label>パスワード</label>
+            <input type="password" class="form-control" name="loginPassword" ng-model="member.loginPassword"
+                   ng-required="true"
+                   ng-pattern="/^[a-zA-Z0-9]{4,8}$/"
+                   size="20">
+            <span class="help-block" ng-messages="memberRegistForm.loginPassword.$error" ng-messages-multiple>
+                <span ng-message="pattern">4文字以上、8文字以下の半角英数時のみ指定可能です。</span>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
+        <!-- パスワード（確認用）-->
+        <div class="form-group form-inline">
+            <label>パスワード（確認用）</label>
+            <input type="password" class="form-control" name="loginPasswordConfirm" ng-model="member.loginPasswordConfirm"
+                   ng-required="true"
+                   size="20">
+            <span class="help-block" ng-messages="memberRegistForm.loginPassword.$error" ng-messages-multiple>
+                <span ng-messages-include="messages_template.html"></span>
+            </span>
+        </div><br>
 
-    <!-- ボタン配置 -->
-    <button type="button" class="btn btn-lg btn-primary" ng-disabled="memberRegistForm.$invalid">登録
-        <span class="glyphicon glyphicon-ok"></span>
-    </button> 
+        <!-- ボタン配置 -->
+        <button type="button" class="btn btn-lg btn-primary" ng-disabled="memberRegistForm.$invalid">登録
+            <span class="glyphicon glyphicon-ok"></span>
+        </button>
+    </div>
 </form>
 
 <!-- debug -->
