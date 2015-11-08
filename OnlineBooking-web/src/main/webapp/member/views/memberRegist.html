@@ -3,12 +3,15 @@
     <!-- ログインID -->
     <div class="form-group">
         <label for="loginId" class="control-label col-xs-2">ログインID</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.loginId.$valid, 'has-error': memberRegistForm.loginId.$invalid}]">
             <input type="text" id="loginId" name="loginId" class="form-control" ng-model="member.loginId"
                    ng-required="true"
                    ng-pattern="/^[a-zA-Z0-9]{4,8}$/"
                    placeholder="(例) tnkmatic" 
                    value="tnkmatic">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.loginId.$valid, 'glyphicon-remove': memberRegistForm.loginId.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.loginId.$error" ng-messages-multiple>
                 <span ng-message="pattern">4文字以上、8文字以下の半角英数時のみ指定可能です。</span>
                 <span ng-messages-include="messages_template.html"></span>
@@ -18,20 +21,26 @@
     <!-- 名前（姓）名前（名） -->
     <div class="form-group">
         <label class="control-label col-xs-2">名前（姓）</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.lastName.$valid, 'has-error': memberRegistForm.lastName.$invalid}]">
             <input type="text" class="form-control" name="lastName" ng-model="member.lastName"
                    ng-required="true"
                    placeholder="(例) 田中">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.lastName.$valid, 'glyphicon-remove': memberRegistForm.lastName.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.lastName.$error" ng-messages-multiple>
                 <span ng-messages-include="messages_template.html"></span>
             </span>
         </div>
         <!-- 名前（名） -->
         <label class="control-label col-xs-1">名前（名）</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.firstName.$valid, 'has-error': memberRegistForm.firstName.$invalid}]">
             <input type="text" class="form-control" name="firstName" ng-model="member.firstName"
                    ng-required="true"
                    placeholder="(例) 栄一">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.firstName.$valid, 'glyphicon-remove': memberRegistForm.firstName.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.firstName.$error" ng-messages-multiple>
                 <span ng-messages-include="messages_template.html"></span>
             </span>
@@ -40,20 +49,26 @@
     <!-- 名前（姓カナ）-->
     <div class="form-group">
         <label class="control-label col-xs-2">カナ（姓）</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.lastNameKana.$valid, 'has-error': memberRegistForm.lastNameKana.$invalid}]">
             <input type="text" class="form-control" name="lastNameKana" ng-model="member.lastNameKana"
                    ng-required="true"
                    placeholder="(例) タナカ">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.lastNameKana.$valid, 'glyphicon-remove': memberRegistForm.lastNameKana.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.lastNameKana.$error" ng-messages-multiple>
                 <span ng-messages-include="messages_template.html"></span>
             </span>
         </div>
         <!-- 名前（名カナ） -->
         <label class="control-label col-xs-1">カナ（名）</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.firstNameKana.$valid, 'has-error': memberRegistForm.firstNameKana.$invalid}]">
             <input type="text" class="form-control" name="firstNameKana" ng-model="member.firstNameKana"
                    ng-required="true"
                    placeholder="(例) エイイチ">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.firstNameKana.$valid, 'glyphicon-remove': memberRegistForm.firstNameKana.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.firstNameKana.$error" ng-messages-multiple>
                 <span ng-messages-include="messages_template.html"></span>
             </span>
@@ -62,9 +77,12 @@
     <!-- 生年月日 -->
     <div class="form-group">
         <label class="control-label col-xs-2">生年月日</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.birthday.$valid, 'has-error': memberRegistForm.birthday.$invalid}]">
             <input type="dateTimeLocal" class="form-control" name="birthday" ng-model="member.birthday"
                    ng-required="true">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.birthday.$valid, 'glyphicon-remove': memberRegistForm.birthday.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.birthday.$error" ng-messages-multiple>
                 <span ng-messages-include="messages_template.html"></span>
             </span>
@@ -73,10 +91,13 @@
     <!-- SkypeID -->
     <div class="form-group">
         <label class="control-label col-xs-2">SkypeID</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.skypeId.$valid, 'has-error': memberRegistForm.skypeId.$invalid}]">
             <input type="text" class="form-control" name="skypeId" ng-model="member.skypeId"
                    ng-required="true"
                    placeholder="(例) tnkmatic">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.skypeId.$valid, 'glyphicon-remove': memberRegistForm.skypeId.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.skypeId.$error" ng-messages-multiple>
                 <span ng-messages-include="messages_template.html"></span>
             </span>
@@ -90,10 +111,13 @@
                     ng-model="member.contactWayKbn"
                     value="1">電話番号
         </label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.tel.$valid, 'has-error': memberRegistForm.tel.$invalid}]">
             <input type="text" class="form-control" name="tel" ng-model="member.tel"
                ng-pattern="/^0\d{1,4}-\d{1,4}-\d{4}$/"
                ng-disabled="contactWayKbnOn('1')">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.tel.$valid, 'glyphicon-remove': memberRegistForm.tel.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.tel.$error" ng-messages-multiple>
                 <span ng-message="pattern">ハイフン付きの番号を市外局番から入力してください。</span>
                 <span ng-messages-include="messages_template.html"></span>
@@ -105,9 +129,12 @@
             <input type="radio" name="contactWayKbn" id="contactWayKbnEmail" 
                    ng-model="member.contactWayKbn" value="2">Eメール
         </label>
-        <div class="col-xs-3">
+        <div ng-class="['col-xs-3', 'has-feedback', 
+                    {'has-success': memberRegistForm.email.$valid, 'has-error': memberRegistForm.email.$invalid}]">
             <input type="email" class="form-control" name="email" ng-model="member.email"
                    ng-disabled="contactWayKbnOn('2')">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.email.$valid, 'glyphicon-remove': memberRegistForm.email.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.email.$error" ng-messages-multiple>
                 <span ng-messages-include="messages_template.html"></span>
             </span>
@@ -116,9 +143,12 @@
     <!-- 郵便番号 -->
     <div class="form-group">
         <label class="control-label col-xs-2">郵便番号</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.postalCd.$valid, 'has-error': memberRegistForm.postalCd.$invalid}]">
             <input type="text" class="form-control" name="postalCd" ng-model="member.postalCd"
                    ng-required="true" ng-pattern="/\d{7}/">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.postalCd.$valid, 'glyphicon-remove': memberRegistForm.postalCd.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.postalCd.$error" ng-messages-multiple>
                 <span ng-message="pattern">7桁の数字で入力してください。</span>
                 <span ng-messages-include="messages_template.html"></span>
@@ -128,18 +158,24 @@
     <!-- 都道府県 市区町村 -->
     <div class="form-group">
         <label class="control-label col-xs-2">都道府県</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.prefName.$valid, 'has-error': memberRegistForm.prefName.$invalid}]">
             <input type="text" class="form-control" name="prefName" ng-model="member.prefName"
                    ng-required="true" ng-maxlength=10>
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.prefName.$valid, 'glyphicon-remove': memberRegistForm.prefName.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.prefName.$error" ng-messages-multiple>
                 <span ng-message="maxlength">10文字以内で入力してください。</span>
                 <span ng-messages-include="messages_template.html"></span>
             </span>
         </div>
         <label class="control-label col-xs-1">市区町村</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.cityName.$valid, 'has-error': memberRegistForm.cityName.$invalid}]">
             <input type="text" class="form-control" name="cityName" size="20" ng-model="member.cityName"
                    ng-required="true" ng-maxlength=20>
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.cityName.$valid, 'glyphicon-remove': memberRegistForm.cityName.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.cityName.$error" ng-messages-multiple>
                 <span ng-message="maxlength">20文字以内で入力してください。</span>
                 <span ng-messages-include="messages_template.html"></span>
@@ -149,10 +185,13 @@
     <!-- 丁目・番地・号 建物名 -->
     <div class="form-group">
         <label class="control-label col-xs-2">丁目・番地・号</label>
-        <div class="col-xs-5">
+        <div ng-class="['col-xs-5', 'has-feedback', 
+                    {'has-success': memberRegistForm.addressDetailName.$valid, 'has-error': memberRegistForm.addressDetailName.$invalid}]">
             <input type="text" class="form-control" name="addressDetailName" ng-model="member.addressDetailName"
                    ng-required="true"
                    ng-maxlength="100">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.addressDetailName.$valid, 'glyphicon-remove': memberRegistForm.addressDetailName.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.addressDetailName.$error" ng-messages-multiple>
                 <span ng-message="maxlength">100文字以内で入力してください。</span>
                 <span ng-messages-include="messages_template.html"></span>
@@ -162,9 +201,12 @@
     <!-- 建物名 -->
     <div class="form-group">    
         <label class="control-label col-xs-2">建物名</label>
-        <div class="col-xs-5">
+        <div ng-class="['col-xs-5', 'has-feedback', 
+                    {'has-success': memberRegistForm.buildingName.$valid, 'has-error': memberRegistForm.buildingName.$invalid}]">
             <input type="text" class="form-control" name="buildingName" ng-model="member.buildingName"
                    ng-maxlength="100">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.buildingName.$valid, 'glyphicon-remove': memberRegistForm.buildingName.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.buildingName.$error" ng-messages-multiple>
                 <span ng-message="maxlength">100文字以内で入力してください。</span>
                 <span ng-messages-include="messages_template.html"></span>
@@ -192,11 +234,14 @@
     <!-- パスワード -->
     <div class="form-group">
         <label class="control-label col-xs-2">パスワード</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.loginPassword.$valid, 'has-error': memberRegistForm.loginPassword.$invalid}]">
             <input type="password" class="form-control" name="loginPassword" ng-model="member.loginPassword"
                    ng-required="true"
                    ng-pattern="/^[a-zA-Z0-9]{4,8}$/"
                    size="20">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.loginPassword.$valid, 'glyphicon-remove': memberRegistForm.loginPassword.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.loginPassword.$error" ng-messages-multiple>
                 <span ng-message="pattern">4文字以上、8文字以下の半角英数時のみ指定可能です。</span>
                 <span ng-messages-include="messages_template.html"></span>
@@ -206,10 +251,13 @@
     <!-- パスワード（確認用）-->
     <div class="form-group">
         <label class="control-label col-xs-2">パスワード（確認用）</label>
-        <div class="col-xs-2">
+        <div ng-class="['col-xs-2', 'has-feedback', 
+                    {'has-success': memberRegistForm.loginPasswordConfirm.$valid, 'has-error': memberRegistForm.loginPasswordConfirm.$invalid}]">
             <input type="password" class="form-control" name="loginPasswordConfirm" ng-model="member.loginPasswordConfirm"
                    ng-required="true"
                    size="20">
+            <span ng-class="['glyphicon', 'form-control-feedback', 
+                    {'glyphicon-ok': memberRegistForm.loginPasswordConfirm.$valid, 'glyphicon-remove': memberRegistForm.loginPasswordConfirm.$invalid}]"></span>
             <span class="help-block" ng-messages="memberRegistForm.loginPassword.$error" ng-messages-multiple>
                 <span ng-messages-include="messages_template.html"></span>
             </span>
