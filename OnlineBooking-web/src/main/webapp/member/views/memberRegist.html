@@ -5,7 +5,7 @@
         <div class="form-group">
             <label for="loginId" class="control-label col-xs-2">ログインID</label>
             <div ng-class="['col-xs-2', 'has-feedback', 
-                        {'has-success': (memberRegistForm.loginId.$valid && memberRegistForm.loginId.$dirty), 'has-error': (memberRegistForm.loginId.$invalid && memberRegistForm.loginId.$dirty)}]">
+                        {'has-success': memberRegistForm.loginId.$valid, 'has-error': memberRegistForm.loginId.$invalid}]">
                 <input type="text" id="loginId" name="loginId" class="form-control" ng-model="member.loginId"
                        ng-required="true"
                        ng-pattern="/^[a-zA-Z0-9]{4,8}$/"
@@ -297,7 +297,8 @@
     <!-- 生年月日 -->
     <div class="row">
         <label class="control-label col-xs-2" style="background-color: gainsboro">生年月日</label>
-        <span class="col-xs-2">{{member.birthday | 'yyyy年MM月dd日'}}</span>　<!--フィルタを用いた表現形式 -->
+<!--        <span class="col-xs-2">{{member.birthday | 'yyyy年MM月dd日'}}</span>　フィルタを用いた表現形式 -->
+        <span class="col-xs-2">{{member.birthday | date: 'yyyy/MM/dd' }}</span>
     </div>
     <!-- SkypeID -->
     <div class="row">
@@ -353,7 +354,7 @@
     <div class="row">
         <!-- data-toggleをmodal指定することでモーダル表示に対応 data-targetで対象のモーダルを指定 -->
         <div class="col-xs-3">
-            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-memberRegist"
+            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalMemberRegist"
                     ng-disabled="memberRegistForm.$invalid" ng-click="confirm()">この内容で登録したい</button>
         </div>
         <div class="col-xs-3">
@@ -362,9 +363,20 @@
     </div>
 </div> <!-- ng-show= show.confirm -->
 
+<div ng-show="show.complete"> <!-- ng-show= show.complete -->
+    <div class="row">
+        <div class="col-xs-6">
+            <h3 class="text-success">登録が完了しました</h3>
+        </div>
+    </div>
+    <!-- debug -->
+    <div ng-model="debug.statusCode"></div>
+    <div ng-model="debug.data"></div>
+</div>
+    
 <!-- モーダルの配置内容 -->
 <!-- ESCキーでダイアログを閉じるために tabindex = -1 を指定 -->
-<div class="modal" id="modal-memberRegist" tabindex="-1">
+<div class="modal" id="modalMemberRegist" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- モーダルヘッダ -->
@@ -382,12 +394,9 @@
             <!-- モーダルのフッタ -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-                <button type="button" class="btn btn-primary" ng-click="submit()">登録</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="submit()">登録</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- debug -->
-<div ng-model="debug.statusCode"></div>
-<div ng-model="debug.data"></div>

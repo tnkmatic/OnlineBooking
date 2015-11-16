@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-var Member = {};
+var MemberResource = {};
 
 //コンストラクタ
 var MemberService = function($resource, $rootScope) {
     this.$resource = $resource;
     this.$scope = $rootScope;
-    Member = this.$resource(
+    MemberResource = this.$resource(
         onlineBookingResourceDomain + 'members' + '/',
         {memberId: '@id'},
         {
@@ -29,14 +29,25 @@ var prototype = MemberService.prototype;
 //メンバー登録
 prototype.memberRegist = function($scope) {
     //生年月日の文字列をDate型に変換
-    $scope.member.birthday = stringToDate($scope.member.birthday);
+    //$scope.member.birthday = stringToDate($scope.member.birthday);
     
     //サーバリクエストオブジェクトの生成
-    var member = new Member({memberRegister: $scope.member}); //memberRegisterRequest
+    var memberResource = new MemberResource({memberRegister: $scope.member}); //memberRegisterRequest
     //サーバリクエスト(メンバー登録)
-    member.$save()
+    memberResource.$save()
             .then(function success(result) {
                 $scope.debug.statusCode = result.status;
                 $scope.debug.data = result.data;
+    });
+};
+
+//メンバー参照(検索)
+prototype.memberReference = function($scope) {
+    //サーバリクエストオブジェクトの生成
+    var memberResource = new MemberResource({memberCondition: $scope.memberCondition});
+    //サーバリクエスト(メンバー参照(検索))
+    memberResource.$query()
+            .then(function success(result) {
+                $scope.memberList = result.data;
     });
 };

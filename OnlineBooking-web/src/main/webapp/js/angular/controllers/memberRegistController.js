@@ -15,7 +15,8 @@ angular.module('onlineBookingModule').controller('memberRegistController',
         // 表示対象の管理
        $scope.show = {
            entry : true,
-           confirm  : false
+           confirm  : false,
+           complete : false
        };
 
         //画面制御用
@@ -41,6 +42,8 @@ angular.module('onlineBookingModule').controller('memberRegistController',
         $scope.submit = function() {
             //memberServiceを介してメンバー登録
             memberService.memberRegist($scope);
+            //完了画面の表示
+            $scope.changePage('complete');
         };
         
         // 表示対象を変更する
