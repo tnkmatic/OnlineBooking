@@ -9,12 +9,15 @@ var onlineBookingRouteModule = angular.module(
 onlineBookingRouteModule.config(['$routeProvider',
     function($routeProvider) {
         // ルーティング設定
-        $routeProvider.when('/member/regist', {
-            templateUrl: './member/views/memberRegist.html',
-            //template: '<h1>TEST</h1>'
-            controller: 'memberRegistController'
-        }).otherwise({
-           redirectTo: '/list' 
-        });
+        $routeProvider
+                .when('/member/regist', {
+                    templateUrl: './member/views/memberRegist.html',
+                    //template: '<h1>TEST</h1>'
+                    controller: 'memberRegistController'
+                })
+                .otherwise({
+                   redirectTo: '/list' 
+                });
+        
     }
 ]);

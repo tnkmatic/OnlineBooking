@@ -11,6 +11,12 @@ angular.module('onlineBookingModule').controller('memberRegistController',
         
         //デバッグ用のモデル
         $scope.debug = {};
+        
+        // 表示対象の管理
+       $scope.show = {
+           entry : true,
+           confirm  : false
+       };
 
         //画面制御用
         $scope.contactWayKbnTelChecked = true;
@@ -20,11 +26,32 @@ angular.module('onlineBookingModule').controller('memberRegistController',
         $scope.contactWayKbnOn = function(compareValue) {
             return !($scope.member.contactWayKbn === compareValue);
         };
+        
+        //入力画面への遷移(entry)
+        $scope.entry = function() {
+            $scope.changePage('entry');
+        };
+        
+        //確認画面への遷移(confirm)
+        $scope.confirm = function() {
+            $scope.changePage('confirm');
+        };
 
         //メンバー登録(submit)
         $scope.submit = function() {
             //memberServiceを介してメンバー登録
             memberService.memberRegist($scope);
         };
+        
+        // 表示対象を変更する
+       $scope.changePage = function(type) {
+           for (var name in $scope.show) {
+               if (name === type) {
+                   $scope.show[name] = true;
+               } else {
+                   $scope.show[name] = false;
+               }
+           }
+       };
     }]
 );
