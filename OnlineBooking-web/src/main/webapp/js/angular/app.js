@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 var onlineBookingModule = angular.module(
-        'onlineBookingModule', ['ngMessages', 'ngResource', 'onlineBookingRouteModule']);
+        'onlineBookingModule', 
+        ['ngMessages', 'ngResource', 'ui.grid', 'ui-grid-pagination', 'onlineBookingRouteModule']);
 
 onlineBookingModule
         //$resourceProvider設定

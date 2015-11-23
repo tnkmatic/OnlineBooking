@@ -41,12 +41,9 @@ prototype.memberRegist = function($scope) {
 };
 
 //メンバー参照(検索)
-prototype.memberReference = function($scope) {
+prototype.memberReference = function(memberCondition) {
     //サーバリクエストオブジェクトの生成
-    var memberResource = new MemberResource({memberCondition: $scope.memberCondition});
+    var memberResource = new MemberResource({memberCondition: memberCondition});
     //サーバリクエスト(メンバー参照(検索))
-    memberResource.$get()
-            .then(function success(result) {
-                $scope.memberList = result.members;
-    });
+    return memberResource.$get();
 };

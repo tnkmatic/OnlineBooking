@@ -5,15 +5,9 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <form class="form-horizontal" name="memberReferenceForm" novalidate >
-    <div id="dataTableArea">
-        <table id="datatables"></table>
-    </div>
-
+    <div ui-grid="memberGrid" ui-grid-pagination></div>
     <div class="form-group">
         <!-- data-toggleをmodal指定することでモーダル表示に対応 data-targetで対象のモーダルを指定 -->
         <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="reference()">検索</button>
-    </div>
-    <div class="form-group">
-        {{memberList}}
     </div>
 </form>
