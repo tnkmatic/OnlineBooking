@@ -76,10 +76,23 @@
                 </span>
             </div>
         </div>
-        <!-- 生年月日 -->
+        <!-- 性別/生年月日 -->
         <div class="form-group">
+            <!-- 性別 -->
+            <label class="control-label col-xs-2">性別</label>
+            <div class="radio col-xs-2">
+                <label for="genderMan">
+                    <input type="radio" name="gender" id="genderMan" value="1" 
+                           ng-model="member.gender"checked />男性
+                </label>
+                <label for="genderWoman">
+                    <input type="radio" name="gender" id="genderWoman" value="2" 
+                       ng-model="member.gender"/>女性
+                </label>
+            </div>
+            <!-- 生年月日 -->
             <label class="control-label col-xs-2">生年月日</label>
-            <div ng-class="['col-xs-2', 'has-feedback', 
+            <div ng-class="['col-xs-3', 'has-feedback', 
                         {'has-success': memberRegistForm.birthday.$valid, 'has-error': memberRegistForm.birthday.$invalid}]">
                 <input type="date" class="form-control" name="birthday" ng-model="member.birthday"
                        ng-required="true">
@@ -294,8 +307,13 @@
         <label class="control-label col-xs-2" style="background-color: gainsboro">カナ（名）</label>
         <span class="col-xs-2">{{member.firstNameKana}}</span>
     </div>
-    <!-- 生年月日 -->
+    <!-- 性別/生年月日 -->
     <div class="row">
+        <label class="control-label col-xs-2" style="background-color: gainsboro">性別</label>
+        <div ng-switch="member.memberGroupKbn">
+            <span class="col-xs-2" ng-switch-when="1">男性</span>
+            <span class="col-xs-2" ng-switch-when="2">女性</span>
+        </div>
         <label class="control-label col-xs-2" style="background-color: gainsboro">生年月日</label>
 <!--        <span class="col-xs-2">{{member.birthday | 'yyyy年MM月dd日'}}</span>　フィルタを用いた表現形式 -->
         <span class="col-xs-2">{{member.birthday | date: 'yyyy/MM/dd' }}</span>

@@ -11,8 +11,7 @@ var MemberService = function($resource, $rootScope) {
     this.$resource = $resource;
     this.$scope = $rootScope;
     MemberResource = this.$resource(
-        onlineBookingResourceDomain + 'members' + '/',
-        {memberId: '@id'},
+        onlineBookingResourceDomain + 'members/:memberId', {memberId: '@id'},
         {
             //メンバー登録
             regist: {
@@ -46,8 +45,8 @@ prototype.memberReference = function($scope) {
     //サーバリクエストオブジェクトの生成
     var memberResource = new MemberResource({memberCondition: $scope.memberCondition});
     //サーバリクエスト(メンバー参照(検索))
-    memberResource.$query()
+    memberResource.$get()
             .then(function success(result) {
-                $scope.memberList = result.data;
+                $scope.memberList = result.members;
     });
 };
