@@ -60,9 +60,10 @@ public class MemberResource extends BaseResource {
             // レスポンスボディ編集
             MemberResponse memberResponse = new MemberResponse();
             MemberResponseDetail memberResponseDetail = new MemberResponseDetail();
-            BeanUtils.copyProperties(memberResponseDetail, bookingMember);
-            memberResponseDetail.setRecid(1);         
-            memberResponse.setMember(memberResponseDetail);
+//            BeanUtils.copyProperties(memberResponseDetail, bookingMember);
+//            memberResponseDetail.setRecid(1);
+//            memberResponse.setMember(memberResponseDetail);
+              memberResponse.setMember(bookingMember);
             // レスポンス生成
             response = ResourceUtil.createResponse(Response.Status.CREATED, MediaType.APPLICATION_JSON, 
                     uriInfo, Arrays.asList(bookingMember.getMemberId().toString()),
@@ -89,6 +90,7 @@ public class MemberResource extends BaseResource {
             final List<BookingMember> bookingMemberList =
                     memberService.memberReference(memberCondition);
             // レスポンスボディ編集
+/*
             MemberResponse memberResponse = new MemberResponse();
             List<MemberResponseDetail> members = new ArrayList<>();
             memberResponse.setMembers(members);
@@ -99,13 +101,15 @@ public class MemberResource extends BaseResource {
                 memberResponseDetail.setRecid(i + 1);
                 members.add(memberResponseDetail);
             }
+*/
             // レスポンス生成
             response = ResourceUtil.createResponse(
                     Response.Status.OK, 
                     MediaType.APPLICATION_JSON, 
                     null,
                     null,
-                    memberResponse);
+//                    memberResponse);
+                    bookingMemberList);
             LOG.log(Level.INFO, response.toString());
         } catch (Exception e) {
             throw new javax.ws.rs.InternalServerErrorException(

@@ -54,10 +54,10 @@ public class MemberService implements MemberServiceLocal {
         
         try {
             // 処理基準日
-            Date processDate = new Date();
+//            Date processDate = new Date();
 
             // メンバーエンティティの生成
-            bookingMember = new BookingMember(processDate);
+            bookingMember = new BookingMember();
             BeanUtils.copyProperties(bookingMember, memberRegister);
             // ハッシュ化(SHA-256)をパスワード設定
             bookingMember.setLoginPassword(

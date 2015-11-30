@@ -18,6 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -157,15 +159,11 @@ public class BookingMember implements Serializable {
     @OneToOne
     @JoinColumn(name = "GENDER", nullable = false, insertable = false, updatable = false)
     private MstGender mstGender;
+    
 
     public BookingMember() {
     }
     
-    public BookingMember(Date processDate) {
-        this.setInsDate(processDate);
-        this.setUpdDate(processDate);
-    }
-
     public BookingMember(Integer memberId) {
         this.memberId = memberId;
     }
@@ -390,4 +388,16 @@ public class BookingMember implements Serializable {
         return "com.tnkmatic.onlinebooking.ejb.entity.BookingMember[ memberId=" + memberId + " ]";
     }
     
+    @PrePersist
+    public void onPrePersist() {
+        final Date processDate = new Date();
+        this.setInsDate(processDate);
+        this.setUpdDate(processDate);
+    }
+    
+    @PreUpdate
+    public void onPreUpdate() {
+        final Date processDate = new Date();
+        this.setUpdDate(processDate);
+    }
 }
