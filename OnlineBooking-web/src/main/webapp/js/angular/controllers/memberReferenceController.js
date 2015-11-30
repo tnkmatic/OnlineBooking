@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-angular.module('onlineBookingModule').controller('memberReferenceController',
+onlineBookingModule.controller('memberReferenceController',
     ['$scope', 'uiGridConstants', 'memberService', function($scope, uiGridConstants, memberService) {
         //メンバ検索用のモデル
         $scope.memberCondition = {};
@@ -16,6 +16,10 @@ angular.module('onlineBookingModule').controller('memberReferenceController',
         $scope.memberGrid = {
             enablePaginationControls: true,
             paginationPageSize: 5,
+            paginationPageSizes: [20, 50, 100],
+            enableGridMenu: true,
+            exporterCsvFilename: 'members' + '_' + formatDate(new Date(), 'YYYYMMDDhhmmss') + '.csv',
+http://ui-grid.info/docs/#/tutorial/191_horizontal_scrolling
             columnDefs: [
                 {field: 'loginId',              displayName: 'ログインID'},
                 {field: 'lastName',             displayName: '氏名(姓)'},

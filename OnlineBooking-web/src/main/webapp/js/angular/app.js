@@ -5,7 +5,9 @@
  */
 var onlineBookingModule = angular.module(
         'onlineBookingModule', 
-        ['ngMessages', 'ngResource', 'ui.grid', 'ui-grid-pagination', 'onlineBookingRouteModule']);
+        ['ngMessages', 'ngResource', 
+            'ui.grid', 'ui.grid.pagination', 'ui.grid.exporter',
+            'onlineBookingRouteModule']);
 
 onlineBookingModule
         //$resourceProvider設定
