@@ -19,26 +19,24 @@ onlineBookingModule.controller('memberReferenceController',
             paginationPageSizes: [20, 50, 100],
             enableGridMenu: true,
             exporterCsvFilename: 'members' + '_' + formatDate(new Date(), 'YYYYMMDDhhmmss') + '.csv',
-http://ui-grid.info/docs/#/tutorial/191_horizontal_scrolling
             columnDefs: [
-                {field: 'loginId',              displayName: 'ログインID'},
-                {field: 'lastName',             displayName: '氏名(姓)'},
-                {field: 'firstName',            displayName: '氏名(名)'},
-                {field: 'lastNameKana',         displayName: '氏名(姓カナ)'},
-                {field: 'firstNameKana',        displayName: '氏名(名カナ)'},
-                {field: 'genderName',           displayName: '性別'},
-                {field: 'birthday',             displayName: '生年月日'}, //,    cellFilter:'date: yyyy年MM月dd日'
-                {field: 'skypeId',              displayName: 'Skype'},
-                {field: 'contactWayName',       displayName: '連絡先'},
-                {field: 'contactWayName',       displayName: '連絡方法'},
-                {field: 'tel',                  displayName: '電話番号'},
-                {field: 'email',                displayName: 'メールアドレス'},
-                {field: 'postalCd',             displayName: '郵便番号'},
-                {field: 'prefName',             displayName: '都道府県'},
-                {field: 'cityName',             displayName: '市区町村'},
-                {field: 'addressDetailName',    displayName: '住所'},
-                {field: 'buildingName',         displayName: '建物名'},
-                {field: 'memberGroupKbnName',   displayName: 'メンバー区分'}
+                {field: 'loginId',              displayName: 'ログインID', width: 120},
+                {field: 'lastName',             displayName: '氏名(姓)', width: 120},
+                {field: 'firstName',            displayName: '氏名(名)', width: 120},
+                {field: 'lastNameKana',         displayName: '氏名(姓カナ)', width: 120},
+                {field: 'firstNameKana',        displayName: '氏名(名カナ)', width: 120},
+                {field: 'genderName',           displayName: '性別', width: 80},
+                {field: 'birthday',             displayName: '生年月日', width: 80}, //,    cellFilter:'date: yyyy年MM月dd日'
+                {field: 'skypeId',              displayName: 'Skype', width: 80},
+                {field: 'contactWayName',       displayName: '連絡方法', width: 80},
+                {field: 'tel',                  displayName: '電話番号', width: 160},
+                {field: 'email',                displayName: 'メールアドレス', width: 220},
+                {field: 'postalCd',             displayName: '郵便番号', width: 80},
+                {field: 'prefName',             displayName: '都道府県', width: 80},
+                {field: 'cityName',             displayName: '市区町村', width: 80},
+                {field: 'addressDetailName',    displayName: '住所', width: 250},
+                {field: 'buildingName',         displayName: '建物名', width: 250},
+                {field: 'memberGroupKbnName',   displayName: 'メンバー区分', width: 120}
             ],
             data : []
         };
