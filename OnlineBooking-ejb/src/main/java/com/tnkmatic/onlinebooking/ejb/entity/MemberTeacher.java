@@ -10,10 +10,13 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,8 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MemberTeacher.findByEmployKbn", query = "SELECT m FROM MemberTeacher m WHERE m.employKbn = :employKbn"),
     @NamedQuery(name = "MemberTeacher.findByEmployYmdFrom", query = "SELECT m FROM MemberTeacher m WHERE m.employYmdFrom = :employYmdFrom"),
     @NamedQuery(name = "MemberTeacher.findByEmployYmdTo", query = "SELECT m FROM MemberTeacher m WHERE m.employYmdTo = :employYmdTo"),
-    @NamedQuery(name = "MemberTeacher.findByInsDate", query = "SELECT m FROM MemberTeacher m WHERE m.insDate = :insDate"),
-    @NamedQuery(name = "MemberTeacher.findByUpdDate", query = "SELECT m FROM MemberTeacher m WHERE m.updDate = :updDate")})
+    @NamedQuery(name = "MemberTeacher.findByInsDate", query = "SELECT m FROM MemberTeacher m WHERE m.embDate.insDate = :insDate"),
+    @NamedQuery(name = "MemberTeacher.findByUpdDate", query = "SELECT m FROM MemberTeacher m WHERE m.embDate.updDate = :updDate")})
 public class MemberTeacher implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,16 +58,9 @@ public class MemberTeacher implements Serializable {
     @Column(name = "EMPLOY_YMD_TO")
     @Temporal(TemporalType.DATE)
     private Date employYmdTo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "INS_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date insDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "UPD_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date updDate;
+    
+    @Embedded
+    private EmbeddableDate embDate;
 
     public MemberTeacher() {
     }
@@ -78,8 +74,8 @@ public class MemberTeacher implements Serializable {
         this.employKbn = employKbn;
         this.employYmdFrom = employYmdFrom;
         this.employYmdTo = employYmdTo;
-        this.insDate = insDate;
-        this.updDate = updDate;
+        this.embDate.setInsDate(insDate);
+        this.embDate.setUpdDate(updDate);
     }
 
     public Integer getMemberId() {
@@ -114,22 +110,6 @@ public class MemberTeacher implements Serializable {
         this.employYmdTo = employYmdTo;
     }
 
-    public Date getInsDate() {
-        return insDate;
-    }
-
-    public void setInsDate(Date insDate) {
-        this.insDate = insDate;
-    }
-
-    public Date getUpdDate() {
-        return updDate;
-    }
-
-    public void setUpdDate(Date updDate) {
-        this.updDate = updDate;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -155,4 +135,14 @@ public class MemberTeacher implements Serializable {
         return "com.tnkmatic.onlinebooking.ejb.entity.MemberTeacher[ memberId=" + memberId + " ]";
     }
     
+    @PrePersist
+    public void onPrePersist() {
+        embDate = (embDate == null) ? new EmbeddableDate() : embDate;
+        embDate.persistEmbeddableDate();
+    }
+    
+    @PreUpdate
+    public void onPreUpdate() {
+        embDate.updateEmbeddableDate();
+    }    
 }

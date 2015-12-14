@@ -10,10 +10,13 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,8 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MemberTeacherSchedule.findByDayOfWeekKbn", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.dayOfWeekKbn = :dayOfWeekKbn"),
     @NamedQuery(name = "MemberTeacherSchedule.findByLessonTimeFrom", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.lessonTimeFrom = :lessonTimeFrom"),
     @NamedQuery(name = "MemberTeacherSchedule.findByLessonTimeTo", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.lessonTimeTo = :lessonTimeTo"),
-    @NamedQuery(name = "MemberTeacherSchedule.findByInsDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.insDate = :insDate"),
-    @NamedQuery(name = "MemberTeacherSchedule.findByUpdDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.updDate = :updDate")})
+    @NamedQuery(name = "MemberTeacherSchedule.findByInsDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.embDate.insDate = :insDate"),
+    @NamedQuery(name = "MemberTeacherSchedule.findByUpdDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.embDate.updDate = :updDate")})
 public class MemberTeacherSchedule implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
@@ -63,16 +66,9 @@ public class MemberTeacherSchedule implements Serializable {
     @Size(min = 1, max = 4)
     @Column(name = "LESSON_TIME_TO")
     private String lessonTimeTo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "INS_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date insDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "UPD_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date updDate;
+    
+    @Embedded
+    private EmbeddableDate embDate;
 
     public MemberTeacherSchedule() {
     }
@@ -87,8 +83,8 @@ public class MemberTeacherSchedule implements Serializable {
         this.dayOfWeekKbn = dayOfWeekKbn;
         this.lessonTimeFrom = lessonTimeFrom;
         this.lessonTimeTo = lessonTimeTo;
-        this.insDate = insDate;
-        this.updDate = updDate;
+        this.embDate.setInsDate(insDate);
+        this.embDate.setUpdDate(updDate);
     }
 
     public int getMemberId() {
@@ -131,22 +127,6 @@ public class MemberTeacherSchedule implements Serializable {
         this.lessonTimeTo = lessonTimeTo;
     }
 
-    public Date getInsDate() {
-        return insDate;
-    }
-
-    public void setInsDate(Date insDate) {
-        this.insDate = insDate;
-    }
-
-    public Date getUpdDate() {
-        return updDate;
-    }
-
-    public void setUpdDate(Date updDate) {
-        this.updDate = updDate;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -170,6 +150,17 @@ public class MemberTeacherSchedule implements Serializable {
     @Override
     public String toString() {
         return "com.tnkmatic.onlinebooking.ejb.entity.MemberTeacherSchedule[ scheduleSeq=" + scheduleSeq + " ]";
+    }
+    
+    @PrePersist
+    public void onPrePersist() {
+        embDate = (embDate == null) ? new EmbeddableDate() : embDate;
+        embDate.persistEmbeddableDate();
+    }
+    
+    @PreUpdate
+    public void onPreUpdate() {
+        embDate.updateEmbeddableDate();
     }
     
 }

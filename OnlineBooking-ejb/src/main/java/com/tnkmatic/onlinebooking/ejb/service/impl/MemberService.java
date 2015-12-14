@@ -78,7 +78,7 @@ public class MemberService implements MemberServiceLocal {
             rMemberMemberGroupPk.setMemberId(memberId);
             BeanUtils.copyProperties(rMemberMemberGroupPk, memberRegister);
             // メンバーグループ関連エンティティの生成
-            final RMemberMemberGroup rMemberMemberGroup = new RMemberMemberGroup(processDate);
+            final RMemberMemberGroup rMemberMemberGroup = new RMemberMemberGroup();
             BeanUtils.copyProperties(rMemberMemberGroup, memberRegister);
             rMemberMemberGroup.setRMemberMemberGroupPK(rMemberMemberGroupPk);
 
@@ -90,12 +90,12 @@ public class MemberService implements MemberServiceLocal {
                         memberRegister.getMemberGroupKbn())) {
                     // 講師エンティティの永続化
                     memberTeacherDao.create(
-                            createMemberTeacher(memberId, processDate));
+                            createMemberTeacher(memberId));
                 } else if (ConstantValue.MEMBER_GROUP_KBN_STUDENT.equals(
                         memberRegister.getMemberGroupKbn())) {
                     // 生徒エンティティの永続化
                     memberStudenDao.create(
-                            createMemberStudent(memberId, processDate));
+                            createMemberStudent(memberId));
                 } else {
                     //
                 }
@@ -124,22 +124,18 @@ public class MemberService implements MemberServiceLocal {
     }
     
     private MemberTeacher createMemberTeacher(
-            final Integer memberId, final Date processDate) throws Exception {
+            final Integer memberId) throws Exception {
         // 講師エンティティクラスの生成
         final MemberTeacher memberTeacher = new MemberTeacher();
         memberTeacher.setMemberId(memberId);
-        memberTeacher.setInsDate(processDate);
-        memberTeacher.setUpdDate(processDate);
         return memberTeacher;
    }
     
-    private MemberStudent createMemberStudent(
-            final Integer memberId, final Date processDate) throws Exception {
+    private MemberStudent createMemberStudent(final Integer memberId) 
+            throws Exception {
         // 生徒エンティティクラスの生成
         final MemberStudent memberStudent = new MemberStudent();
         memberStudent.setMemberId(memberId);
-        memberStudent.setInsDate(processDate);
-        memberStudent.setUpdDate(processDate);
         return memberStudent;
     }
 }

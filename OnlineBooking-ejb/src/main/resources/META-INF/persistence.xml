@@ -3,6 +3,9 @@
   <persistence-unit name="com.tnkmatic_OnlineBooking-ejb_PU" transaction-type="JTA">
     <jta-data-source>jdbc/OnlineBookingPool</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+      <property name="eclipselink.logging.logger" value="ServerLogger"/>
+      <property name="eclipselink.logging.level.sql" value="FINE"/>
+    </properties>
   </persistence-unit>
 </persistence>

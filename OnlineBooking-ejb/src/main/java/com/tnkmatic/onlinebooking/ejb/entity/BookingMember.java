@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -54,8 +55,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BookingMember.findByCityName", query = "SELECT b FROM BookingMember b WHERE b.cityName = :cityName"),
     @NamedQuery(name = "BookingMember.findByAddressDetailName", query = "SELECT b FROM BookingMember b WHERE b.addressDetailName = :addressDetailName"),
     @NamedQuery(name = "BookingMember.findByBuildingName", query = "SELECT b FROM BookingMember b WHERE b.buildingName = :buildingName"),
-    @NamedQuery(name = "BookingMember.findByInsDate", query = "SELECT b FROM BookingMember b WHERE b.insDate = :insDate"),
-    @NamedQuery(name = "BookingMember.findByUpdDate", query = "SELECT b FROM BookingMember b WHERE b.updDate = :updDate")})
+    @NamedQuery(name = "BookingMember.findByInsDate", query = "SELECT b FROM BookingMember b WHERE b.embDate.insDate = :insDate"),
+    @NamedQuery(name = "BookingMember.findByUpdDate", query = "SELECT b FROM BookingMember b WHERE b.embDate.updDate = :updDate")})
 public class BookingMember implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -141,17 +142,10 @@ public class BookingMember implements Serializable {
     @Size(max = 100)
     @Column(name = "BUILDING_NAME")
     private String buildingName;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "INS_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date insDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "UPD_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date updDate;
     
+    @Embedded
+    private EmbeddableDate embDate;
+
     //追加プロパティ
     @OneToOne
     @JoinColumn(name = "CONTACT_WAY_KBN", nullable = false, insertable = false, updatable = false)
@@ -183,8 +177,8 @@ public class BookingMember implements Serializable {
         this.prefName = prefName;
         this.cityName = cityName;
         this.addressDetailName = addressDetailName;
-        this.insDate = insDate;
-        this.updDate = updDate;
+        this.embDate.setInsDate(insDate);
+        this.embDate.setUpdDate(updDate);
     }
 
     public Integer getMemberId() {
@@ -330,22 +324,6 @@ public class BookingMember implements Serializable {
     public void setBuildingName(String buildingName) {
         this.buildingName = buildingName;
     }
-
-    public Date getInsDate() {
-        return insDate;
-    }
-
-    public void setInsDate(Date insDate) {
-        this.insDate = insDate;
-    }
-
-    public Date getUpdDate() {
-        return updDate;
-    }
-
-    public void setUpdDate(Date updDate) {
-        this.updDate = updDate;
-    }
     
     public MstContactWay getMstContactWay() {
         return mstContactWay;
@@ -390,14 +368,12 @@ public class BookingMember implements Serializable {
     
     @PrePersist
     public void onPrePersist() {
-        final Date processDate = new Date();
-        this.setInsDate(processDate);
-        this.setUpdDate(processDate);
+        embDate = (embDate == null) ? new EmbeddableDate() : embDate;
+        embDate.persistEmbeddableDate();
     }
     
     @PreUpdate
     public void onPreUpdate() {
-        final Date processDate = new Date();
-        this.setUpdDate(processDate);
+        embDate.updateEmbeddableDate();
     }
 }
