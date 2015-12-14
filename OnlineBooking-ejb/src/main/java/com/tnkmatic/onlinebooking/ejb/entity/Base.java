@@ -6,11 +6,11 @@
 package com.tnkmatic.onlinebooking.ejb.entity;
 
 import java.util.Date;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -19,20 +19,20 @@ import javax.validation.constraints.NotNull;
  *
  * @author tnkmatic@outlook.jp
  */
-@Embeddable
-@Access(AccessType.FIELD)
-public class EmbeddableDate {
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Base {
     @Basic(optional = false)
     @NotNull
     @Column(name = "INS_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date insDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date insDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPD_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date updDate;
-    
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date updDate;
+
     public Date getInsDate() {
         return insDate;
     }
@@ -49,13 +49,13 @@ public class EmbeddableDate {
         this.updDate = updDate;
     }
     
-    public void persistEmbeddableDate() {
+    protected void persistEmbeddableDate() {
         Date persistDate  = new Date();
         this.insDate = persistDate;
         this.updDate = persistDate;
     }
     
-    public void updateEmbeddableDate() {
+    protected void updateEmbeddableDate() {
         Date updateDate  = new Date();
         this.updDate = updateDate;
     }

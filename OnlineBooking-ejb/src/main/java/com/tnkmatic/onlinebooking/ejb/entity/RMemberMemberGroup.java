@@ -8,11 +8,12 @@ package com.tnkmatic.onlinebooking.ejb.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -29,15 +30,23 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RMemberMemberGroup.findAll", query = "SELECT r FROM RMemberMemberGroup r"),
     @NamedQuery(name = "RMemberMemberGroup.findByMemberId", query = "SELECT r FROM RMemberMemberGroup r WHERE r.rMemberMemberGroupPK.memberId = :memberId"),
     @NamedQuery(name = "RMemberMemberGroup.findByMemberGroupKbn", query = "SELECT r FROM RMemberMemberGroup r WHERE r.rMemberMemberGroupPK.memberGroupKbn = :memberGroupKbn"),
-    @NamedQuery(name = "RMemberMemberGroup.findByInsDate", query = "SELECT r FROM RMemberMemberGroup r WHERE r.embDate.insDate = :insDate"),
-    @NamedQuery(name = "RMemberMemberGroup.findByUpdDate", query = "SELECT r FROM RMemberMemberGroup r WHERE r.embDate.updDate = :updDate")})
-public class RMemberMemberGroup implements Serializable {
+    @NamedQuery(name = "RMemberMemberGroup.findByInsDate", query = "SELECT r FROM RMemberMemberGroup r WHERE r.insDate = :insDate"),
+    @NamedQuery(name = "RMemberMemberGroup.findByUpdDate", query = "SELECT r FROM RMemberMemberGroup r WHERE r.updDate = :updDate")})
+public class RMemberMemberGroup extends Base implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected RMemberMemberGroupPK rMemberMemberGroupPK;
-    @Embedded
-    protected EmbeddableDate embDate;
     
+    @OneToOne
+    @JoinColumn(name = "MEMBER_GROUP", nullable = false, insertable = false, updatable = false)
+    private RMemberMemberGroup rMemberMemberGroup;
+    ここから。、。。、
+    
+    
+
+    public void setrMemberMemberGroup(RMemberMemberGroup rMemberMemberGroup) {
+        this.rMemberMemberGroup = rMemberMemberGroup;
+    }
 
     public RMemberMemberGroup() {
     }
@@ -48,8 +57,8 @@ public class RMemberMemberGroup implements Serializable {
 
     public RMemberMemberGroup(RMemberMemberGroupPK rMemberMemberGroupPK, Date insDate, Date updDate) {
         this.rMemberMemberGroupPK = rMemberMemberGroupPK;
-        this.embDate.setInsDate(insDate);
-        this.embDate.setUpdDate(updDate);
+        this.insDate = insDate;
+        this.updDate = updDate;
     }
 
     public RMemberMemberGroup(int memberId, String memberGroupKbn) {
@@ -63,6 +72,7 @@ public class RMemberMemberGroup implements Serializable {
     public void setRMemberMemberGroupPK(RMemberMemberGroupPK rMemberMemberGroupPK) {
         this.rMemberMemberGroupPK = rMemberMemberGroupPK;
     }
+
 
     @Override
     public int hashCode() {
@@ -91,13 +101,12 @@ public class RMemberMemberGroup implements Serializable {
     
     @PrePersist
     public void onPrePersist() {
-        embDate = (embDate == null) ? new EmbeddableDate() : embDate;
-        embDate.persistEmbeddableDate();
+        persistEmbeddableDate();
     }
     
     @PreUpdate
     public void onPreUpdate() {
-        embDate.updateEmbeddableDate();
+        updateEmbeddableDate();
     }
     
 }

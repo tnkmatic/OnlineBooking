@@ -37,9 +37,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MemberTeacher.findByEmployKbn", query = "SELECT m FROM MemberTeacher m WHERE m.employKbn = :employKbn"),
     @NamedQuery(name = "MemberTeacher.findByEmployYmdFrom", query = "SELECT m FROM MemberTeacher m WHERE m.employYmdFrom = :employYmdFrom"),
     @NamedQuery(name = "MemberTeacher.findByEmployYmdTo", query = "SELECT m FROM MemberTeacher m WHERE m.employYmdTo = :employYmdTo"),
-    @NamedQuery(name = "MemberTeacher.findByInsDate", query = "SELECT m FROM MemberTeacher m WHERE m.embDate.insDate = :insDate"),
-    @NamedQuery(name = "MemberTeacher.findByUpdDate", query = "SELECT m FROM MemberTeacher m WHERE m.embDate.updDate = :updDate")})
-public class MemberTeacher implements Serializable {
+    @NamedQuery(name = "MemberTeacher.findByInsDate", query = "SELECT m FROM MemberTeacher m WHERE m.insDate = :insDate"),
+    @NamedQuery(name = "MemberTeacher.findByUpdDate", query = "SELECT m FROM MemberTeacher m WHERE m.updDate = :updDate")})
+public class MemberTeacher extends Base implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -58,9 +58,6 @@ public class MemberTeacher implements Serializable {
     @Column(name = "EMPLOY_YMD_TO")
     @Temporal(TemporalType.DATE)
     private Date employYmdTo;
-    
-    @Embedded
-    private EmbeddableDate embDate;
 
     public MemberTeacher() {
     }
@@ -74,8 +71,8 @@ public class MemberTeacher implements Serializable {
         this.employKbn = employKbn;
         this.employYmdFrom = employYmdFrom;
         this.employYmdTo = employYmdTo;
-        this.embDate.setInsDate(insDate);
-        this.embDate.setUpdDate(updDate);
+        this.insDate = insDate;
+        this.updDate = updDate;
     }
 
     public Integer getMemberId() {
@@ -137,12 +134,11 @@ public class MemberTeacher implements Serializable {
     
     @PrePersist
     public void onPrePersist() {
-        embDate = (embDate == null) ? new EmbeddableDate() : embDate;
-        embDate.persistEmbeddableDate();
+        persistEmbeddableDate();
     }
     
     @PreUpdate
     public void onPreUpdate() {
-        embDate.updateEmbeddableDate();
+        updateEmbeddableDate();
     }    
 }

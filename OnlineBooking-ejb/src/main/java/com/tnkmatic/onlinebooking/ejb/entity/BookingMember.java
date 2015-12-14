@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -55,9 +54,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BookingMember.findByCityName", query = "SELECT b FROM BookingMember b WHERE b.cityName = :cityName"),
     @NamedQuery(name = "BookingMember.findByAddressDetailName", query = "SELECT b FROM BookingMember b WHERE b.addressDetailName = :addressDetailName"),
     @NamedQuery(name = "BookingMember.findByBuildingName", query = "SELECT b FROM BookingMember b WHERE b.buildingName = :buildingName"),
-    @NamedQuery(name = "BookingMember.findByInsDate", query = "SELECT b FROM BookingMember b WHERE b.embDate.insDate = :insDate"),
-    @NamedQuery(name = "BookingMember.findByUpdDate", query = "SELECT b FROM BookingMember b WHERE b.embDate.updDate = :updDate")})
-public class BookingMember implements Serializable {
+    @NamedQuery(name = "BookingMember.findByInsDate", query = "SELECT b FROM BookingMember b WHERE b.insDate = :insDate"),
+    @NamedQuery(name = "BookingMember.findByUpdDate", query = "SELECT b FROM BookingMember b WHERE b.updDate = :updDate")})
+public class BookingMember extends Base implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -142,9 +141,6 @@ public class BookingMember implements Serializable {
     @Size(max = 100)
     @Column(name = "BUILDING_NAME")
     private String buildingName;
-    
-    @Embedded
-    private EmbeddableDate embDate;
 
     //追加プロパティ
     @OneToOne
@@ -153,7 +149,9 @@ public class BookingMember implements Serializable {
     @OneToOne
     @JoinColumn(name = "GENDER", nullable = false, insertable = false, updatable = false)
     private MstGender mstGender;
-    
+    @OneToOne
+    @JoinColumn(name = "MEMBER_ID", nullable = false, insertable = false, updatable = false)
+    private RMemberMemberGroup rMemberMemberGroup;
 
     public BookingMember() {
     }
@@ -177,8 +175,8 @@ public class BookingMember implements Serializable {
         this.prefName = prefName;
         this.cityName = cityName;
         this.addressDetailName = addressDetailName;
-        this.embDate.setInsDate(insDate);
-        this.embDate.setUpdDate(updDate);
+        this.insDate = insDate;
+        this.updDate = updDate;
     }
 
     public Integer getMemberId() {
@@ -340,6 +338,14 @@ public class BookingMember implements Serializable {
     public void setMstGender(MstGender mstGender) {
         this.mstGender = mstGender;
     }
+    
+    public RMemberMemberGroup getrMemberMemberGroup() {
+        return rMemberMemberGroup;
+    }
+
+    public void setrMemberMemberGroup(RMemberMemberGroup rMemberMemberGroup) {
+        this.rMemberMemberGroup = rMemberMemberGroup;
+    }
 
     @Override
     public int hashCode() {
@@ -368,12 +374,11 @@ public class BookingMember implements Serializable {
     
     @PrePersist
     public void onPrePersist() {
-        embDate = (embDate == null) ? new EmbeddableDate() : embDate;
-        embDate.persistEmbeddableDate();
+        persistEmbeddableDate();
     }
     
     @PreUpdate
     public void onPreUpdate() {
-        embDate.updateEmbeddableDate();
+        updateEmbeddableDate();
     }
 }

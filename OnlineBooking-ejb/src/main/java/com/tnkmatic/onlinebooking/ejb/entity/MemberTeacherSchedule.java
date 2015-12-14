@@ -18,8 +18,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,9 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MemberTeacherSchedule.findByDayOfWeekKbn", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.dayOfWeekKbn = :dayOfWeekKbn"),
     @NamedQuery(name = "MemberTeacherSchedule.findByLessonTimeFrom", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.lessonTimeFrom = :lessonTimeFrom"),
     @NamedQuery(name = "MemberTeacherSchedule.findByLessonTimeTo", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.lessonTimeTo = :lessonTimeTo"),
-    @NamedQuery(name = "MemberTeacherSchedule.findByInsDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.embDate.insDate = :insDate"),
-    @NamedQuery(name = "MemberTeacherSchedule.findByUpdDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.embDate.updDate = :updDate")})
-public class MemberTeacherSchedule implements Serializable {
+    @NamedQuery(name = "MemberTeacherSchedule.findByInsDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.insDate = :insDate"),
+    @NamedQuery(name = "MemberTeacherSchedule.findByUpdDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.updDate = :updDate")})
+public class MemberTeacherSchedule extends Base implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
@@ -66,9 +64,6 @@ public class MemberTeacherSchedule implements Serializable {
     @Size(min = 1, max = 4)
     @Column(name = "LESSON_TIME_TO")
     private String lessonTimeTo;
-    
-    @Embedded
-    private EmbeddableDate embDate;
 
     public MemberTeacherSchedule() {
     }
@@ -83,8 +78,8 @@ public class MemberTeacherSchedule implements Serializable {
         this.dayOfWeekKbn = dayOfWeekKbn;
         this.lessonTimeFrom = lessonTimeFrom;
         this.lessonTimeTo = lessonTimeTo;
-        this.embDate.setInsDate(insDate);
-        this.embDate.setUpdDate(updDate);
+        this.insDate = insDate;
+        this.updDate = updDate;
     }
 
     public int getMemberId() {
@@ -154,13 +149,12 @@ public class MemberTeacherSchedule implements Serializable {
     
     @PrePersist
     public void onPrePersist() {
-        embDate = (embDate == null) ? new EmbeddableDate() : embDate;
-        embDate.persistEmbeddableDate();
+        persistEmbeddableDate();
     }
     
     @PreUpdate
     public void onPreUpdate() {
-        embDate.updateEmbeddableDate();
+        updateEmbeddableDate();
     }
     
 }

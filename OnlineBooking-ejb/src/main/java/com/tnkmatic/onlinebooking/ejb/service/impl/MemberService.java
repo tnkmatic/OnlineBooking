@@ -53,9 +53,6 @@ public class MemberService implements MemberServiceLocal {
         BookingMember bookingMember = null;
         
         try {
-            // 処理基準日
-//            Date processDate = new Date();
-
             // メンバーエンティティの生成
             bookingMember = new BookingMember();
             BeanUtils.copyProperties(bookingMember, memberRegister);

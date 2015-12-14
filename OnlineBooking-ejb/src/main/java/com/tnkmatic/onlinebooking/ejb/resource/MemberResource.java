@@ -90,26 +90,15 @@ public class MemberResource extends BaseResource {
             final List<BookingMember> bookingMemberList =
                     memberService.memberReference(memberCondition);
             // レスポンスボディ編集
-/*
             MemberResponse memberResponse = new MemberResponse();
-            List<MemberResponseDetail> members = new ArrayList<>();
-            memberResponse.setMembers(members);
-            for (int i = 0; i < bookingMemberList.size(); i++) {
-                final MemberResponseDetail memberResponseDetail = 
-                        new MemberResponseDetail();
-                BeanUtils.copyProperties(memberResponseDetail, bookingMemberList.get(i));
-                memberResponseDetail.setRecid(i + 1);
-                members.add(memberResponseDetail);
-            }
-*/
+            memberResponse.setMembers(bookingMemberList);
             // レスポンス生成
             response = ResourceUtil.createResponse(
                     Response.Status.OK, 
                     MediaType.APPLICATION_JSON, 
                     null,
                     null,
-//                    memberResponse);
-                    bookingMemberList);
+                    memberResponse);
             LOG.log(Level.INFO, response.toString());
         } catch (Exception e) {
             throw new javax.ws.rs.InternalServerErrorException(
