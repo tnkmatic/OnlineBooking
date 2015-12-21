@@ -36,7 +36,7 @@ onlineBookingModule.controller('memberReferenceController',
                 {field: 'cityName',displayName: '市区町村', width: 80},
                 {field: 'addressDetailName',displayName: '住所', width: 250},
                 {field: 'buildingName',displayName: '建物名', width: 250},
-                {field: 'memberGroupKbnName',displayName: 'メンバー区分', width: 120}
+                {field: 'rMemberMemberGroup.memberGroup.memberGroupName',displayName: 'メンバー区分', width: 120}
             ],
             data : []
         };
