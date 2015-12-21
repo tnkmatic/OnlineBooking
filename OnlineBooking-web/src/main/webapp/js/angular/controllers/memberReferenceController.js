@@ -26,7 +26,7 @@ onlineBookingModule.controller('memberReferenceController',
                 {field: 'lastNameKana',displayName: '氏名(姓カナ)', width: 120},
                 {field: 'firstNameKana',displayName: '氏名(名カナ)', width: 120},
                 {field: 'mstGender.genderName', displayName: '性別', width: 80},
-                {field: 'birthday',displayName: '生年月日', width: 80}, //,    cellFilter:'date: yyyy年MM月dd日'
+                {field: 'birthday',displayName: '生年月日', width: 200, type: 'date', cellFilter: 'date:"yyyy-MM-dd"'},
                 {field: 'skypeId', displayName: 'Skype', width: 80},
                 {field: 'mstContactWay.contactWayKbnName',displayName: '連絡方法', width: 80},
                 {field: 'tel',displayName: '電話番号', width: 160},
