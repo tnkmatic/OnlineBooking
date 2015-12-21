@@ -6,10 +6,12 @@
 
 package com.tnkmatic.onlinebooking.ejb.entity;
 
+import com.tnkmatic.onlinebooking.ejb.entity.embeddable.SystemDate;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -54,9 +56,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BookingMember.findByCityName", query = "SELECT b FROM BookingMember b WHERE b.cityName = :cityName"),
     @NamedQuery(name = "BookingMember.findByAddressDetailName", query = "SELECT b FROM BookingMember b WHERE b.addressDetailName = :addressDetailName"),
     @NamedQuery(name = "BookingMember.findByBuildingName", query = "SELECT b FROM BookingMember b WHERE b.buildingName = :buildingName"),
-    @NamedQuery(name = "BookingMember.findByInsDate", query = "SELECT b FROM BookingMember b WHERE b.insDate = :insDate"),
-    @NamedQuery(name = "BookingMember.findByUpdDate", query = "SELECT b FROM BookingMember b WHERE b.updDate = :updDate")})
-public class BookingMember extends Base implements Serializable {
+    @NamedQuery(name = "BookingMember.findByInsDate", query = "SELECT b FROM BookingMember b WHERE b.systemDate.insDate = :insDate"),
+    @NamedQuery(name = "BookingMember.findByUpdDate", query = "SELECT b FROM BookingMember b WHERE b.systemDate.updDate = :updDate")})
+public class BookingMember implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -141,6 +143,10 @@ public class BookingMember extends Base implements Serializable {
     @Size(max = 100)
     @Column(name = "BUILDING_NAME")
     private String buildingName;
+    
+    //登録日時・更新日時
+    @Embedded
+    private SystemDate systemDate;
 
     //追加プロパティ
     @OneToOne
@@ -149,6 +155,7 @@ public class BookingMember extends Base implements Serializable {
     @OneToOne
     @JoinColumn(name = "GENDER", nullable = false, insertable = false, updatable = false)
     private MstGender mstGender;
+    
     @OneToOne
     @JoinColumn(name = "MEMBER_ID", nullable = false, insertable = false, updatable = false)
     private RMemberMemberGroup rMemberMemberGroup;
@@ -160,7 +167,7 @@ public class BookingMember extends Base implements Serializable {
         this.memberId = memberId;
     }
 
-    public BookingMember(Integer memberId, String loginId, String loginPassword, String lastName, String firstName, String lastNameKana, String firstNameKana, Date birthday, String skypeId, String contactWayKbn, String postalCd, String prefName, String cityName, String addressDetailName, Date insDate, Date updDate) {
+    public BookingMember(Integer memberId, String loginId, String loginPassword, String lastName, String firstName, String lastNameKana, String firstNameKana, Date birthday, String skypeId, String contactWayKbn, String postalCd, String prefName, String cityName, String addressDetailName) {
         this.memberId = memberId;
         this.loginId = loginId;
         this.loginPassword = loginPassword;
@@ -175,8 +182,6 @@ public class BookingMember extends Base implements Serializable {
         this.prefName = prefName;
         this.cityName = cityName;
         this.addressDetailName = addressDetailName;
-        this.insDate = insDate;
-        this.updDate = updDate;
     }
 
     public Integer getMemberId() {
@@ -339,6 +344,14 @@ public class BookingMember extends Base implements Serializable {
         this.mstGender = mstGender;
     }
     
+    public SystemDate getSystemDate() {
+        return systemDate;
+    }
+
+    public void setSystemDate(SystemDate systemDate) {
+        this.systemDate = systemDate;
+    }
+    
     public RMemberMemberGroup getrMemberMemberGroup() {
         return rMemberMemberGroup;
     }
@@ -346,6 +359,7 @@ public class BookingMember extends Base implements Serializable {
     public void setrMemberMemberGroup(RMemberMemberGroup rMemberMemberGroup) {
         this.rMemberMemberGroup = rMemberMemberGroup;
     }
+
 
     @Override
     public int hashCode() {
@@ -374,11 +388,11 @@ public class BookingMember extends Base implements Serializable {
     
     @PrePersist
     public void onPrePersist() {
-        persistEmbeddableDate();
+        systemDate = new SystemDate(new Date());
     }
     
     @PreUpdate
     public void onPreUpdate() {
-        updateEmbeddableDate();
+        this.systemDate.setUpdDate(new Date());
     }
 }

@@ -6,6 +6,7 @@
 
 package com.tnkmatic.onlinebooking.ejb.entity;
 
+import com.tnkmatic.onlinebooking.ejb.entity.embeddable.SystemDate;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -36,9 +37,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MemberTeacherSchedule.findByDayOfWeekKbn", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.dayOfWeekKbn = :dayOfWeekKbn"),
     @NamedQuery(name = "MemberTeacherSchedule.findByLessonTimeFrom", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.lessonTimeFrom = :lessonTimeFrom"),
     @NamedQuery(name = "MemberTeacherSchedule.findByLessonTimeTo", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.lessonTimeTo = :lessonTimeTo"),
-    @NamedQuery(name = "MemberTeacherSchedule.findByInsDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.insDate = :insDate"),
-    @NamedQuery(name = "MemberTeacherSchedule.findByUpdDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.updDate = :updDate")})
-public class MemberTeacherSchedule extends Base implements Serializable {
+    @NamedQuery(name = "MemberTeacherSchedule.findByInsDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.systemDate.insDate = :insDate"),
+    @NamedQuery(name = "MemberTeacherSchedule.findByUpdDate", query = "SELECT m FROM MemberTeacherSchedule m WHERE m.systemDate.updDate = :updDate")})
+public class MemberTeacherSchedule implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
@@ -64,6 +65,10 @@ public class MemberTeacherSchedule extends Base implements Serializable {
     @Size(min = 1, max = 4)
     @Column(name = "LESSON_TIME_TO")
     private String lessonTimeTo;
+    
+    //登録日時・更新日時
+    @Embedded
+    private SystemDate systemDate;
 
     public MemberTeacherSchedule() {
     }
@@ -72,14 +77,12 @@ public class MemberTeacherSchedule extends Base implements Serializable {
         this.scheduleSeq = scheduleSeq;
     }
 
-    public MemberTeacherSchedule(Integer scheduleSeq, int memberId, String dayOfWeekKbn, String lessonTimeFrom, String lessonTimeTo, Date insDate, Date updDate) {
+    public MemberTeacherSchedule(Integer scheduleSeq, int memberId, String dayOfWeekKbn, String lessonTimeFrom, String lessonTimeTo) {
         this.scheduleSeq = scheduleSeq;
         this.memberId = memberId;
         this.dayOfWeekKbn = dayOfWeekKbn;
         this.lessonTimeFrom = lessonTimeFrom;
         this.lessonTimeTo = lessonTimeTo;
-        this.insDate = insDate;
-        this.updDate = updDate;
     }
 
     public int getMemberId() {
@@ -121,6 +124,15 @@ public class MemberTeacherSchedule extends Base implements Serializable {
     public void setLessonTimeTo(String lessonTimeTo) {
         this.lessonTimeTo = lessonTimeTo;
     }
+    
+    public SystemDate getSystemDate() {
+        return systemDate;
+    }
+
+    public void setSystemDate(SystemDate systemDate) {
+        this.systemDate = systemDate;
+    }
+
 
     @Override
     public int hashCode() {
@@ -149,12 +161,11 @@ public class MemberTeacherSchedule extends Base implements Serializable {
     
     @PrePersist
     public void onPrePersist() {
-        persistEmbeddableDate();
+        this.systemDate = new SystemDate(new Date());
     }
     
     @PreUpdate
     public void onPreUpdate() {
-        updateEmbeddableDate();
+        this.systemDate.setUpdDate(new Date());
     }
-    
 }

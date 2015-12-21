@@ -6,10 +6,12 @@
 
 package com.tnkmatic.onlinebooking.ejb.entity;
 
+import com.tnkmatic.onlinebooking.ejb.entity.embeddable.SystemDate;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -30,15 +32,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "MemberStudent.findAll", query = "SELECT m FROM MemberStudent m"),
     @NamedQuery(name = "MemberStudent.findByMemberId", query = "SELECT m FROM MemberStudent m WHERE m.memberId = :memberId"),
-    @NamedQuery(name = "MemberStudent.findByInsDate", query = "SELECT m FROM MemberStudent m WHERE m.insDate = :insDate"),
-    @NamedQuery(name = "MemberStudent.findByUpdDate", query = "SELECT m FROM MemberStudent m WHERE m.updDate = :updDate")})
-public class MemberStudent extends Base implements Serializable {
+    @NamedQuery(name = "MemberStudent.findByInsDate", query = "SELECT m FROM MemberStudent m WHERE m.systemDate.insDate = :insDate"),
+    @NamedQuery(name = "MemberStudent.findByUpdDate", query = "SELECT m FROM MemberStudent m WHERE m.systemDate.updDate = :updDate")})
+public class MemberStudent implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "MEMBER_ID")
     private Integer memberId;
+    
+    //登録日時・更新日時
+    @Embedded
+    private SystemDate systemDate;
 
     public MemberStudent() {
     }
@@ -47,18 +53,20 @@ public class MemberStudent extends Base implements Serializable {
         this.memberId = memberId;
     }
 
-    public MemberStudent(Integer memberId, Date insDate, Date updDate) {
-        this.memberId = memberId;
-        this.insDate = insDate;
-        this.updDate = updDate;
-    }
-
     public Integer getMemberId() {
         return memberId;
     }
 
     public void setMemberId(Integer memberId) {
         this.memberId = memberId;
+    }
+    
+    public SystemDate getSystemDate() {
+        return systemDate;
+    }
+
+    public void setSystemDate(SystemDate systemDate) {
+        this.systemDate = systemDate;
     }
 
     @Override
@@ -88,11 +96,11 @@ public class MemberStudent extends Base implements Serializable {
     
     @PrePersist
     public void onPrePersist() {
-        persistEmbeddableDate();
+        this.systemDate = new SystemDate(new Date());
     }
     
     @PreUpdate
     public void onPreUpdate() {
-        updateEmbeddableDate();
+        this.systemDate.setUpdDate(new Date());
     }    
 }

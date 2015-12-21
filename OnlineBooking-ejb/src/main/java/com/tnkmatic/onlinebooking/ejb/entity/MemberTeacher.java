@@ -6,6 +6,7 @@
 
 package com.tnkmatic.onlinebooking.ejb.entity;
 
+import com.tnkmatic.onlinebooking.ejb.entity.embeddable.SystemDate;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -37,9 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MemberTeacher.findByEmployKbn", query = "SELECT m FROM MemberTeacher m WHERE m.employKbn = :employKbn"),
     @NamedQuery(name = "MemberTeacher.findByEmployYmdFrom", query = "SELECT m FROM MemberTeacher m WHERE m.employYmdFrom = :employYmdFrom"),
     @NamedQuery(name = "MemberTeacher.findByEmployYmdTo", query = "SELECT m FROM MemberTeacher m WHERE m.employYmdTo = :employYmdTo"),
-    @NamedQuery(name = "MemberTeacher.findByInsDate", query = "SELECT m FROM MemberTeacher m WHERE m.insDate = :insDate"),
-    @NamedQuery(name = "MemberTeacher.findByUpdDate", query = "SELECT m FROM MemberTeacher m WHERE m.updDate = :updDate")})
-public class MemberTeacher extends Base implements Serializable {
+    @NamedQuery(name = "MemberTeacher.findByInsDate", query = "SELECT m FROM MemberTeacher m WHERE m.systemDate.insDate = :insDate"),
+    @NamedQuery(name = "MemberTeacher.findByUpdDate", query = "SELECT m FROM MemberTeacher m WHERE m.systemDate.updDate = :updDate")})
+public class MemberTeacher implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -58,6 +59,10 @@ public class MemberTeacher extends Base implements Serializable {
     @Column(name = "EMPLOY_YMD_TO")
     @Temporal(TemporalType.DATE)
     private Date employYmdTo;
+    
+    //登録日時・更新日時
+    @Embedded
+    private SystemDate systemDate;
 
     public MemberTeacher() {
     }
@@ -66,13 +71,11 @@ public class MemberTeacher extends Base implements Serializable {
         this.memberId = memberId;
     }
 
-    public MemberTeacher(Integer memberId, String employKbn, Date employYmdFrom, Date employYmdTo, Date insDate, Date updDate) {
+    public MemberTeacher(Integer memberId, String employKbn, Date employYmdFrom, Date employYmdTo) {
         this.memberId = memberId;
         this.employKbn = employKbn;
         this.employYmdFrom = employYmdFrom;
         this.employYmdTo = employYmdTo;
-        this.insDate = insDate;
-        this.updDate = updDate;
     }
 
     public Integer getMemberId() {
@@ -106,6 +109,14 @@ public class MemberTeacher extends Base implements Serializable {
     public void setEmployYmdTo(Date employYmdTo) {
         this.employYmdTo = employYmdTo;
     }
+    
+    public SystemDate getSystemDate() {
+        return systemDate;
+    }
+
+    public void setSystemDate(SystemDate systemDate) {
+        this.systemDate = systemDate;
+    }
 
     @Override
     public int hashCode() {
@@ -134,11 +145,11 @@ public class MemberTeacher extends Base implements Serializable {
     
     @PrePersist
     public void onPrePersist() {
-        persistEmbeddableDate();
+        systemDate = new SystemDate(new Date());
     }
     
     @PreUpdate
     public void onPreUpdate() {
-        updateEmbeddableDate();
+        systemDate.setUpdDate(new Date());
     }    
 }

@@ -71,13 +71,13 @@ public class MemberService implements MemberServiceLocal {
             System.out.println("memberId = " + memberId);
 
             // メンバーグループ関連PKエンティティの生成
-            final RMemberMemberGroupPK rMemberMemberGroupPk = new RMemberMemberGroupPK();
-            rMemberMemberGroupPk.setMemberId(memberId);
-            BeanUtils.copyProperties(rMemberMemberGroupPk, memberRegister);
+            //final RMemberMemberGroupPK rMemberMemberGroupPk = new RMemberMemberGroupPK();
+            //rMemberMemberGroupPk.setMemberId(memberId);
+            //BeanUtils.copyProperties(rMemberMemberGroupPk, memberRegister);
             // メンバーグループ関連エンティティの生成
             final RMemberMemberGroup rMemberMemberGroup = new RMemberMemberGroup();
             BeanUtils.copyProperties(rMemberMemberGroup, memberRegister);
-            rMemberMemberGroup.setRMemberMemberGroupPK(rMemberMemberGroupPk);
+            //rMemberMemberGroup.setRMemberMemberGroupPK(rMemberMemberGroupPk);
 
             // メンバーグループ関連の永続化
             rMemberMemberGroupDao.create(rMemberMemberGroup);
