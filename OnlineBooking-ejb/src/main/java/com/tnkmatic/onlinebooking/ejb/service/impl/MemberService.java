@@ -16,11 +16,9 @@ import com.tnkmatic.onlinebooking.ejb.entity.BookingMember;
 import com.tnkmatic.onlinebooking.ejb.entity.MemberStudent;
 import com.tnkmatic.onlinebooking.ejb.entity.MemberTeacher;
 import com.tnkmatic.onlinebooking.ejb.entity.RMemberMemberGroup;
-import com.tnkmatic.onlinebooking.ejb.entity.RMemberMemberGroupPK;
 import com.tnkmatic.onlinebooking.ejb.resource.request.member.reference.MemberReferenceCondition;
 import com.tnkmatic.onlinebooking.ejb.resource.request.member.register.MemberRegisterRequest;
 import com.tnkmatic.onlinebooking.ejb.service.MemberServiceLocal;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -70,15 +68,10 @@ public class MemberService implements MemberServiceLocal {
             // TODO ロガーによる出力に変更
             System.out.println("memberId = " + memberId);
 
-            // メンバーグループ関連PKエンティティの生成
-            //final RMemberMemberGroupPK rMemberMemberGroupPk = new RMemberMemberGroupPK();
-            //rMemberMemberGroupPk.setMemberId(memberId);
-            //BeanUtils.copyProperties(rMemberMemberGroupPk, memberRegister);
             // メンバーグループ関連エンティティの生成
             final RMemberMemberGroup rMemberMemberGroup = new RMemberMemberGroup();
+            rMemberMemberGroup.setMemberId(memberId);
             BeanUtils.copyProperties(rMemberMemberGroup, memberRegister);
-            //rMemberMemberGroup.setRMemberMemberGroupPK(rMemberMemberGroupPk);
-
             // メンバーグループ関連の永続化
             rMemberMemberGroupDao.create(rMemberMemberGroup);
             

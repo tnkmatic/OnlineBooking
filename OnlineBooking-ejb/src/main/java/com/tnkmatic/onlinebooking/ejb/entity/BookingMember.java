@@ -8,7 +8,7 @@ package com.tnkmatic.onlinebooking.ejb.entity;
 
 import com.tnkmatic.onlinebooking.ejb.entity.embeddable.SystemDate;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -388,11 +388,11 @@ public class BookingMember implements Serializable {
     
     @PrePersist
     public void onPrePersist() {
-        systemDate = new SystemDate(new Date());
+        systemDate = new SystemDate(new Date(new java.util.Date().getTime()));
     }
     
     @PreUpdate
     public void onPreUpdate() {
-        this.systemDate.setUpdDate(new Date());
+        this.systemDate.setUpdDate(new Date(new java.util.Date().getTime()));
     }
 }

@@ -12,13 +12,12 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -57,7 +56,7 @@ public class RMemberMemberGroup implements Serializable {
     @Embedded
     private SystemDate systemDate;
   
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "MEMBER_GROUP_KBN", nullable = false, insertable = false, updatable = false)
     private MemberGroup memberGroup;
 
