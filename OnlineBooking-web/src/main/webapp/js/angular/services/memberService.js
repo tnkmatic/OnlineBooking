@@ -4,22 +4,18 @@
  * and open the template in the editor.
  */
 
+//memberリソース用オブジェクト
 var MemberResource = {};
+var uri = onlineBookingResourceDomain + 'members/:memberId';
+var resourcekey = {memberId: '@id'};
+var condition = {};
 
 //コンストラクタ
-var MemberService = function($resource, $rootScope) {
+var MemberService = function($resource) {
     this.$resource = $resource;
-    this.$scope = $rootScope;
+    //Memberリソース用のインスタンスを取得
     MemberResource = this.$resource(
-        onlineBookingResourceDomain + 'members/:memberId', {memberId: '@id'},
-        {
-            //メンバー登録
-            regist: {
-                method: 'POST',
-                params: {}
-            }
-        }
-    );
+        onlineBookingResourceDomain + 'members/:memberId', {memberId: '@id'});
 };
 
 //プロトタイプの取得
@@ -27,9 +23,6 @@ var prototype = MemberService.prototype;
 
 //メンバー登録
 prototype.memberRegist = function($scope) {
-    //生年月日の文字列をDate型に変換
-    //$scope.member.birthday = stringToDate($scope.member.birthday);
-    
     //サーバリクエストオブジェクトの生成
     var memberResource = new MemberResource({memberRegister: $scope.member}); //memberRegisterRequest
     //サーバリクエスト(メンバー登録)
@@ -43,7 +36,14 @@ prototype.memberRegist = function($scope) {
 //メンバー参照(検索)
 prototype.memberReference = function(memberCondition) {
     //サーバリクエストオブジェクトの生成
-    var memberResource = new MemberResource({memberCondition: memberCondition});
+    //var memberResource = new MemberResource({memberCondition: memberCondition});
     //サーバリクエスト(メンバー参照(検索))
-    return memberResource.$get();
+    //return memberResource.$get(memberCondition);
+    
+    var members = MemberResource.get({loginId: memberCondition.loginId}, function(){
+        members.firstName = memberCondition.firstName;
+        members.$get();
+    });
+    
+    return members;
 };

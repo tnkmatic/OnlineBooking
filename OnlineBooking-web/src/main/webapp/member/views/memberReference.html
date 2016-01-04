@@ -7,12 +7,41 @@ and open the template in the editor.
 <form class="form-horizontal" name="memberReferenceForm" novalidate >
     <!-- 検索条件 -->
     <div class="form-group">
+        <!-- ログインID -->
         <label for="loginId" class="control-label col-xs-2">ログインID</label>
         <div ng-class="['col-xs-2']">
-           <!-- <input text="text" id="loginId" class="form-control" -->
+           <input type="text" id="loginId" name="loginId" class="form-control" ng-model="memberCondition.loginId">
+        </div>
+        <!-- 名前(姓) 名前(名) -->
+        <label class="control-label col-xs-2">名前（姓）</label>
+        <div ng-class="['col-xs-2']">
+            <input type="text" class="form-control" name="lastName" ng-model="memberCondition.lastName">
+        </div>
+        <label class="control-label col-xs-2">名前（名）</label>
+        <div ng-class="['col-xs-2']">
+            <input type="text" class="form-control" name="firstName" ng-model="memberCondition.firstName">
         </div>
     </div>
-    
+    <!-- メンバー区分 -->
+    <div class="form-group">
+        <label class="control-label col-xs-2">メンバー区分</label>
+        <div class="radio col-xs-5">
+            <label for="memberGroupKbnTeacher">
+                <input type="radio" name="memberGroupKbn" id="memberGroupKbnTeacher" value="1" 
+                        ng-model="memberCondition.memberGroupKbn"checked />講師
+            </label>
+            <label for="memberGroupKbnStudent">
+                <input type="radio" name="memberGroupKbn" id="memberGroupKbnStudent" value="2" 
+                           ng-model="memberCondition.memberGroupKbn"/>生徒
+            </label>
+            <label for="memberGroupKbnAdmin">
+                <input type="radio" name="memberGroupKbn" id="memberGroupKbnAdmin" value="9" 
+                               ng-model="memberCondition.memberGroupKbn"/>管理者
+            </label>
+        </div>
+    </div>
+
+    <!-- 検索ボタン -->
     <div class="form-group">
         <!-- data-toggleをmodal指定することでモーダル表示に対応 data-targetで対象のモーダルを指定 -->
         <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="reference()">検索</button>

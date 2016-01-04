@@ -7,14 +7,6 @@
 /*
  * factoryメソッドでは共有するオブジェクトや関数を返す関数を登録(memberService)
  */
-(function(module) {
-    
-    module.factory(
-            'memberService', ['$resource', '$rootScope', function($resource, $rootScope) {
-        //サービスの実装(DI経由で共有するオブジェクトの返却)
-        return new MemberService($resource, $rootScope);
-        }]
-    );
-    
-}(onlineBookingModule));
-
+onlineBookingModule.service(
+        'memberService', ['$resource', MemberService]
+);
