@@ -30,7 +30,7 @@ public class ResourceUtil {
         String responseBody = null;
         if (MediaType.APPLICATION_JSON.equals(mediaType)
                 && responseBodyBean != null) {
-            final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+            final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();
             responseBody = gson.toJson(responseBodyBean);
         }
 

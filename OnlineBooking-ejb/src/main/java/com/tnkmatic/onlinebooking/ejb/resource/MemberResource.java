@@ -14,7 +14,6 @@ import com.tnkmatic.onlinebooking.ejb.resource.response.member.MemberResponse;
 import com.tnkmatic.onlinebooking.ejb.resource.response.member.MemberResponseDetail;
 import com.tnkmatic.onlinebooking.ejb.service.MemberServiceLocal;
 import com.tnkmatic.onlinebooking.ejb.util.ResourceUtil;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,10 +26,10 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.apache.commons.beanutils.BeanUtils;
 
 /**
  *
@@ -77,33 +76,63 @@ public class MemberResource extends BaseResource {
     }
     
     @GET
+    @Path("{loginId}")
     @Consumes(MediaType.APPLICATION_JSON + ";" + ConstantValue.ENCODING)
     @Produces(MediaType.APPLICATION_JSON + ";" + ConstantValue.ENCODING)
-    public Response memgerReference(
+    public Response memberReferenceByKey(
+            @PathParam("loginId") String loginId,
             @BeanParam MemberReferenceCondition memberCondition) {
         Response response = null;
-        
         try {
             // TODO バリデーションチェック(クエリパラメータ)
 
-            // 登録メンバーの検索
-            final List<BookingMember> bookingMemberList =
-                    memberService.memberReference(memberCondition);
-            // レスポンスボディ編集
-            MemberResponse memberResponse = new MemberResponse();
-            memberResponse.setMembers(bookingMemberList);
-            // レスポンス生成
-            response = ResourceUtil.createResponse(
-                    Response.Status.OK, 
-                    MediaType.APPLICATION_JSON, 
-                    null,
-                    null,
-                    memberResponse);
+            memberCondition.setLoginId(loginId);
+            response = this.memberReference(memberCondition);
             LOG.log(Level.INFO, response.toString());
         } catch (Exception e) {
             throw new javax.ws.rs.InternalServerErrorException(
                     Response.status(Response.Status.INTERNAL_SERVER_ERROR).build(), e);
         }
+
+        return response;
+    }
+    
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON + ";" + ConstantValue.ENCODING)
+    @Produces(MediaType.APPLICATION_JSON + ";" + ConstantValue.ENCODING)
+    public Response memgerReferenceByCondition(
+            @BeanParam MemberReferenceCondition memberCondition) {
+        Response response = null;
+        try {
+            // TODO バリデーションチェック(クエリパラメータ)
+            
+            response = this.memberReference(memberCondition);
+            LOG.log(Level.INFO, response.toString());
+        } catch (Exception e) {
+            throw new javax.ws.rs.InternalServerErrorException(
+                    Response.status(Response.Status.INTERNAL_SERVER_ERROR).build(), e);
+        }
+        
+        return response;
+    }
+    
+    private Response memberReference(
+            MemberReferenceCondition memberCondition) throws Exception {
+        Response response = null;
+        
+        // 登録メンバーの検索
+        final List<BookingMember> bookingMemberList =
+                memberService.memberReference(memberCondition);
+        // レスポンスボディ編集
+        MemberResponse memberResponse = new MemberResponse();
+        memberResponse.setMembers(bookingMemberList);
+        // レスポンス生成
+        response = ResourceUtil.createResponse(
+                Response.Status.OK, 
+                MediaType.APPLICATION_JSON, 
+                null,
+                null,
+                memberResponse);
         
         return response;
     }
