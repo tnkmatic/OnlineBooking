@@ -8,5 +8,5 @@
  * factoryメソッドでは共有するオブジェクトや関数を返す関数を登録(memberService)
  */
 onlineBookingModule.service(
-        'memberService', ['$resource', MemberService]
+        'memberService', ['$resource', '$rootScope', MemberService]
 );

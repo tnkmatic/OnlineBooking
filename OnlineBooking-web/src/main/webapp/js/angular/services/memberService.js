@@ -6,16 +6,13 @@
 
 //memberリソース用オブジェクト
 var MemberResource = {};
-var uri = onlineBookingResourceDomain + 'members/:memberId';
-var resourcekey = {memberId: '@id'};
-var condition = {};
 
 //コンストラクタ
-var MemberService = function($resource) {
+var MemberService = function($resource, $rootScope) {
     this.$resource = $resource;
     //Memberリソース用のインスタンスを取得
     MemberResource = this.$resource(
-        onlineBookingResourceDomain + 'members/:memberId', {memberId: '@id'});
+        $rootScope.onlineBookingUri, {memberId: '@id'});    //'@idはデフォルト'
 };
 
 //プロトタイプの取得
@@ -39,11 +36,11 @@ prototype.memberReference = function(memberCondition) {
     //var memberResource = new MemberResource({memberCondition: memberCondition});
     //サーバリクエスト(メンバー参照(検索))
     //return memberResource.$get(memberCondition);
-    
-    var members = MemberResource.get({loginId: memberCondition.loginId}, function(){
-        members.firstName = memberCondition.firstName;
-        members.$get();
+
+    MemberResource.$get(memberCondition)
+            .then(function success(result) {
+                return result;
     });
     
-    return members;
+    //MemberResource.$get is not a function が不明
 };

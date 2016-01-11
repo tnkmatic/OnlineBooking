@@ -44,12 +44,9 @@ onlineBookingModule.controller('memberReferenceController',
         //メンバー参照(検索)
         $scope.reference = function() {
             //memberServiceを介して検索を実行
-            memberService.memberReference($scope.memberCondition)
-                    .then(function success(result) {
-                        $scope.memberGrid.data = result.members;
-                        //$scope.memberConditionの状態を初期化(検索パラメータが残らないようにするため)
-                        $scope.memberCondition = {};
-                    });
+            $scope.memberGrid.data = memberService.memberReference($scope.memberCondition);
+            //$scope.memberConditionの状態を初期化(検索パラメータが残らないようにするため)
+            $scope.memberCondition = {};
         };
     }]
 );
