@@ -23,10 +23,3 @@ onlineBookingModule
                         'http://localhost:8080/OnlineBooking-web/onlinebooking/members/:memberId';
             })
 ;
-
-
-
-/*
- * アプリケーション共通変数定義
- */
-var onlineBookingResourceDomain = 'http://localhost:8080/OnlineBooking-web/onlinebooking/';

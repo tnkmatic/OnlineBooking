@@ -33,14 +33,13 @@ prototype.memberRegist = function($scope) {
 //メンバー参照(検索)
 prototype.memberReference = function(memberCondition) {
     //サーバリクエストオブジェクトの生成
-    //var memberResource = new MemberResource({memberCondition: memberCondition});
+    var memberResource = new MemberResource({memberCondition: memberCondition});
     //サーバリクエスト(メンバー参照(検索))
-    //return memberResource.$get(memberCondition);
-
-    MemberResource.$get(memberCondition)
-            .then(function success(result) {
-                return result;
-    });
+    var result = memberResource.get(memberCondition);
+    var result2 = MemberResource.$get(memberCondition);
     
-    //MemberResource.$get is not a function が不明
+    //検証中 → $resourceの使い方
+    
+    return "TODO";
+
 };
