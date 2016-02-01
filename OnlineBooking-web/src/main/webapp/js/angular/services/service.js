@@ -7,6 +7,13 @@
 /*
  * factoryメソッドでは共有するオブジェクトや関数を返す関数を登録(memberService)
  */
-onlineBookingModule.service(
-        'memberService', ['$resource', '$rootScope', MemberService]
-);
+angular.module('onlineBookingModule')
+        .factory('memberService', ['$resource', 
+                function($resource) {
+                    return $resource(
+                            'http://localhost:8080/OnlineBooking-web/onlinebooking/members/:memberId', 
+                            {memberId: '@id'});
+                }
+        ])
+//        .service('memberService', ['$resource', '$rootScope', MemberService])
+;

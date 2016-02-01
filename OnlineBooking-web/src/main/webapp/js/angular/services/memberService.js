@@ -5,14 +5,33 @@
  */
 
 //memberリソース用オブジェクト
-var MemberResource = {};
+//var MemberResource = {};
 
 //コンストラクタ
 var MemberService = function($resource, $rootScope) {
-    this.$resource = $resource;
+//    this.Member = $resource(
+//            $rootScope.onlineBookingUri, {memberId: '@id'}, null);
+    //this.memberReference = getMember;
+    
     //Memberリソース用のインスタンスを取得
-    MemberResource = this.$resource(
-        $rootScope.onlineBookingUri, {memberId: '@id'});    //'@idはデフォルト'
+//    MemberResource = this.$resource(
+//        $rootScope.onlineBookingUri, {memberId: '@id'});    //'@idはデフォルト'
+
+    var Member = $resource(
+            'http://localhost:8080/OnlineBooking-web/onlinebooking/members/:memberId', {memberId: '@id'}, null);
+    
+    var members;
+    this.getMembers = function () {
+        return members;
+    };
+    
+    this.memberReference = function(memberCondition) {
+        Member.get(null, function(responseBody) {
+            return function() {
+                return responseBody;
+            };
+        });
+    };
 };
 
 //プロトタイプの取得
@@ -30,16 +49,33 @@ prototype.memberRegist = function($scope) {
     });
 };
 
-//メンバー参照(検索)
-prototype.memberReference = function(memberCondition) {
-    //サーバリクエストオブジェクトの生成
-    var memberResource = new MemberResource({memberCondition: memberCondition});
-    //サーバリクエスト(メンバー参照(検索))
-    var result = memberResource.get(memberCondition);
-    var result2 = MemberResource.$get(memberCondition);
-    
-    //検証中 → $resourceの使い方
-    
-    return "TODO";
+//prototype.memberReference = function(memberCondition) {
+//    var members = this.Member.get(memberCondition);
+//    return members;
+//};
 
+
+var getMember = function(memberCondition) {
+   //サーバリクエストオブジェクトの生成
+   var promise = this.resource.get(memberCondition).$promise;
+   //→戻り値はモジュールのインスタンスになる・・・なので$promiseの指定→なのでもうちょい工夫必要
+   
+   
+   return promise;
+   
+//    var members = this.resource.get(
+//            memberCondition, function(result, headers) {
+//                membersList = result.members;
+//    });
 };
+//メンバー参照(検索)
+//prototype.memberReference = function(memberCondition) {
+//     var membersList;
+//   //サーバリクエストオブジェクトの生成
+//    var members = this.$resourceService.get(
+//            memberCondition, function(result, headers) {
+//                membersList = result;
+//    });
+//    
+//    return membersList;
+//};

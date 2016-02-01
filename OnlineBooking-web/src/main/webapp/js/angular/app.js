@@ -3,13 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var onlineBookingModule = angular.module(
-        'onlineBookingModule', 
-        ['ngMessages', 'ngResource', 
-            'ui.grid', 'ui.grid.pagination', 'ui.grid.exporter',
-            'onlineBookingRouteModule']);
-
-onlineBookingModule
+angular.module('onlineBookingModule', ['ngMessages', 'ngResource', 'ui.grid', 
+        'ui.grid.pagination', 'ui.grid.exporter','onlineBookingRouteModule'])
         //各サービスインスタンスが生成される前の設定を実行
         .config(['$resourceProvider',    
             function($resourceProvider) {
@@ -21,5 +16,4 @@ onlineBookingModule
             function($rootScope) {
                 $rootScope.onlineBookingUri = 
                         'http://localhost:8080/OnlineBooking-web/onlinebooking/members/:memberId';
-            })
-;
+            });

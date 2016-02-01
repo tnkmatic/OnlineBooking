@@ -41,7 +41,7 @@ angular.module('onlineBookingModule').controller('memberRegistController',
         //メンバー登録(submit)
         $scope.submit = function() {
             //memberServiceを介してメンバー登録
-            memberService.memberRegist($scope);
+            memberService.save({memberRegister: $scope.member});
             //完了画面の表示
             $scope.changePage('complete');
         };

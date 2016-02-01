@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-onlineBookingModule.controller('memberReferenceController',
-    ['$scope', 'uiGridConstants', 'memberService', function($scope, uiGridConstants, memberService) {
+angular.module('onlineBookingModule')
+        .controller('memberReferenceController',['$scope', 'uiGridConstants', 'memberService', 
+    function($scope, uiGridConstants, memberService) {
         //メンバ検索用のモデル
         $scope.memberCondition = {};
         
@@ -40,14 +41,13 @@ onlineBookingModule.controller('memberReferenceController',
             ],
             data : []
         };
-        
+
         //メンバー参照(検索)
         $scope.reference = function() {
-            //memberServiceを介して検索を実行
-            $scope.memberGrid.data = memberService.memberReference($scope.memberCondition);
-            //$scope.memberConditionの状態を初期化(検索パラメータが残らないようにするため)
-            $scope.memberCondition = {};
+            //memberService($resourceサービス)を介して検索を実行
+            memberService.get($scope.memberCondition, function(responseBody) {
+                $scope.memberGrid.data = responseBody.members;
+            });
         };
     }]
 );
-
