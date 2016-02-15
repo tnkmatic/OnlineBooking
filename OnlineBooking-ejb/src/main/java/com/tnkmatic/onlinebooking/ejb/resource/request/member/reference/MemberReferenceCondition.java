@@ -15,6 +15,12 @@ import javax.ws.rs.QueryParam;
 public class MemberReferenceCondition {
     @QueryParam(ConstantValue.MEMBER_CONDITION_LOGIN_ID)
     private String loginId;
+    @QueryParam(ConstantValue.MEMBER_CONDITION_FIRST_NAME)
+    private String firstName;
+    @QueryParam(ConstantValue.MEMBER_CONDITION_LAST_NAME)
+    private String lastName;
+    @QueryParam(ConstantValue.MEMBER_GROUP_KBN)
+    private String memberGroupKbn;
 
     public String getLoginId() {
         return loginId;
@@ -22,5 +28,29 @@ public class MemberReferenceCondition {
 
     public void setLoginId(String loginId) {
         this.loginId = loginId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMemberGroupKbn() {
+        return memberGroupKbn;
+    }
+
+    public void setMemberGroupKbn(String memberGroupKbn) {
+        this.memberGroupKbn = memberGroupKbn;
     }
 }

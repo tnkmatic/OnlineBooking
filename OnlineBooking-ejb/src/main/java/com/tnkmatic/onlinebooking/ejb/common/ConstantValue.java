@@ -23,5 +23,8 @@ public class ConstantValue {
     
     //検索パラメータ
     public static final String MEMBER_CONDITION_LOGIN_ID = "loginId";
+    public static final String MEMBER_CONDITION_FIRST_NAME = "firstName";
+    public static final String MEMBER_CONDITION_LAST_NAME = "lastName";
+    public static final String MEMBER_GROUP_KBN = "memberGroupKbn";
     
 }
