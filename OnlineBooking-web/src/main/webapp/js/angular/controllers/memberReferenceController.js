@@ -6,7 +6,8 @@
 
 angular.module('onlineBookingModule')
         .controller('memberReferenceController',['$scope', 'uiGridConstants', 'memberService', 
-    function($scope, uiGridConstants, memberService) {
+            'stringUtilService',
+    function($scope, uiGridConstants, memberService, stringUtilService) {
         //メンバ検索用のモデル
         $scope.memberCondition = {};
         
@@ -19,6 +20,7 @@ angular.module('onlineBookingModule')
             paginationPageSize: 5,
             paginationPageSizes: [20, 50, 100],
             enableGridMenu: true,
+//            enableRowSelection: true,
             exporterCsvFilename: 'members' + '_' + formatDate(new Date(), 'YYYYMMDDhhmmss') + '.csv',
             columnDefs: [
                 {field: 'loginId',displayName: 'ログインID', width: 120},
@@ -44,6 +46,17 @@ angular.module('onlineBookingModule')
 
         //メンバー参照(検索)
         $scope.reference = function() {
+            //空文字対応
+            $scope.memberCondition.loginId = 
+                    stringUtilService.emptyOrUndefinedToNull(
+                            $scope.memberCondition.loginId);
+            $scope.memberCondition.firstName =
+                    stringUtilService.emptyOrUndefinedToNull(
+                            $scope.memberCondition.firstName);
+            $scope.memberCondition.lastName = 
+                    stringUtilService.emptyOrUndefinedToNull(
+                            $scope.memberCondition.lastName);
+            
             //memberService($resourceサービス)を介して検索を実行
             memberService.get($scope.memberCondition, function(responseBody) {
                 $scope.memberGrid.data = responseBody.members;

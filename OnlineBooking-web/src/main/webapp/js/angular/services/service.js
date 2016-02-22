@@ -15,5 +15,6 @@ angular.module('onlineBookingModule')
                             {memberId: '@id'});
                 }
         ])
+        .service('stringUtilService', [StringUtilService])
 //        .service('memberService', ['$resource', '$rootScope', MemberService])
 ;
