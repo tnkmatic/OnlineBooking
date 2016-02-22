@@ -11,6 +11,7 @@ import com.tnkmatic.onlinebooking.ejb.entity.BookingMember_;
 import com.tnkmatic.onlinebooking.ejb.entity.RMemberMemberGroup;
 import com.tnkmatic.onlinebooking.ejb.entity.RMemberMemberGroup_;
 import com.tnkmatic.onlinebooking.ejb.resource.request.member.reference.MemberReferenceCondition;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -20,9 +21,8 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.SetJoin;
 
 /**
  *
@@ -38,35 +38,37 @@ public class BookingMemberCustom {
         //クエリオブジェクトの取得
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<BookingMember> criteriaQuery = builder.createQuery(BookingMember.class);
-        //JPQLでの別名取得
-        Root<BookingMember> root = criteriaQuery.from(BookingMember.class);
-        Join<BookingMember, RMemberMemberGroup> join = root.join(BookingMember_.rMemberMemberGroup);
         
-        //JPQLの生成
-        criteriaQuery = criteriaQuery.select(root);
+        //From句の設定
+        Root<BookingMember> root = criteriaQuery.from(BookingMember.class);
+        //結合の定義
+        Join<BookingMember, RMemberMemberGroup> join = root.join(BookingMember_.rMemberMemberGroup);
+        //Select句の設定
+        criteriaQuery = criteriaQuery.select(root);        
+        //動的条件設定用のオブジェクト生成(Where句の生成)
+        List<Predicate> whereConditions = new ArrayList<>();
         if (memberCondition.getLoginId() != null) { //ログインID
-            criteriaQuery = criteriaQuery.where(
-                    builder.equal(root.get(ConstantValue.MEMBER_CONDITION_LOGIN_ID), 
+            whereConditions.add(
+                    builder.equal(root.get(BookingMember_.loginId), 
                             memberCondition.getLoginId()));
         }
         if (memberCondition.getFirstName() != null) {   //氏名(名)
-            criteriaQuery = criteriaQuery.where(
-                    builder.equal(root.get(ConstantValue.MEMBER_CONDITION_FIRST_NAME),
+            whereConditions.add(
+                    builder.equal(root.get(BookingMember_.firstName), 
                             memberCondition.getFirstName()));
         }
         if (memberCondition.getLastName() != null) {    //氏名(姓)
-            criteriaQuery = criteriaQuery.where(
-                    builder.equal(root.get(ConstantValue.MEMBER_CONDITION_LAST_NAME),
+            whereConditions.add(
+                    builder.equal(root.get(BookingMember_.lastName),
                             memberCondition.getLastName()));
         }
         if (memberCondition.getMemberGroupKbn() != null) {  //グループ区分(講師 or 生徒 or 管理者)
-            criteriaQuery = criteriaQuery.where(
+            whereConditions.add(
                     builder.equal(join.get(RMemberMemberGroup_.memberGroupKbn), 
-                            memberCondition.getMemberGroupKbn())
-            );
-                    
-                    
+                            memberCondition.getMemberGroupKbn()));
         }
+        criteriaQuery.where(
+                builder.and(whereConditions.toArray(new Predicate[]{})));
 
         //JPQLの発行
         Query q = em.createQuery(criteriaQuery);

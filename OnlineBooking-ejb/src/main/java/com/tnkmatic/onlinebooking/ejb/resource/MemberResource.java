@@ -59,10 +59,7 @@ public class MemberResource extends BaseResource {
             // レスポンスボディ編集
             MemberResponse memberResponse = new MemberResponse();
             MemberResponseDetail memberResponseDetail = new MemberResponseDetail();
-//            BeanUtils.copyProperties(memberResponseDetail, bookingMember);
-//            memberResponseDetail.setRecid(1);
-//            memberResponse.setMember(memberResponseDetail);
-              memberResponse.setMember(bookingMember);
+            memberResponse.setMember(bookingMember);
             // レスポンス生成
             response = ResourceUtil.createResponse(Response.Status.CREATED, MediaType.APPLICATION_JSON, 
                     uriInfo, Arrays.asList(bookingMember.getMemberId().toString()),
