@@ -8,7 +8,7 @@ var onlineBookingRouteModule = angular.module(
 
 onlineBookingRouteModule.config(['$routeProvider',
     function($routeProvider) {
-        // ルーティング設定
+        //ルーティング設定
         $routeProvider
                 .when('/member/regist', {
                     templateUrl: './member/views/memberRegist.html',

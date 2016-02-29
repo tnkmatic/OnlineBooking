@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-angular.module('onlineBookingModule', ['ngMessages', 'ngResource', 'ui.grid', 
-        'ui.grid.pagination', 'ui.grid.exporter','onlineBookingRouteModule'])
+angular.module('onlineBookingModule', ['ngMessages', 'ngResource', 
+        'ui.grid', 'ui.grid.selection', 'ui.grid.pagination', 'ui.grid.exporter',
+        'ui.grid.resizeColumns',
+        'onlineBookingRouteModule'])
         //各サービスインスタンスが生成される前の設定を実行
         .config(['$resourceProvider',    
             function($resourceProvider) {
