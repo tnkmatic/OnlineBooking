@@ -43,11 +43,22 @@ and open the template in the editor.
 
     <!-- 検索ボタン -->
     <div class="form-group">
-        <!-- data-toggleをmodal指定することでモーダル表示に対応 data-targetで対象のモーダルを指定 -->
         <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="reference()">検索</button>
     </div>
     <hr>
     <!-- 検索結果 -->
     <div id="members" ui-grid="gridOptions" 
          ui-grid-pagination ui-grid-resize-columns ui-grid-selection class="grid"></div>
+
+    <!-- 編集ボタン -->
+    <div class="form-grop">
+        <button type="button" class="btn btn-lg btn-primary btn-block">編集</button>
+    </div>
+    
+    <!-- デバッグエリア -->
+    <div id="debugarea">{{selectedRows.entity.loginId}}</div>
+    
+    <div class="container" ng-controller="memberEditController">
+        <input type="text" class="form-control" ng-model="$parent.selectedRows.entity.lastName">
+    </div>
 </form>

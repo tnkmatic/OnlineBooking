@@ -5,7 +5,7 @@
  */
 
 angular.module('onlineBookingModule')
-        .controller('memberReferenceController',['$rootScope', 'memberService', 
+        .controller('memberReferenceController',['$scope', 'memberService', 
             'stringUtilService',
     function($scope, memberService, stringUtilService) {
         //メンバ検索用のモデル
@@ -27,14 +27,14 @@ angular.module('onlineBookingModule')
             paginationPageSize: 5,
             paginationPageSizes: [20, 50, 100],
             //グリッドヘッダ行
-            //enableGridMenu: true,
+            enableGridMenu: true,
             //CSV出力
             exporterCsvFilename: 'members' + '_' + formatDate(new Date(), 'YYYYMMDDhhmmss') + '.csv',
             //グリッド列の定義
             columnDefs: [
-                {field: 'loginId',displayName: 'ログインID', width: 120},
-                {field: 'lastName',displayName: '氏名(姓)', width: 240},
-                {field: 'firstName',displayName: '氏名(名)', width: 120},
+                {name: 'loginId',displayName: 'ログインID', width: 120},
+                {name: 'lastName',displayName: '氏名(姓)', width: 120},
+                {name: 'firstName',displayName: '氏名(名)', width: 120},
                 {name: 'lastNameKana',displayName: '氏名(姓カナ)', width: 120},
                 {name: 'firstNameKana',displayName: '氏名(名カナ)', width: 120},
                 {name: 'mstGender.genderName', displayName: '性別', width: 80},
@@ -50,7 +50,18 @@ angular.module('onlineBookingModule')
                 {name: 'buildingName',displayName: '建物名', width: 250},
                 {name: 'rMemberMemberGroup.memberGroup.memberGroupName',displayName: 'メンバー区分', width: 120}
             ],
-            data : {}
+            data : [],
+            onRegisterApi : function( gridApi ) {
+                $scope.gridApi = gridApi;
+                // 行選択時の選択行の取得
+                gridApi.selection.on.rowSelectionChanged($scope, function(row){
+                    if (row.isSelected) {
+                        $scope.selectedRows = row;
+                    } else {
+                        $scope.selectedRows = null;
+                    }
+                });
+            }
         };
 
         //メンバー参照(検索)
