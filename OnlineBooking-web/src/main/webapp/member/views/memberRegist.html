@@ -1,5 +1,5 @@
 <!-- サブミット時にHTML5のバリデーションチェック動作を回避するためnovalidate属性を付与 -->
-<div ng-show="show.entry">
+<div ng-show="showRegist.entry">
     <form class="form-horizontal" name="memberRegistForm" novalidate >
         <!-- ログインID -->
         <div class="form-group">
@@ -287,7 +287,7 @@
     </form>
 </div> <!-- ngShow = show.entry -->
 
-<div ng-show="show.confirm"> <!-- ng-show= show.confirm -->
+<div ng-show="showRegist.confirm"> <!-- ng-show= show.confirm -->
     <!-- ログインID -->
     <div class="row">
         <label for="loginId" class="control-label col-xs-2" style="background-color: gainsboro">ログインID</label>
@@ -381,7 +381,7 @@
     </div>
 </div> <!-- ng-show= show.confirm -->
 
-<div ng-show="show.complete"> <!-- ng-show= show.complete -->
+<div ng-show="showRegist.complete"> <!-- ng-show= show.complete -->
     <div class="row">
         <div class="col-xs-6">
             <h3 class="text-success">登録が完了しました</h3>

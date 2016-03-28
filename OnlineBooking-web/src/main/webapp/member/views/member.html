@@ -4,61 +4,63 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<form class="form-horizontal" name="memberReferenceForm" novalidate >
-    <!-- 検索条件 -->
-    <div class="form-group">
-        <!-- ログインID -->
-        <label for="loginId" class="control-label col-xs-2">ログインID</label>
-        <div ng-class="['col-xs-2']">
-           <input type="text" id="loginId" name="loginId" class="form-control" ng-model="memberCondition.loginId">
-        </div>
-        <!-- 名前(姓) 名前(名) -->
-        <label class="control-label col-xs-2">名前（姓）</label>
-        <div ng-class="['col-xs-2']">
-            <input type="text" class="form-control" name="lastName" ng-model="memberCondition.lastName">
-        </div>
-        <label class="control-label col-xs-2">名前（名）</label>
-        <div ng-class="['col-xs-2']">
-            <input type="text" class="form-control" name="firstName" ng-model="memberCondition.firstName">
-        </div>
-    </div>
-    <!-- メンバー区分 -->
-    <div class="form-group">
-        <label class="control-label col-xs-2">メンバー区分</label>
-        <div class="radio col-xs-5">
-            <label for="memberGroupKbnTeacher">
-                <input type="radio" name="memberGroupKbn" id="memberGroupKbnTeacher" value="1" 
-                        ng-model="memberCondition.memberGroupKbn"checked />講師
-            </label>
-            <label for="memberGroupKbnStudent">
-                <input type="radio" name="memberGroupKbn" id="memberGroupKbnStudent" value="2" 
-                           ng-model="memberCondition.memberGroupKbn"/>生徒
-            </label>
-            <label for="memberGroupKbnAdmin">
-                <input type="radio" name="memberGroupKbn" id="memberGroupKbnAdmin" value="9" 
-                               ng-model="memberCondition.memberGroupKbn"/>管理者
-            </label>
-        </div>
-    </div>
 
-    <!-- 検索ボタン -->
-    <div class="form-group">
-        <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="reference()">検索</button>
-    </div>
-    <hr>
-    <!-- 検索結果 -->
-    <div id="members" ui-grid="gridOptions" 
-         ui-grid-pagination ui-grid-resize-columns ui-grid-selection class="grid"></div>
+<div ng-show="showReference.reference">
+    <form class="form-horizontal" name="memberReferenceForm" novalidate >
+        <!-- 検索条件 -->
+        <div class="form-group">
+            <!-- ログインID -->
+            <label for="loginId" class="control-label col-xs-2">ログインID</label>
+            <div ng-class="['col-xs-2']">
+               <input type="text" id="loginId" name="loginId" class="form-control" ng-model="memberCondition.loginId">
+            </div>
+            <!-- 名前(姓) 名前(名) -->
+            <label class="control-label col-xs-2">名前（姓）</label>
+            <div ng-class="['col-xs-2']">
+                <input type="text" class="form-control" name="lastName" ng-model="memberCondition.lastName">
+            </div>
+            <label class="control-label col-xs-2">名前（名）</label>
+            <div ng-class="['col-xs-2']">
+                <input type="text" class="form-control" name="firstName" ng-model="memberCondition.firstName">
+            </div>
+        </div>
+        <!-- メンバー区分 -->
+        <div class="form-group">
+            <label class="control-label col-xs-2">メンバー区分</label>
+            <div class="radio col-xs-5">
+                <label for="memberGroupKbnTeacher">
+                    <input type="radio" name="memberGroupKbn" id="memberGroupKbnTeacher" value="1" 
+                            ng-model="memberCondition.memberGroupKbn"checked />講師
+                </label>
+                <label for="memberGroupKbnStudent">
+                    <input type="radio" name="memberGroupKbn" id="memberGroupKbnStudent" value="2" 
+                               ng-model="memberCondition.memberGroupKbn"/>生徒
+                </label>
+                <label for="memberGroupKbnAdmin">
+                    <input type="radio" name="memberGroupKbn" id="memberGroupKbnAdmin" value="9" 
+                                   ng-model="memberCondition.memberGroupKbn"/>管理者
+                </label>
+            </div>
+        </div>
 
-    <!-- 編集ボタン -->
-    <div class="form-grop">
-        <button type="button" class="btn btn-lg btn-primary btn-block">編集</button>
-    </div>
-    
-    <!-- デバッグエリア -->
-    <div id="debugarea">{{selectedRows.entity.loginId}}</div>
-    
-    <div class="container" ng-controller="memberEditController">
-        <input type="text" class="form-control" ng-model="$parent.selectedRows.entity.lastName">
-    </div>
-</form>
+        <!-- 検索ボタン -->
+        <div class="form-group">
+            <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="reference()">検索</button>
+        </div>
+        <hr>
+        <!-- 検索結果 -->
+        <div id="members" ui-grid="gridOptions" 
+             ui-grid-pagination ui-grid-resize-columns ui-grid-selection class="grid"></div>
+
+        <!-- 編集ボタン -->
+        <div class="form-grop">
+            <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="edit()">編集</button>
+        </div>
+
+    </form>
+</div>
+
+<div ng-show="showReference.edit">
+    <div id="debugarea">{{selectedRows.entity.loginId}}</div>    
+    <input type="text" class="form-control" ng-model="$parent.selectedRows.entity.lastName">
+</div>

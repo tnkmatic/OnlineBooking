@@ -13,11 +13,11 @@ onlineBookingRouteModule.config(['$routeProvider',
                 .when('/member/regist', {
                     templateUrl: './member/views/memberRegist.html',
                     //template: '<h1>TEST</h1>'
-                    controller: 'memberRegistController'
+                    controller: 'memberController'
                 })
                 .when('/member', {
                     templateUrl: './member/views/member.html',
-                    controller: 'memberReferenceController'
+                    controller: 'memberController'
                 })
                 .otherwise({
                    redirectTo: '/member' 
