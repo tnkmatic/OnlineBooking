@@ -154,11 +154,13 @@ public class BookingMember implements Serializable {
     private MstContactWay mstContactWay;
     @OneToOne
     @JoinColumn(name = "GENDER", nullable = false, insertable = false, updatable = false)
-    private MstGender mstGender;
-    
+    private MstGender mstGender;    
     @OneToOne
     @JoinColumn(name = "MEMBER_ID", nullable = false, insertable = false, updatable = false)
     private RMemberMemberGroup rMemberMemberGroup;
+    @OneToOne
+    @JoinColumn(name="MEMBER_ID", nullable = false, insertable = false, updatable = false)
+    private MemberTeacher memberTeacher;
 
     public BookingMember() {
     }
@@ -359,7 +361,14 @@ public class BookingMember implements Serializable {
     public void setrMemberMemberGroup(RMemberMemberGroup rMemberMemberGroup) {
         this.rMemberMemberGroup = rMemberMemberGroup;
     }
+    
+    public MemberTeacher getMemberTeacher() {
+        return memberTeacher;
+    }
 
+    public void setMemberTeacher(MemberTeacher memberTeacher) {
+        this.memberTeacher = memberTeacher;
+    }
 
     @Override
     public int hashCode() {
