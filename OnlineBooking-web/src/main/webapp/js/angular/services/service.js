@@ -8,13 +8,21 @@
  * factoryメソッドでは共有するオブジェクトや関数を返す関数を登録(memberService)
  */
 angular.module('onlineBookingModule')
-        .factory('memberService', ['$resource', 
-                function($resource) {
+        .factory('memberService', ['$resource', 'onlineBookingUri',
+                function($resource, onlineBookingUri) {
                     return $resource(
-                            'http://localhost:8080/OnlineBooking-web/onlinebooking/members/:memberId', 
+                            onlineBookingUri + 'members/:memberId', 
                             {memberId: '@id'});
                 }
         ])
+        .factory('mstEmployService', ['$resource', 'onlineBookingUri',
+                function($resource, onlineBookingUri) {
+                    return $resource(
+                            onlineBookingUri + 'mstemploys/:employKbn',
+                            {employKbn: '@id'});
+                }
+        ])
         .service('stringUtilService', [StringUtilService])
+        .service('mstService', ['mstEmployService', MstService])
 //        .service('memberService', ['$resource', '$rootScope', MemberService])
 ;

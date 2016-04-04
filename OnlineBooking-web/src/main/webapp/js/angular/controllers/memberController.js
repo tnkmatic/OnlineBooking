@@ -5,8 +5,8 @@
  */
 
 angular.module('onlineBookingModule').controller('memberController',
-    ['$scope', 'memberService', 'stringUtilService', 
-        function($scope, memberService, stringUtilService) {
+    ['$scope', 'memberService', 'stringUtilService', 'mstService',
+        function($scope, memberService, stringUtilService, mstService) {
         //**********************************************************************
         // モデル定義
         //**********************************************************************
@@ -25,6 +25,9 @@ angular.module('onlineBookingModule').controller('memberController',
                }
            }
         };
+        
+        // マスタ値の取得
+        $scope.mstEmployList = mstService.getEmployList();
             
         //**********************************************************************
         // メンバ追加用(memberRegist)
@@ -65,7 +68,7 @@ angular.module('onlineBookingModule').controller('memberController',
         // SPA表示制御用
         $scope.showReference = {
            reference : true,
-           edit  : false
+           addAttribute  : false
         };
 
         //Grid初期設定
@@ -110,9 +113,9 @@ angular.module('onlineBookingModule').controller('memberController',
                 // 行選択時の選択行の取得
                 gridApi.selection.on.rowSelectionChanged($scope, function(row){
                     if (row.isSelected) {
-                        $scope.selectedRows = row;
+                        $scope.selectedMember = row.entity;
                     } else {
-                        $scope.selectedRows = null;
+                        $scope.selectedMember = null;
                     }
                 });
             }
@@ -138,12 +141,12 @@ angular.module('onlineBookingModule').controller('memberController',
         };
         
         //メンバー編集の表示
-        $scope.edit = function() {
-            $scope.changePage($scope.showReference, 'edit');
+        $scope.addAttribute = function() {
+            $scope.changePage($scope.showReference, 'addAttribute');
         };
 
         //**********************************************************************
-        // メンバ更新(memberUpdate)
+        // メンバ追加属性設定(memberAddAttribute)
         //**********************************************************************
         
 

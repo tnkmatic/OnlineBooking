@@ -13,9 +13,9 @@ angular.module('onlineBookingModule', ['ngMessages', 'ngResource',
                 //リソースキーを指定しなかった場合にURL末尾に/を付与するかどうか
                 //$resourceProvider.defaults.stripTrailingSlashes = true;
             }])
+        .value('onlineBookingUri', 'http://localhost:8080/OnlineBooking-web/onlinebooking/')
         //すべてのモジュールの読み込み完了後に実行される(モジュール全体の初期処理を実行)
         .run(
             function($rootScope) {
-                $rootScope.onlineBookingUri = 
-                        'http://localhost:8080/OnlineBooking-web/onlinebooking/members/:memberId';
+
             });

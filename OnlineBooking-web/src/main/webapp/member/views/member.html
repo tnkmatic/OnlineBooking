@@ -5,6 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 
+<!-- メンバー検索 -->
 <div ng-show="showReference.reference">
     <form class="form-horizontal" name="memberReferenceForm" novalidate >
         <!-- 検索条件 -->
@@ -42,7 +43,6 @@ and open the template in the editor.
                 </label>
             </div>
         </div>
-
         <!-- 検索ボタン -->
         <div class="form-group">
             <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="reference()">検索</button>
@@ -51,16 +51,57 @@ and open the template in the editor.
         <!-- 検索結果 -->
         <div id="members" ui-grid="gridOptions" 
              ui-grid-pagination ui-grid-resize-columns ui-grid-selection class="grid"></div>
-
         <!-- 編集ボタン -->
         <div class="form-grop">
-            <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="edit()">編集</button>
+            <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="edit()">基本情報更新</button>
+            <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="addAttribute()">追加情報設定</button>
         </div>
 
     </form>
 </div>
 
-<div ng-show="showReference.edit">
-    <div id="debugarea">{{selectedRows.entity.loginId}}</div>    
-    <input type="text" class="form-control" ng-model="$parent.selectedRows.entity.lastName">
+<!-- メンバー編集 -->
+<div ng-show="showReference.addAttribute">
+    <form class="form-horizontal" name="memberAddAttributeForm" novalidate>
+        <!-- ログインID ・名前（姓）・名前（名）-->
+        <div class="form-group">
+            <label for="loginId" class="control-label col-xs-2">ログインID</label>
+            <div ng-class="['col-xs-2']">
+                <input type="text" id="loginId" name="loginId" class="form-control col-xs-2" 
+                        ng-model="selectedMember.loginId" disabled>
+            </div>
+            <label class="control-label col-xs-2">名前（姓）</label>
+            <div ng-class="['col-xs-2']">
+                <input type="text" name="lastName" class="form-control" 
+                        ng-model="selectedMember.lastName" disabled>
+            </div>
+            <label class="control-label col-xs-2">名前（名）</label>
+            <div ng-class="['col-xs-2']">
+                <input type="text" name="firstName" class="form-control" 
+                        ng-model="selectedMember.firstName" disabled>
+            </div>
+            
+        </div>
+        <!-- メンバー区分 -->
+        <div class="form-group">
+            <label class="control-label col-xs-2">メンバー区分</label>
+            <div ng-class="['col-xs-2']">
+                <input type="text" name="firstName" class="form-control" 
+                        ng-model="selectedMember.rMemberMemberGroup.memberGroup.memberGroupName" 
+                        disabled>
+            </div>
+        </div>
+        <hr>
+        <!-- 追加属性情報(講師) -->
+        <div id="teacherPanel" class="panel" 
+             ng-if="selectedMember.rMemberMemberGroup.memberGroupKbn === '1'">
+            <div class="form-group">
+                <label class="control-label col-xs-2">雇用形態</label>
+                <select id ="employKbn" ng-model="selectedMember.memberTeacher.employKbn"
+                        ng-options="mstEmploy.employKbn as mstEmploy.employName for mstEmploy in mstEmployList">
+                </select>
+            </div>
+        </div>
+        
+    </form>
 </div>
