@@ -93,15 +93,42 @@ and open the template in the editor.
         </div>
         <hr>
         <!-- 追加属性情報(講師) -->
-        <div id="teacherPanel" class="panel" 
+        <div id="teacherPanel" class="panel"
              ng-if="selectedMember.rMemberMemberGroup.memberGroupKbn === '1'">
             <div class="form-group">
-                <label class="control-label col-xs-2">雇用形態</label>
-                <select id ="employKbn" ng-model="selectedMember.memberTeacher.employKbn"
-                        ng-options="mstEmploy.employKbn as mstEmploy.employName for mstEmploy in mstEmployList">
-                </select>
+                <label for="employKbn" class="control-label col-xs-2">雇用形態</label>
+                <div ng-class="['col-xs-2']">
+                    <select id ="employKbn" class="form-control" 
+                            ng-model="selectedMember.memberTeacher.employKbn"
+                            ng-options="mstEmploy.employKbn as mstEmploy.employName for mstEmploy in mstEmployList"
+                            ng-required="true">
+                    </select>
+                </div>
+                <label class="control-label col-xs-2">雇用開始日</label>
+                <div ng-class="['col-xs-2']">
+                    <input type="date" class="form-control" name="employYmdFrom"
+                           ng-model="selectedMember.memberTeacher.employYmdFrom">
+                </div>
+                <label class="control-label col-xs-2">雇用終了日</label>
+                <div ng-class="['col-xs-2']">
+                    <input type="date" class="form-control" name="employYmdEnd"
+                           ng-model="selectedMember.memberTeacher.employYmdEnd">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-2">担当コース</label>
+                <div ng-class="['col-xs-3']">
+                    <select id="courseId" class="form-control"
+                            ng-model="selectedMember.memberTeacher.courseId"
+                            ng-options="mstCourse.courseId as mstCourse.courseName for mstCourse in mstCourseList">
+                    </select>
+                </div>
+                <label class="control-label col-xs-2">時給(円)</label>
+                <div ng-class="['col-xs-1']">
+                    <input type="number" class="form-control text-right" name="salaryPerHour"
+                           ng-model="selectedMember.memberTeacher.salaryPerHour" integer>
+                </div>
             </div>
         </div>
-        
     </form>
 </div>

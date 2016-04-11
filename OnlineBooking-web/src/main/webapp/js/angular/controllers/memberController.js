@@ -28,6 +28,7 @@ angular.module('onlineBookingModule').controller('memberController',
         
         // マスタ値の取得
         $scope.mstEmployList = mstService.getEmployList();
+        $scope.mstCourseList = mstService.getCourseList();
             
         //**********************************************************************
         // メンバ追加用(memberRegist)
