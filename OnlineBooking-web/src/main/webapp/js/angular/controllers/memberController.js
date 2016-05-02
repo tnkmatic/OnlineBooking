@@ -144,13 +144,23 @@ angular.module('onlineBookingModule').controller('memberController',
         //メンバー編集の表示
         $scope.addAttribute = function() {
             $scope.changePage($scope.showReference, 'addAttribute');
+            if ($scope.selectedMember.rMemberTeacherCourseList === undefined ||
+                    $scope.selectedMember.rMemberTeacherCourseList.length === 0) {
+                $scope.selectedMember.rMemberTeacherCourseList = [{}];
+            }    
         };
 
         //**********************************************************************
         // メンバ追加属性設定(memberAddAttribute)
         //**********************************************************************
+        //コースリスト登録
+        $scope.addCourse = function(index) {
+            $scope.selectedMember.rMemberTeacherCourseList[index + 1] = {};
+        };
         
-
-
+        //コース削除
+        $scope.removeCourse = function(index) {
+            $scope.selectedMember.rMemberTeacherCourseList.splice[index, 1];
+        };
     }]
 );
