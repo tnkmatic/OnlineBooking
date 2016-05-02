@@ -3,28 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.tnkmatic.onlinebooking.ejb.entity;
 
-import com.tnkmatic.onlinebooking.ejb.entity.embeddable.SystemDate;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Eiichi
+ * @author tnkmatic
  */
 @Entity
 @Table(name = "r_member_student_course")
@@ -34,8 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RMemberStudentCourse.findByMemberId", query = "SELECT r FROM RMemberStudentCourse r WHERE r.rMemberStudentCoursePK.memberId = :memberId"),
     @NamedQuery(name = "RMemberStudentCourse.findByCourseId", query = "SELECT r FROM RMemberStudentCourse r WHERE r.rMemberStudentCoursePK.courseId = :courseId"),
     @NamedQuery(name = "RMemberStudentCourse.findByPricePerHour", query = "SELECT r FROM RMemberStudentCourse r WHERE r.pricePerHour = :pricePerHour"),
-    @NamedQuery(name = "RMemberStudentCourse.findByInsDate", query = "SELECT r FROM RMemberStudentCourse r WHERE r.systemDate.insDate = :insDate"),
-    @NamedQuery(name = "RMemberStudentCourse.findByUpdDate", query = "SELECT r FROM RMemberStudentCourse r WHERE r.systemDate.updDate = :updDate")})
+    @NamedQuery(name = "RMemberStudentCourse.findByInsDate", query = "SELECT r FROM RMemberStudentCourse r WHERE r.insDate = :insDate"),
+    @NamedQuery(name = "RMemberStudentCourse.findByUpdDate", query = "SELECT r FROM RMemberStudentCourse r WHERE r.updDate = :updDate")})
 public class RMemberStudentCourse implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -44,11 +41,17 @@ public class RMemberStudentCourse implements Serializable {
     @NotNull
     @Column(name = "PRICE_PER_HOUR")
     private int pricePerHour;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "INS_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date insDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "UPD_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updDate;
 
-    //登録日時・更新日時
-    @Embedded
-    private SystemDate systemDate;
-    
     public RMemberStudentCourse() {
     }
 
@@ -56,9 +59,11 @@ public class RMemberStudentCourse implements Serializable {
         this.rMemberStudentCoursePK = rMemberStudentCoursePK;
     }
 
-    public RMemberStudentCourse(RMemberStudentCoursePK rMemberStudentCoursePK, int pricePerHour) {
+    public RMemberStudentCourse(RMemberStudentCoursePK rMemberStudentCoursePK, int pricePerHour, Date insDate, Date updDate) {
         this.rMemberStudentCoursePK = rMemberStudentCoursePK;
         this.pricePerHour = pricePerHour;
+        this.insDate = insDate;
+        this.updDate = updDate;
     }
 
     public RMemberStudentCourse(int memberId, short courseId) {
@@ -81,14 +86,21 @@ public class RMemberStudentCourse implements Serializable {
         this.pricePerHour = pricePerHour;
     }
 
-        public SystemDate getSystemDate() {
-        return systemDate;
+    public Date getInsDate() {
+        return insDate;
     }
 
-    public void setSystemDate(SystemDate systemDate) {
-        this.systemDate = systemDate;
+    public void setInsDate(Date insDate) {
+        this.insDate = insDate;
     }
 
+    public Date getUpdDate() {
+        return updDate;
+    }
+
+    public void setUpdDate(Date updDate) {
+        this.updDate = updDate;
+    }
 
     @Override
     public int hashCode() {
@@ -115,13 +127,4 @@ public class RMemberStudentCourse implements Serializable {
         return "com.tnkmatic.onlinebooking.ejb.entity.RMemberStudentCourse[ rMemberStudentCoursePK=" + rMemberStudentCoursePK + " ]";
     }
     
-    @PrePersist
-    public void onPrePersist() {
-        this.systemDate = new SystemDate(new Date());
-    }
-    
-    @PreUpdate
-    public void onPreUpdate() {
-        this.systemDate.setUpdDate(new Date());
-    }
 }

@@ -9,6 +9,7 @@ package com.tnkmatic.onlinebooking.ejb.entity;
 import com.tnkmatic.onlinebooking.ejb.entity.embeddable.SystemDate;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -19,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -148,7 +150,7 @@ public class BookingMember implements Serializable {
     @Embedded
     private SystemDate systemDate;
 
-    //追加プロパティ
+    //リレーションシップ定義
     @OneToOne
     @JoinColumn(name = "CONTACT_WAY_KBN", nullable = false, insertable = false, updatable = false)
     private MstContactWay mstContactWay;
@@ -161,6 +163,12 @@ public class BookingMember implements Serializable {
     @OneToOne
     @JoinColumn(name="MEMBER_ID", nullable = false, insertable = false, updatable = false)
     private MemberTeacher memberTeacher;
+    @OneToMany
+    @JoinColumn(name="MEMBER_ID", nullable = false, insertable = false, updatable = false)
+    private List<RMemberTeacherCourse> rMemberTeacherCourseList;
+    @OneToMany
+    @JoinColumn(name="MEMBER_ID", nullable = false, insertable = false, updatable = false)
+    private List<RMemberStudentCourse> rMemberStudentCourseList;
 
     public BookingMember() {
     }
@@ -368,6 +376,22 @@ public class BookingMember implements Serializable {
 
     public void setMemberTeacher(MemberTeacher memberTeacher) {
         this.memberTeacher = memberTeacher;
+    }
+    
+    public List<RMemberTeacherCourse> getrMemberTeacherCourseList() {
+        return rMemberTeacherCourseList;
+    }
+
+    public void setrMemberTeacherCourseList(List<RMemberTeacherCourse> rMemberTeacherCourseList) {
+        this.rMemberTeacherCourseList = rMemberTeacherCourseList;
+    }
+
+    public List<RMemberStudentCourse> getrMemberStudentCourseList() {
+        return rMemberStudentCourseList;
+    }
+
+    public void setrMemberStudentCourseList(List<RMemberStudentCourse> rMemberStudentCourseList) {
+        this.rMemberStudentCourseList = rMemberStudentCourseList;
     }
 
     @Override
