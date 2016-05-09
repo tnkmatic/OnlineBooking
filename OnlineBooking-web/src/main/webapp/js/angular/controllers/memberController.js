@@ -27,8 +27,9 @@ angular.module('onlineBookingModule').controller('memberController',
         };
         
         // マスタ値の取得
-        $scope.mstEmployList = mstService.getEmployList();
-        $scope.mstCourseList = mstService.getCourseList();
+        $scope.data = {mstEmployList:[{}], mstCourseList: [{}]};
+        mstService.getEmployList($scope.data.mstEmployList);
+        mstService.getCourseList($scope.data.mstCourseList);
             
         //**********************************************************************
         // メンバ追加用(memberRegist)
@@ -160,7 +161,7 @@ angular.module('onlineBookingModule').controller('memberController',
         
         //コース削除
         $scope.removeCourse = function(index) {
-            $scope.selectedMember.rMemberTeacherCourseList.splice[index, 1];
+            $scope.selectedMember.rMemberTeacherCourseList.splice(index, 1);
         };
     }]
 );
