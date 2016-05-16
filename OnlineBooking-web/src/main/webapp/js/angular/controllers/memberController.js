@@ -5,8 +5,8 @@
  */
 
 angular.module('onlineBookingModule').controller('memberController',
-    ['$scope', 'memberService', 'stringUtilService', 'mstService',
-        function($scope, memberService, stringUtilService, mstService) {
+    ['$scope', 'memberService', 'stringUtilService', 'mstEmployService', 'mstCourseService',
+        function($scope, memberService, stringUtilService, mstEmployService, mstCourseService) {
         //**********************************************************************
         // モデル定義
         //**********************************************************************
@@ -25,12 +25,7 @@ angular.module('onlineBookingModule').controller('memberController',
                }
            }
         };
-        
-        // マスタ値の取得
-        $scope.data = {mstEmployList:[{}], mstCourseList: [{}]};
-        mstService.getEmployList($scope.data.mstEmployList);
-        mstService.getCourseList($scope.data.mstCourseList);
-            
+
         //**********************************************************************
         // メンバ追加用(memberRegist)
         //**********************************************************************
@@ -148,7 +143,18 @@ angular.module('onlineBookingModule').controller('memberController',
             if ($scope.selectedMember.rMemberTeacherCourseList === undefined ||
                     $scope.selectedMember.rMemberTeacherCourseList.length === 0) {
                 $scope.selectedMember.rMemberTeacherCourseList = [{}];
-            }    
+            }
+            //メンバ追加属性設定画面のドロップダウン(雇用形態)
+            var promise = mstEmployService.getCachedAllResource();
+            promise.then(function(result) {
+                $scope.mstEmployList = result;
+            });
+            
+            //メンバ追加属性設定画面のドロップダウン(コース)
+            var promise = mstCourseService.getCachedAllResource();
+            promise.then(function(result) {
+                 $scope.mstCourseList = result;
+            });
         };
 
         //**********************************************************************
