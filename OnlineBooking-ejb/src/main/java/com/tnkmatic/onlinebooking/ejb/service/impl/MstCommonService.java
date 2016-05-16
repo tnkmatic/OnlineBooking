@@ -5,12 +5,16 @@
  */
 package com.tnkmatic.onlinebooking.ejb.service.impl;
 
+import com.tnkmatic.onlinebooking.ejb.dao.MstBusinessHoursFacadeLocal;
 import com.tnkmatic.onlinebooking.ejb.dao.MstCourseFacadeLocal;
 import com.tnkmatic.onlinebooking.ejb.dao.MstEmployFacadeLocal;
 import com.tnkmatic.onlinebooking.ejb.dao.MstGenderFacadeLocal;
+import com.tnkmatic.onlinebooking.ejb.dao.MstLessonTimespaceFacadeLocal;
+import com.tnkmatic.onlinebooking.ejb.entity.MstBusinessHours;
 import com.tnkmatic.onlinebooking.ejb.entity.MstCourse;
 import com.tnkmatic.onlinebooking.ejb.entity.MstEmploy;
 import com.tnkmatic.onlinebooking.ejb.entity.MstGender;
+import com.tnkmatic.onlinebooking.ejb.entity.MstLessonTimespace;
 import com.tnkmatic.onlinebooking.ejb.service.MstCommonServiceLocal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -25,6 +29,8 @@ public class MstCommonService implements MstCommonServiceLocal {
     @EJB MstGenderFacadeLocal mstGenderDao;
     @EJB MstCourseFacadeLocal mstCourseDao;
     @EJB MstEmployFacadeLocal mstEmployDao;
+    @EJB MstBusinessHoursFacadeLocal mstBusinessHoursDao;
+    @EJB MstLessonTimespaceFacadeLocal mstLessonTimespaceDao;
 
     @Override
     public List<MstGender> mstGenderSelectAll() {
@@ -42,5 +48,17 @@ public class MstCommonService implements MstCommonServiceLocal {
     public List<MstCourse> mstCourseSelectAll() {
         final List<MstCourse> listMstCourse = mstCourseDao.findAll();
         return listMstCourse;
+    }
+
+    @Override
+    public List<MstBusinessHours> mstBusinessHoursSelectAll() {
+        final List<MstBusinessHours> listMstBusinessHours = mstBusinessHoursDao.findAll();
+        return listMstBusinessHours;
+    }
+
+    @Override
+    public List<MstLessonTimespace> mstLessonTimespaceSelectAll() {
+        final List<MstLessonTimespace> listMstLessonTimespace = mstLessonTimespaceDao.findAll();
+        return listMstLessonTimespace;
     }
 }
