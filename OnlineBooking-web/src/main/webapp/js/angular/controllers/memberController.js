@@ -6,7 +6,9 @@
 
 angular.module('onlineBookingModule').controller('memberController',
     ['$scope', 'memberService', 'stringUtilService', 'mstEmployService', 'mstCourseService',
-        function($scope, memberService, stringUtilService, mstEmployService, mstCourseService) {
+        'mstBusinessHoursService', 'mstLessonTimespacesService',
+        function($scope, memberService, stringUtilService, mstEmployService, mstCourseService, 
+                mstBusinessHoursService, mstLessonTimespacesService) {
         //**********************************************************************
         // モデル定義
         //**********************************************************************
@@ -149,11 +151,20 @@ angular.module('onlineBookingModule').controller('memberController',
             promise.then(function(result) {
                 $scope.mstEmployList = result;
             });
-            
             //メンバ追加属性設定画面のドロップダウン(コース)
             var promise = mstCourseService.getCachedAllResource();
             promise.then(function(result) {
                  $scope.mstCourseList = result;
+            });
+            //メンバ追加属性設定画面の営業時間マスタ
+            var promise = mstBusinessHoursService.getCachedAllResource();
+            promise.then(function(result) {
+                $scope.mstBusinessHours = result;
+            });
+            //メンバ追加属性設定画面の授業時間間隔マスタ
+            var promise = mstLessonTimespacesService.getCachedAllResource();
+            promise.then(function(result) {
+                $scope.mstLessonTimeSpaces = result;
             });
         };
 

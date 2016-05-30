@@ -17,6 +17,7 @@ angular.module('onlineBookingModule')
                             {memberId: '@id'});
                 }
         ])
+        //雇用形態マスタサービス
         .factory('mstEmployService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
                 function($resource, $cacheFactory, $q, onlineBookingUri) {
                     //$resourceのcacheプロパティによるキャッシュが動作しなかったため
@@ -48,6 +49,7 @@ angular.module('onlineBookingModule')
                     };
                 }
         ])
+        //コースマスタサービス
         .factory('mstCourseService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
                 function($resource, $cacheFactory, $q, onlineBookingUri) {
                     //$resourceのcacheプロパティによるキャッシュが動作しなかったため
@@ -72,6 +74,68 @@ angular.module('onlineBookingModule')
                             } else {
                                 //プロミスに処理成功時のオブジェクトを設定
                                 deferrd.resolve(mstCourseList);
+                            }
+                            //呼び出し元にプロミスオブジェクトを返す
+                            return deferrd.promise;
+                        }
+                    };
+                }
+        ])
+        //営業時間マスタサービス
+        .factory('mstBusinessHoursService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
+                function($resource, $cacheFactory, $q, onlineBookingUri) {
+                    //$resourceのcacheプロパティによるキャッシュが動作しなかったため
+                    //独自にキャッシュを実装
+                    var cache = $cacheFactory('mstBusinessHoursService');
+                    var MstBusinessHours = $resource(
+                            onlineBookingUri + 'mstbusinesshours',{});
+                    return {
+                        getCachedAllResource: function() {
+                            //プロミスのdeferredインスタンスを生成
+                            var deferrd = $q.defer();
+                            //キャッシュから取得
+                            var mstBusinessHours = cache.get('record');
+                            if (!mstBusinessHours) {
+                                MstBusinessHours.get(null, function(responseBody) {
+                                    mstBusinessHours= responseBody.mstBusinessHours;
+                                    cache.put('record', mstBusinessHours);
+                                    //プロミスに処理成功時のオブジェクトを設定
+                                    deferrd.resolve(mstBusinessHours);
+                                });
+                            } else {
+                                //プロミスに処理成功時のオブジェクトを設定
+                                deferrd.resolve(mstBusinessHours);
+                            }
+                            //呼び出し元にプロミスオブジェクトを返す
+                            return deferrd.promise;
+                        }
+                    };
+                }
+        ])
+        //授業時間間隔マスタ
+        .factory('mstLessonTimespacesService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
+                function($resource, $cacheFactory, $q, onlineBookingUri) {
+                    //$resourceのcacheプロパティによるキャッシュが動作しなかったため
+                    //独自にキャッシュを実装
+                    var cache = $cacheFactory('mstLessonTimespaceService');
+                    var MstLessonTimeSpaces = $resource(
+                            onlineBookingUri + 'mstlessontimespaces',{});
+                    return {
+                        getCachedAllResource: function() {
+                            //プロミスのdeferredインスタンスを生成
+                            var deferrd = $q.defer();
+                            //キャッシュから取得
+                            var mstLessonTimeSpaces = cache.get('record');
+                            if (!mstLessonTimeSpaces) {
+                                MstLessonTimeSpaces.get(null, function(responseBody) {
+                                    mstLessonTimeSpaces = responseBody.mstLessonTimeSpace;
+                                    cache.put('record', mstLessonTimeSpaces);
+                                    //プロミスに処理成功時のオブジェクトを設定
+                                    deferrd.resolve(mstLessonTimeSpaces);
+                                });
+                            } else {
+                                //プロミスに処理成功時のオブジェクトを設定
+                                deferrd.resolve(mstLessonTimeSpaces);
                             }
                             //呼び出し元にプロミスオブジェクトを返す
                             return deferrd.promise;
