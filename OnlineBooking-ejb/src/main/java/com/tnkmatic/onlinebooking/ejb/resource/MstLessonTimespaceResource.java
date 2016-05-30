@@ -6,8 +6,10 @@
 package com.tnkmatic.onlinebooking.ejb.resource;
 
 import com.tnkmatic.onlinebooking.ejb.common.ConstantValue;
-import com.tnkmatic.onlinebooking.ejb.entity.MstBusinessHours;
+import com.tnkmatic.onlinebooking.ejb.entity.MstLessonTimespace;
+import com.tnkmatic.onlinebooking.ejb.resource.response.mstlessontimespace.MstLessonTimespaceResponse;
 import com.tnkmatic.onlinebooking.ejb.service.MstCommonServiceLocal;
+import com.tnkmatic.onlinebooking.ejb.util.ResourceUtil;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,19 +32,31 @@ public class MstLessonTimespaceResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";" + ConstantValue.ENCODING)
-    public Response referenceMstLessonTimeSpace() throw Exception {
+    public Response referenceMstLessonTimeSpace() throws Exception {
         Response response = null;
         try {
             //営業時間マスタの全件取得
-            List<MstBusinessHours> mstBusinessList = 
-                    mstCommonService.mstBusinessHoursSelectAll();
+            List<MstLessonTimespace> mstLessonTimespaceList = 
+                    mstCommonService.mstLessonTimespaceSelectAll();
+            //2件以上検索された場合はエラー
+            if (mstLessonTimespaceList.size() > 1) {
+                throw new javax.ws.rs.InternalServerErrorException(
+                        "授業時間間隔マスタに2件以上レコードが存在",
+                        Response.status(
+                                Response.Status.INTERNAL_SERVER_ERROR).build());
+            }
             //レスポンスボディの編集
-            
-            
+            MstLessonTimespaceResponse mstLessonTimespaceResponse = new MstLessonTimespaceResponse();
+            mstLessonTimespaceResponse.setMstLessonTimeSpace(mstLessonTimespaceList.get(0));
+            //レスポンス生成
+            response = ResourceUtil.createResponse(
+                    Response.Status.OK, MediaType.APPLICATION_JSON, 
+                    null, null, mstLessonTimespaceResponse);      
         } catch (Exception e) {
-            
+            throw new javax.ws.rs.InternalServerErrorException(
+                    Response.status(Response.Status.INTERNAL_SERVER_ERROR).build(), e);
         }
         
-        return null;
+        return response;
     }
 }
