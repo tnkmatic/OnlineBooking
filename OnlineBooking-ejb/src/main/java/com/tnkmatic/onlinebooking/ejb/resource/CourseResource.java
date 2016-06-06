@@ -6,8 +6,8 @@
 package com.tnkmatic.onlinebooking.ejb.resource;
 
 import com.tnkmatic.onlinebooking.ejb.common.ConstantValue;
-import com.tnkmatic.onlinebooking.ejb.entity.MstEmploy;
-import com.tnkmatic.onlinebooking.ejb.resource.response.mstemploy.MstEmployResponse;
+import com.tnkmatic.onlinebooking.ejb.entity.MstCourse;
+import com.tnkmatic.onlinebooking.ejb.resource.response.course.CourseResponse;
 import com.tnkmatic.onlinebooking.ejb.service.MstCommonServiceLocal;
 import com.tnkmatic.onlinebooking.ejb.util.ResourceUtil;
 import java.util.List;
@@ -26,29 +26,31 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @LocalBean
-@Path("mstemploys")
-public class MstEmployResource extends BaseResource {
+@Path("courses")
+public class CourseResource {
     @EJB MstCommonServiceLocal mstCommonService;
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";" + ConstantValue.ENCODING)
-    public Response referenceMstEmploy() throws Exception {
+    public Response referenceMstCourse() throws Exception {
         Response response = null;
         try {
-            //雇用形態マスタの全件取得
-            List<MstEmploy> mstEmployList = mstCommonService.mstEmploySelectAll();
+            //コースマスタの全件取得
+            List<MstCourse> mstCourseList = mstCommonService.mstCourseSelectAll();
             //レスポンスボディの編集
-            MstEmployResponse mstEmployReponse = new MstEmployResponse();
-            mstEmployReponse.setMstEmploys(mstEmployList);
+            CourseResponse mstCourseResponse = new CourseResponse();
+            mstCourseResponse.setMstCourseList(mstCourseList);
             //レスポンス生成
             response = ResourceUtil.createResponse(
                     Response.Status.OK, MediaType.APPLICATION_JSON, 
-                    null, null, mstEmployReponse);
+                    null, null, mstCourseResponse);
             
         } catch (Exception e) {
             throw new javax.ws.rs.InternalServerErrorException(
                     Response.status(Response.Status.INTERNAL_SERVER_ERROR).build(), e);
+            
         }
         return response;
     }
+    
 }

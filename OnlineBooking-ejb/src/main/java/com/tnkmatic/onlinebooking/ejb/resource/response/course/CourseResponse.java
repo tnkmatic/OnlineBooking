@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tnkmatic.onlinebooking.ejb.resource.response.mstcourse;
+package com.tnkmatic.onlinebooking.ejb.resource.response.course;
 
 import com.tnkmatic.onlinebooking.ejb.entity.MstCourse;
 import java.util.List;
@@ -12,24 +12,24 @@ import java.util.List;
  *
  * @author tnkmatic
  */
-public class MstCourseResponse {
-    private MstCourse mstCourse;
-    private List<MstCourse> mstCourses;
+public class CourseResponse {
+    private MstCourse course;
+    private List<MstCourse> courses;
 
     public MstCourse getMstCourse() {
-        return mstCourse;
+        return course;
     }
 
     public void setMstCourse(MstCourse mstCourse) {
-        this.mstCourse = mstCourse;
+        this.course = mstCourse;
     }
 
     public List<MstCourse> getMstCourseList() {
-        return mstCourses;
+        return courses;
     }
 
     public void setMstCourseList(List<MstCourse> mstCourseList) {
-        this.mstCourses = mstCourseList;
+        this.courses = mstCourseList;
     }
     
 }

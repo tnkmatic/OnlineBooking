@@ -6,8 +6,8 @@
 package com.tnkmatic.onlinebooking.ejb.resource;
 
 import com.tnkmatic.onlinebooking.ejb.common.ConstantValue;
-import com.tnkmatic.onlinebooking.ejb.entity.MstCourse;
-import com.tnkmatic.onlinebooking.ejb.resource.response.mstcourse.MstCourseResponse;
+import com.tnkmatic.onlinebooking.ejb.entity.MstLessonTimespace;
+import com.tnkmatic.onlinebooking.ejb.resource.response.lessontimespace.LessonTimespaceResponse;
 import com.tnkmatic.onlinebooking.ejb.service.MstCommonServiceLocal;
 import com.tnkmatic.onlinebooking.ejb.util.ResourceUtil;
 import java.util.List;
@@ -26,31 +26,37 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @LocalBean
-@Path("mstcourses")
-public class MstCourseResource {
+@Path("lessontimespaces")
+public class LessonTimespaceResource {
     @EJB MstCommonServiceLocal mstCommonService;
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";" + ConstantValue.ENCODING)
-    public Response referenceMstCourse() throws Exception {
+    public Response referenceMstLessonTimeSpace() throws Exception {
         Response response = null;
         try {
-            //コースマスタの全件取得
-            List<MstCourse> mstCourseList = mstCommonService.mstCourseSelectAll();
+            //営業時間マスタの全件取得
+            List<MstLessonTimespace> mstLessonTimespaceList = 
+                    mstCommonService.mstLessonTimespaceSelectAll();
+            //2件以上検索された場合はエラー
+            if (mstLessonTimespaceList.size() > 1) {
+                throw new javax.ws.rs.InternalServerErrorException(
+                        "授業時間間隔マスタに2件以上レコードが存在",
+                        Response.status(
+                                Response.Status.INTERNAL_SERVER_ERROR).build());
+            }
             //レスポンスボディの編集
-            MstCourseResponse mstCourseResponse = new MstCourseResponse();
-            mstCourseResponse.setMstCourseList(mstCourseList);
+            LessonTimespaceResponse mstLessonTimespaceResponse = new LessonTimespaceResponse();
+            mstLessonTimespaceResponse.setMstLessonTimeSpace(mstLessonTimespaceList.get(0));
             //レスポンス生成
             response = ResourceUtil.createResponse(
                     Response.Status.OK, MediaType.APPLICATION_JSON, 
-                    null, null, mstCourseResponse);
-            
+                    null, null, mstLessonTimespaceResponse);      
         } catch (Exception e) {
             throw new javax.ws.rs.InternalServerErrorException(
                     Response.status(Response.Status.INTERNAL_SERVER_ERROR).build(), e);
-            
         }
+        
         return response;
     }
-    
 }

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tnkmatic.onlinebooking.ejb.resource.response.mstbusinesshours;
+package com.tnkmatic.onlinebooking.ejb.dto;
 
 /**
  *
  * @author tnkmatic
  */
-public class MstBusinessHours {
+public class BusinessHoursResponseDto {
     private String businessHoursFrom;
     private String businessHoursTo;
 
