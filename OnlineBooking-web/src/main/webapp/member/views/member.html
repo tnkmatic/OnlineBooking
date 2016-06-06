@@ -97,38 +97,100 @@ and open the template in the editor.
              ng-if="selectedMember.rMemberMemberGroup.memberGroupKbn === '1'">
             <div class="form-group">
                 <label for="employKbn" class="control-label col-xs-2">雇用形態</label>
-                <div ng-class="['col-xs-2']">
-                    <select id ="employKbn" class="form-control"
+                <div ng-class="['col-xs-2', 'has-feedback',
+                            {'has-success': memberAddAttributeForm.employKbn.$valid, 'has-error': memberAddAttributeForm.employKbn.$invalid}]">
+                    <select id ="employKbn" name="employKbn" class="form-control"
                             ng-model="selectedMember.memberTeacher.employKbn"
-                            ng-options="mstEmploy.employKbn as mstEmploy.employName for mstEmploy in mstEmployList"
+                            ng-options="employ.employKbn as employ.employName for employ in employList"
                             ng-required="true">
                     </select>
+                    <span ng-class="['glyphicon', 'form-control-feedback', 
+                        {'glyphicon-ok': memberAddAttributeForm.employKbn.$valid, 'glyphicon-remove': memberAddAttributeForm.employKbn.$invalid}]"></span>
+                    <span class="help-block" ng-messages="memberAddAttributeForm.employKbn.$error" ng-messages-multiple>
+                        <span ng-messages-include="messages_template.html"></span>
+                    </span>
                 </div>
                 <label class="control-label col-xs-2">雇用開始日</label>
-                <div ng-class="['col-xs-2']">
+                <div ng-class="['col-xs-2', 'has-feedback',
+                            {'has-success': memberAddAttributeForm.employYmdFrom.$valid, 'has-error': memberAddAttributeForm.employYmdFrom.$invalid}]">
                     <input type="date" class="form-control" name="employYmdFrom"
-                           ng-model="selectedMember.memberTeacher.employYmdFrom">
+                           ng-model="selectedMember.memberTeacher.employYmdFrom"
+                           ng-required="true">
+                    <span ng-class="['glyphicon', 'form-control-feedback', 
+                        {'glyphicon-ok': memberAddAttributeForm.employYmdFrom.$valid, 'glyphicon-remove': memberAddAttributeForm.employYmdFrom.$invalid}]"></span>
+                    <span class="help-block" ng-messages="memberAddAttributeForm.employYmdFrom.$error" ng-messages-multiple>
+                        <span ng-messages-include="messages_template.html"></span>
+                    </span>
                 </div>
                 <label class="control-label col-xs-2">雇用終了日</label>
-                <div ng-class="['col-xs-2']">
-                    <input type="date" class="form-control" name="employYmdEnd"
-                           ng-model="selectedMember.memberTeacher.employYmdEnd">
+                <div ng-class="['col-xs-2', 'has-feedback',
+                            {'has-success': memberAddAttributeForm.employYmdTo.$valid, 'has-error': memberAddAttributeForm.employYmdTo.$invalid}]">
+                    <input type="date" class="form-control" name="employYmdTo"
+                           ng-model="selectedMember.memberTeacher.employYmdTo">
+                    <span ng-class="['glyphicon', 'form-control-feedback', 
+                        {'glyphicon-ok': memberAddAttributeForm.employYmdTo.$valid, 'glyphicon-remove': memberAddAttributeForm.employYmdTo.$invalid}]"></span>
+                    <span class="help-block" ng-messages="memberAddAttributeForm.employYmdTo.$error" ng-messages-multiple>
+                        <span ng-messages-include="messages_template.html"></span>
+                    </span>
                 </div>
             </div>
             <li ng-repeat="teacherCourse in selectedMember.rMemberTeacherCourseList"
                 ng-style="{listStyle: 'none'}">
                 <div class="form-group">
                     <label class="control-label col-xs-2">担当コース</label>
-                    <div ng-class="['col-xs-3']">
-                        <select id="courseId" class="form-control"
+                    <div ng-class="['col-xs-4', 'has-feedback',
+                            {'has-success': memberAddAttributeForm.courseId.$valid, 'has-error': memberAddAttributeForm.courseId.$invalid}]">
+                        <select id="courseId" class="form-control" name="courseId"
                                 ng-model="teacherCourse.courseId"
-                                ng-options="mstCourse.courseId as mstCourse.courseName for mstCourse in mstCourseList">
+                                ng-options="course.courseId as course.courseName for course in courseList"
+                                ng-required="true">
                         </select>
+                        <span ng-class="['glyphicon', 'form-control-feedback', 
+                                {'glyphicon-ok': memberAddAttributeForm.courseId.$valid, 'glyphicon-remove': memberAddAttributeForm.courseId.$invalid}]"></span>
+                        <span class="help-block" ng-messages="memberAddAttributeForm.courseId.$error" ng-messages-multiple>
+                            <span ng-messages-include="messages_template.html"></span>
+                        </span>
                     </div>
                     <label class="control-label col-xs-2">時給(円)</label>
-                    <div ng-class="['col-xs-2']">
+                    <div ng-class="['col-xs-2', 'has-feedback',
+                            {'has-success': memberAddAttributeForm.salaryPerHour.$valid, 'has-error': memberAddAttributeForm.salaryPerHour.$invalid}]">
                         <input type="number" class="form-control text-right" name="salaryPerHour"
-                               ng-model="teacherCourse.salaryPerHour" integer>
+                               ng-model="teacherCourse.salaryPerHour" integer
+                               ng-required="true">
+                        <span ng-class="['glyphicon', 'form-control-feedback', 
+                                {'glyphicon-ok': memberAddAttributeForm.salaryPerHour.$valid, 'glyphicon-remove': memberAddAttributeForm.salaryPerHour.$invalid}]"></span>
+                        <span class="help-block" ng-messages="memberAddAttributeForm.salaryPerHour.$error" ng-messages-multiple>
+                            <span ng-messages-include="messages_template.html"></span>
+                        </span>    
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2">開始時刻</label>
+                    <div ng-class="['col-xs-2', 'has-feedback',
+                            {'has-success': memberAddAttributeForm.lessonTimeFrom.$valid, 'has-error': memberAddAttributeForm.lessonTimeFrom.$invalid}]">
+                        <input type="time" class="form-control" name="lessonTimeFrom"
+                               ng-model="teacherSchedule.lessonTimeFrom"
+                               ng-required="true"/>
+                        <span ng-class="['glyphicon', 'form-control-feedback', 
+                                {'glyphicon-ok': memberAddAttributeForm.lessonTimeFrom.$valid, 'glyphicon-remove': memberAddAttributeForm.lessonTimeFrom.$invalid}]"></span>
+                        <span class="help-block" ng-messages="memberAddAttributeForm.lessonTimeFrom.$error" ng-messages-multiple>
+                            <span ng-messages-include="messages_template.html"></span>
+                        </span>    
+                    </div>
+                    <!-- 間隔をあける -->
+                    <div ng-class="['col-xs-2']"></div>
+                    <!-- 間隔をあける -->
+                    <label class="control-label col-xs-2">終了時刻</label>
+                    <div ng-class="['col-xs-2', 'has-feedback',
+                            {'has-success': memberAddAttributeForm.lessonTimeTo.$valid, 'has-error': memberAddAttributeForm.lessonTimeTo.$invalid}]">
+                        <input type="time" class="form-control" name="lessonTimeTo" 
+                               ng-model="teacherSchedule.lessonTimeTo"
+                               ng-required="true"/>
+                        <span ng-class="['glyphicon', 'form-control-feedback', 
+                                {'glyphicon-ok': memberAddAttributeForm.lessonTimeTo.$valid, 'glyphicon-remove': memberAddAttributeForm.lessonTimeTo.$invalid}]"></span>
+                        <span class="help-block" ng-messages="memberAddAttributeForm.lessonTimeTo.$error" ng-messages-multiple>
+                            <span ng-messages-include="messages_template.html"></span>
+                        </span>
                     </div>
                     <div>
                         <input type="button" ng-if="!$last" ng-click="removeCourse($index)" value="削除" />
@@ -136,9 +198,9 @@ and open the template in the editor.
                     </div>
                 </div>
             </li>
-            {{selectedMember.rMemberTeacherCourseList}}
-            {{mstBusinessHours}}
-            {{mstLessonTimeSpaces}}
+            <div class="form-group">
+                <label class="control-label col-xs-offset-2">開始時刻は{{businessHours.businessHoursFrom}}から{{businessHours.businessHoursTo}}までの範囲で設定してください。登録可能な時間単位は{{lessonTimeSpaces.lessonTimespace}}分単位となります。</label>
+            </div>
         </div>
     </form>
 </div>

@@ -18,30 +18,30 @@ angular.module('onlineBookingModule')
                 }
         ])
         //雇用形態マスタサービス
-        .factory('mstEmployService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
+        .factory('employService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
                 function($resource, $cacheFactory, $q, onlineBookingUri) {
                     //$resourceのcacheプロパティによるキャッシュが動作しなかったため
                     //独自にキャッシュを実装
-                    var cache = $cacheFactory('mstEmployService');
-                    var MstEmploys = $resource(
-                            onlineBookingUri + 'mstemploys/:employKbn',
+                    var cache = $cacheFactory('employService');
+                    var Employs = $resource(
+                            onlineBookingUri + 'employs/:employKbn',
                             {employKbn: '@id'});
                     return {
                         getCachedAllResource: function() {
                             //プロミスのdeferredインスタンスを生成
                             var deferrd = $q.defer();
                             //キャッシュからドロップダウンの一覧を取得
-                            var mstEmployList = cache.get('all');
-                            if (!mstEmployList) {
-                                MstEmploys.get(null, function(responseBody) {
-                                    mstEmployList = responseBody.mstEmploys;
-                                    cache.put('all', mstEmployList);
+                            var employList = cache.get('all');
+                            if (!employList) {
+                                Employs.get(null, function(responseBody) {
+                                    employList = responseBody.employs;
+                                    cache.put('all', employList);
                                     //プロミスに処理成功時のオブジェクトを設定
-                                    deferrd.resolve(mstEmployList);
+                                    deferrd.resolve(employList);
                                 });
                             } else {
                                 //プロミスに処理成功時のオブジェクトを設定
-                                deferrd.resolve(mstEmployList);
+                                deferrd.resolve(employList);
                             }
                             //呼び出し元にプロミスオブジェクトを返す
                             return deferrd.promise;
@@ -50,30 +50,30 @@ angular.module('onlineBookingModule')
                 }
         ])
         //コースマスタサービス
-        .factory('mstCourseService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
+        .factory('courseService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
                 function($resource, $cacheFactory, $q, onlineBookingUri) {
                     //$resourceのcacheプロパティによるキャッシュが動作しなかったため
                     //独自にキャッシュを実装
-                    var cache = $cacheFactory('mstCourseService');
-                    var MstCourses = $resource(
-                            onlineBookingUri + 'mstcourses/:courseId',
+                    var cache = $cacheFactory('courseService');
+                    var Courses = $resource(
+                            onlineBookingUri + 'courses/:courseId',
                             {courseId: '@id'});
                     return {
                         getCachedAllResource: function() {
                             //プロミスのdeferredインスタンスを生成
                             var deferrd = $q.defer();
                             //キャッシュからドロップダウンの一覧を取得
-                            var mstCourseList = cache.get('all');
-                            if (!mstCourseList) {
-                                MstCourses.get(null, function(responseBody) {
-                                    mstCourseList= responseBody.mstCourses;
-                                    cache.put('all', mstCourseList);
+                            var courseList = cache.get('all');
+                            if (!courseList) {
+                                Courses.get(null, function(responseBody) {
+                                    courseList= responseBody.courses;
+                                    cache.put('all', courseList);
                                     //プロミスに処理成功時のオブジェクトを設定
-                                    deferrd.resolve(mstCourseList);
+                                    deferrd.resolve(courseList);
                                 });
                             } else {
                                 //プロミスに処理成功時のオブジェクトを設定
-                                deferrd.resolve(mstCourseList);
+                                deferrd.resolve(courseList);
                             }
                             //呼び出し元にプロミスオブジェクトを返す
                             return deferrd.promise;
@@ -82,29 +82,29 @@ angular.module('onlineBookingModule')
                 }
         ])
         //営業時間マスタサービス
-        .factory('mstBusinessHoursService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
+        .factory('businessHoursService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
                 function($resource, $cacheFactory, $q, onlineBookingUri) {
                     //$resourceのcacheプロパティによるキャッシュが動作しなかったため
                     //独自にキャッシュを実装
-                    var cache = $cacheFactory('mstBusinessHoursService');
-                    var MstBusinessHours = $resource(
-                            onlineBookingUri + 'mstbusinesshours',{});
+                    var cache = $cacheFactory('businessHoursService');
+                    var BusinessHours = $resource(
+                            onlineBookingUri + 'businesshours',{});
                     return {
                         getCachedAllResource: function() {
                             //プロミスのdeferredインスタンスを生成
                             var deferrd = $q.defer();
                             //キャッシュから取得
-                            var mstBusinessHours = cache.get('record');
-                            if (!mstBusinessHours) {
-                                MstBusinessHours.get(null, function(responseBody) {
-                                    mstBusinessHours= responseBody.mstBusinessHours;
-                                    cache.put('record', mstBusinessHours);
+                            var businessHours = cache.get('record');
+                            if (!businessHours) {
+                                BusinessHours.get(null, function(responseBody) {
+                                    businessHours= responseBody.businessHours;
+                                    cache.put('record', businessHours);
                                     //プロミスに処理成功時のオブジェクトを設定
-                                    deferrd.resolve(mstBusinessHours);
+                                    deferrd.resolve(businessHours);
                                 });
                             } else {
                                 //プロミスに処理成功時のオブジェクトを設定
-                                deferrd.resolve(mstBusinessHours);
+                                deferrd.resolve(businessHours);
                             }
                             //呼び出し元にプロミスオブジェクトを返す
                             return deferrd.promise;
@@ -113,29 +113,29 @@ angular.module('onlineBookingModule')
                 }
         ])
         //授業時間間隔マスタ
-        .factory('mstLessonTimespacesService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
+        .factory('lessonTimespacesService', ['$resource', '$cacheFactory', '$q', 'onlineBookingUri',
                 function($resource, $cacheFactory, $q, onlineBookingUri) {
                     //$resourceのcacheプロパティによるキャッシュが動作しなかったため
                     //独自にキャッシュを実装
-                    var cache = $cacheFactory('mstLessonTimespaceService');
-                    var MstLessonTimeSpaces = $resource(
-                            onlineBookingUri + 'mstlessontimespaces',{});
+                    var cache = $cacheFactory('lessonTimespacesService');
+                    var LessonTimeSpaces = $resource(
+                            onlineBookingUri + 'lessontimespaces',{});
                     return {
                         getCachedAllResource: function() {
                             //プロミスのdeferredインスタンスを生成
                             var deferrd = $q.defer();
                             //キャッシュから取得
-                            var mstLessonTimeSpaces = cache.get('record');
-                            if (!mstLessonTimeSpaces) {
-                                MstLessonTimeSpaces.get(null, function(responseBody) {
-                                    mstLessonTimeSpaces = responseBody.mstLessonTimeSpace;
-                                    cache.put('record', mstLessonTimeSpaces);
+                            var lessonTimeSpaces = cache.get('record');
+                            if (!lessonTimeSpaces) {
+                                LessonTimeSpaces.get(null, function(responseBody) {
+                                    lessonTimeSpaces = responseBody.lessonTimeSpace;
+                                    cache.put('record', lessonTimeSpaces);
                                     //プロミスに処理成功時のオブジェクトを設定
-                                    deferrd.resolve(mstLessonTimeSpaces);
+                                    deferrd.resolve(lessonTimeSpaces);
                                 });
                             } else {
                                 //プロミスに処理成功時のオブジェクトを設定
-                                deferrd.resolve(mstLessonTimeSpaces);
+                                deferrd.resolve(lessonTimeSpaces);
                             }
                             //呼び出し元にプロミスオブジェクトを返す
                             return deferrd.promise;

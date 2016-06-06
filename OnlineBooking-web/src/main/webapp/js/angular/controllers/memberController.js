@@ -5,10 +5,10 @@
  */
 
 angular.module('onlineBookingModule').controller('memberController',
-    ['$scope', 'memberService', 'stringUtilService', 'mstEmployService', 'mstCourseService',
-        'mstBusinessHoursService', 'mstLessonTimespacesService',
-        function($scope, memberService, stringUtilService, mstEmployService, mstCourseService, 
-                mstBusinessHoursService, mstLessonTimespacesService) {
+    ['$scope', 'memberService', 'stringUtilService', 'employService', 'courseService',
+        'businessHoursService', 'lessonTimespacesService',
+        function($scope, memberService, stringUtilService, employService, courseService, 
+                businessHoursService, lessonTimespacesService) {
         //**********************************************************************
         // モデル定義
         //**********************************************************************
@@ -147,24 +147,24 @@ angular.module('onlineBookingModule').controller('memberController',
                 $scope.selectedMember.rMemberTeacherCourseList = [{}];
             }
             //メンバ追加属性設定画面のドロップダウン(雇用形態)
-            var promise = mstEmployService.getCachedAllResource();
+            var promise = employService.getCachedAllResource();
             promise.then(function(result) {
-                $scope.mstEmployList = result;
+                $scope.employList = result;
             });
             //メンバ追加属性設定画面のドロップダウン(コース)
-            var promise = mstCourseService.getCachedAllResource();
+            var promise = courseService.getCachedAllResource();
             promise.then(function(result) {
-                 $scope.mstCourseList = result;
+                 $scope.courseList = result;
             });
             //メンバ追加属性設定画面の営業時間マスタ
-            var promise = mstBusinessHoursService.getCachedAllResource();
+            var promise = businessHoursService.getCachedAllResource();
             promise.then(function(result) {
-                $scope.mstBusinessHours = result;
+                $scope.businessHours = result;
             });
             //メンバ追加属性設定画面の授業時間間隔マスタ
-            var promise = mstLessonTimespacesService.getCachedAllResource();
+            var promise = lessonTimespacesService.getCachedAllResource();
             promise.then(function(result) {
-                $scope.mstLessonTimeSpaces = result;
+                $scope.lessonTimeSpaces = result;
             });
         };
 
