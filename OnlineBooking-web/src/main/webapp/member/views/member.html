@@ -126,7 +126,7 @@ and open the template in the editor.
                 <div ng-class="['col-xs-2', 'has-feedback',
                             {'has-success': memberAddAttributeForm.employYmdTo.$valid, 'has-error': memberAddAttributeForm.employYmdTo.$invalid}]">
                     <input type="date" class="form-control" name="employYmdTo"
-                           ng-model="selectedMember.memberTeacher.employYmdTo">
+                           ng-model="selectedMember.memberTeacher.employYmdTo" data-cd-less-than-date="selectedMember.memberTeacher.employYmdFrom">
                     <span ng-class="['glyphicon', 'form-control-feedback', 
                         {'glyphicon-ok': memberAddAttributeForm.employYmdTo.$valid, 'glyphicon-remove': memberAddAttributeForm.employYmdTo.$invalid}]"></span>
                     <span class="help-block" ng-messages="memberAddAttributeForm.employYmdTo.$error" ng-messages-multiple>
@@ -187,7 +187,8 @@ and open the template in the editor.
                                ng-model="teacherSchedule.lessonTimeTo"
                                ng-required="true"/>
                         <span ng-class="['glyphicon', 'form-control-feedback', 
-                                {'glyphicon-ok': memberAddAttributeForm.lessonTimeTo.$valid, 'glyphicon-remove': memberAddAttributeForm.lessonTimeTo.$invalid}]"></span>
+                                {'glyphicon-ok': memberAddAttributeForm.lessonTimeTo.$valid, 
+                            'glyphicon-remove': memberAddAttributeForm.lessonTimeTo.$invalid}]"></span>
                         <span class="help-block" ng-messages="memberAddAttributeForm.lessonTimeTo.$error" ng-messages-multiple>
                             <span ng-messages-include="messages_template.html"></span>
                         </span>
@@ -200,6 +201,7 @@ and open the template in the editor.
             </li>
             <div class="form-group">
                 <label class="control-label col-xs-offset-2">開始時刻は{{businessHours.businessHoursFrom}}から{{businessHours.businessHoursTo}}までの範囲で設定してください。登録可能な時間単位は{{lessonTimeSpaces.lessonTimespace}}分単位となります。</label>
+                <div data-parse-directive></div>
             </div>
         </div>
     </form>
