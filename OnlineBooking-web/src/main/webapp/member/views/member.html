@@ -169,7 +169,7 @@ and open the template in the editor.
                     <div ng-class="['col-xs-2', 'has-feedback',
                             {'has-success': memberAddAttributeForm.lessonTimeFrom.$valid, 'has-error': memberAddAttributeForm.lessonTimeFrom.$invalid}]">
                         <input type="time" class="form-control" name="lessonTimeFrom"
-                               ng-model="teacherSchedule.lessonTimeFrom"
+                               ng-model="selectedMember.teacherSchedule.lessonTimeFrom"
                                ng-required="true"/>
                         <span ng-class="['glyphicon', 'form-control-feedback', 
                                 {'glyphicon-ok': memberAddAttributeForm.lessonTimeFrom.$valid, 'glyphicon-remove': memberAddAttributeForm.lessonTimeFrom.$invalid}]"></span>
@@ -184,7 +184,7 @@ and open the template in the editor.
                     <div ng-class="['col-xs-2', 'has-feedback',
                             {'has-success': memberAddAttributeForm.lessonTimeTo.$valid, 'has-error': memberAddAttributeForm.lessonTimeTo.$invalid}]">
                         <input type="time" class="form-control" name="lessonTimeTo" 
-                               ng-model="teacherSchedule.lessonTimeTo"
+                               ng-model="selectedMember.teacherSchedule.lessonTimeTo"
                                ng-required="true"/>
                         <span ng-class="['glyphicon', 'form-control-feedback', 
                                 {'glyphicon-ok': memberAddAttributeForm.lessonTimeTo.$valid, 
@@ -201,7 +201,9 @@ and open the template in the editor.
             </li>
             <div class="form-group">
                 <label class="control-label col-xs-offset-2">開始時刻は{{businessHours.businessHoursFrom}}から{{businessHours.businessHoursTo}}までの範囲で設定してください。登録可能な時間単位は{{lessonTimeSpaces.lessonTimespace}}分単位となります。</label>
-                <div data-parse-directive></div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="memberAddAttrSubmit()">登録</button>                
             </div>
         </div>
     </form>

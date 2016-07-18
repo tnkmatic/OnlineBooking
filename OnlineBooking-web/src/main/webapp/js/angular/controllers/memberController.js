@@ -180,5 +180,12 @@ angular.module('onlineBookingModule').controller('memberController',
         $scope.removeCourse = function(index) {
             $scope.selectedMember.rMemberTeacherCourseList.splice(index, 1);
         };
+        
+        //メンバ追加属性登録
+        $scope.memberAddAttrSubmit = function() {
+            memberService.update({
+                memberUpdates: [$scope.selectedMember]
+            });
+        };
     }]
 );

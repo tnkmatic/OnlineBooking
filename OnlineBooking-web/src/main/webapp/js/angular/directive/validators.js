@@ -9,18 +9,26 @@ angular.module('onlineBookingModule')
         .directive('cdLessThanDate',['$parse', function($parse) {
             return {
                 require: 'ngModel',
-                link: function(scope, element, attrs, controller) {
+                link: function(scope, element, attrs, ngModelController) {
                     /*
                      * param1：スコープオブジェクト
                      * param2：ディレクティブが指定された要素
                      * param3：ディレクティブが指定された要素の属性群
                      * param4：ディレクティブに適用されたコントローラ
+                     * 
+                     * $viewValueは画面に表示するためのフォーマット後の値(ngModelの値が$formatterを通過した後)
+                     * $modelValueは内部で保持する値(画面入力値が$parsersをすべて通った後)
+                     * $renderは ng-model="hoge" に指定された値が変更されたときにコールされる、DOM操作関連の処理を入れる
+                     * 
+                     * 参考URL
+                     * https://www.nadeau.tv/using-ngmodelcontroller-with-custom-directives/
+                     * http://radify.io/blog/understanding-ngmodelcontroller-by-example-part-1/
                      */
                     scope.$watch( function() {
                        var target = $parse(attrs.cdLessThanDate)(scope);
-                       return !controller.$modelValue || target <= controller.$modelValue;
+                       return !ngModelController.$modelValue || target <= ngModelController.$modelValue;
                     }, function(currentValue) {
-                        controller.$setValidity('lessThanDate', currentValue);
+                        ngModelController.$setValidity('lessThanDate', currentValue);
                     });
                 }
             };

@@ -14,7 +14,8 @@ angular.module('onlineBookingModule')
                 function($resource, onlineBookingUri) {
                     return $resource(
                             onlineBookingUri + 'members/:memberId', 
-                            {memberId: '@id'});
+                            {memberId: '@id'},
+                            {update: {method: 'PUT'}});
                 }
         ])
         //雇用形態マスタサービス
