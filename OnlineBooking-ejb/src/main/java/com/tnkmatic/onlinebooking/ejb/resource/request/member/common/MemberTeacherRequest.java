@@ -4,10 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.tnkmatic.onlinebooking.ejb.resource.request.member.register;
+package com.tnkmatic.onlinebooking.ejb.resource.request.member.common;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -17,7 +16,6 @@ public class MemberTeacherRequest {
     private String employKbn;
     private Date employYmdFrom;
     private Date employYmdTo;
-    private List<MemberTeacherCourseRequest> memberTeacherCourseRequestList;
 
     public String getEmployKbn() {
         return employKbn;
@@ -41,13 +39,5 @@ public class MemberTeacherRequest {
 
     public void setEmployYmdTo(Date employYmdTo) {
         this.employYmdTo = employYmdTo;
-    }
-
-    public List<MemberTeacherCourseRequest> getMemberTeacherCourseRequestList() {
-        return memberTeacherCourseRequestList;
-    }
-
-    public void setMemberTeacherCourseRequestList(List<MemberTeacherCourseRequest> memberTeacherCourseRequestList) {
-        this.memberTeacherCourseRequestList = memberTeacherCourseRequestList;
     }
 }

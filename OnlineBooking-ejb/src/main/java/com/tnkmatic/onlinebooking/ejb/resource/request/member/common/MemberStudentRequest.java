@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.tnkmatic.onlinebooking.ejb.resource.request.member.register;
+package com.tnkmatic.onlinebooking.ejb.resource.request.member.common;
 
 import java.util.List;
 

@@ -7,6 +7,8 @@
 package com.tnkmatic.onlinebooking.ejb.resource.request.member;
 
 import com.tnkmatic.onlinebooking.ejb.resource.request.member.register.MemberRegisterRequest;
+import com.tnkmatic.onlinebooking.ejb.resource.request.member.update.MemberUpdateRequest;
+import java.util.List;
 
 /**
  *
@@ -14,6 +16,7 @@ import com.tnkmatic.onlinebooking.ejb.resource.request.member.register.MemberReg
  */
 public class MemberRequest {
     private MemberRegisterRequest memberRegister;
+    private List<MemberUpdateRequest> memberUpdates;
 
     public MemberRegisterRequest getMemberRegister() {
         return memberRegister;
@@ -22,5 +25,12 @@ public class MemberRequest {
     public void setMemberRegister(MemberRegisterRequest memberRegister) {
         this.memberRegister = memberRegister;
     }
-    
+
+    public List<MemberUpdateRequest> getMemberUpdates() {
+        return memberUpdates;
+    }
+
+    public void setMemberUpdates(List<MemberUpdateRequest> memberUpdates) {
+        this.memberUpdates = memberUpdates;
+    }
 }
